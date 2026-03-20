@@ -1,0 +1,172 @@
+{
+  "schema_version": 1,
+  "stats_url": "https://plugin-store-dun.vercel.app",
+  "plugins": [
+    {
+      "name": "ranking-sniper",
+      "alias": "排行榜狙击",
+      "version": "1.0.2",
+      "description": "Automated token sniper based on DEX ranking board momentum signals on Solana",
+      "author": { "name": "Plugin Store", "github": "https://github.com/okx/plugin-store" },
+      "category": "trading-strategy",
+      "tags": ["sniper", "ranking", "momentum", "solana", "automated"],
+      "source": "official",
+      "components": {
+        "skill": {
+          "repo": "{self}",
+          "dir": "official/ranking-sniper/skills/ranking-sniper"
+        },
+        "binary": {
+          "repo": "{self}",
+          "asset_pattern": "strategy-ranking-sniper-{target}",
+          "checksums_asset": "checksums.txt"
+        }
+      },
+      "defi": {
+        "chains": ["solana"],
+        "protocols": ["raydium", "orca"],
+        "risk_level": "high"
+      }
+    },
+    {
+      "name": "memepump-scanner",
+      "alias": "MEME 扫描器",
+      "version": "1.0.0",
+      "description": "Automated memepump token scanner based on signal detection on Solana",
+      "author": { "name": "Plugin Store", "github": "https://github.com/okx/plugin-store" },
+      "category": "trading-strategy",
+      "tags": ["memepump", "scanner", "signal", "solana", "automated"],
+      "source": "official",
+      "components": {
+        "skill": {
+          "repo": "{self}",
+          "dir": "official/memepump-scanner/skills/memepump-scanner"
+        },
+        "binary": {
+          "repo": "{self}",
+          "asset_pattern": "strategy-memepump-scanner-{target}",
+          "checksums_asset": "checksums.txt"
+        }
+      },
+      "defi": {
+        "chains": ["solana"],
+        "protocols": ["raydium", "orca"],
+        "risk_level": "high"
+      }
+    },
+    {
+      "name": "signal-tracker",
+      "alias": "信号跟单",
+      "version": "1.0.0",
+      "description": "Smart money signal tracker for automated Solana token trading",
+      "author": { "name": "Plugin Store", "github": "https://github.com/okx/plugin-store" },
+      "category": "trading-strategy",
+      "tags": ["signal", "smart-money", "tracker", "solana", "automated"],
+      "source": "official",
+      "components": {
+        "skill": {
+          "repo": "{self}",
+          "dir": "official/signal-tracker/skills/signal-tracker"
+        },
+        "binary": {
+          "repo": "{self}",
+          "asset_pattern": "strategy-signal-tracker-{target}",
+          "checksums_asset": "checksums.txt"
+        }
+      },
+      "defi": {
+        "chains": ["solana"],
+        "protocols": ["raydium", "orca"],
+        "risk_level": "high"
+      }
+    },
+    {
+      "name": "hyperliquid",
+      "alias": "Hyperliquid 永续合约",
+      "version": "1.0.0",
+      "description": "Hyperliquid perpetual futures & spot trading: markets, orderbook, funding rates, buy/sell/cancel, positions, balances",
+      "author": { "name": "Plugin Store", "github": "https://github.com/okx/plugin-store" },
+      "category": "defi-protocol",
+      "tags": ["hyperliquid", "perpetual", "futures", "spot", "leverage", "trading"],
+      "source": "official",
+      "components": {
+        "skill": {
+          "repo": "{self}",
+          "dir": "official/hyperliquid/skills/hyperliquid"
+        },
+        "binary": {
+          "repo": "{self}",
+          "asset_pattern": "dapp-hyperliquid-{target}",
+          "checksums_asset": "checksums.txt"
+        }
+      },
+      "defi": {
+        "chains": ["arbitrum", "ethereum"],
+        "protocols": ["hyperliquid"],
+        "risk_level": "high"
+      }
+    },
+    {
+      "name": "uniswap-ai",
+      "alias": "Uniswap AI",
+      "version": "1.7.0",
+      "description": "AI-powered Uniswap developer tools: trading, hooks, drivers, and on-chain analysis across V2/V3/V4",
+      "author": { "name": "Uniswap", "github": "https://github.com/Uniswap/uniswap-ai" },
+      "category": "defi-protocol",
+      "tags": ["uniswap", "trading", "hooks", "v2", "v3", "v4", "multi-chain"],
+      "source": "dapp-official",
+      "components": {
+        "skill": {
+          "repo": "Uniswap/uniswap-ai"
+        }
+      },
+      "defi": {
+        "chains": ["ethereum", "base", "arbitrum", "optimism", "polygon", "bnb", "avalanche", "celo", "blast", "zora", "worldchain", "unichain"],
+        "protocols": ["uniswap-v2", "uniswap-v3", "uniswap-v4", "universal-router"],
+        "risk_level": "medium"
+      }
+    },
+    {
+      "name": "morpho-earn",
+      "alias": "Morpho 稳定币理财",
+      "version": "1.2.0",
+      "description": "Earn yield on USDC via the Moonwell Flagship USDC vault on Morpho (Base). Supports deposit, withdraw, auto-compound, and position monitoring.",
+      "author": { "name": "Moonwell", "github": "https://github.com/moonwell-fi/openclaw-morpho-earn" },
+      "category": "defi-protocol",
+      "tags": ["morpho", "yield", "usdc", "base", "lending", "compound"],
+      "source": "community",
+      "components": {
+        "skill": {
+          "repo": "moonwell-fi/openclaw-morpho-earn",
+          "path": "SKILL.md"
+        }
+      },
+      "defi": {
+        "chains": ["base"],
+        "protocols": ["morpho", "moonwell"],
+        "risk_level": "low"
+      }
+    },
+    {
+      "name": "polymarket-agent-skills",
+      "alias": "Polymarket 预测市场",
+      "version": "1.0.0",
+      "description": "Polymarket prediction market integration: trading, market data, WebSocket streaming, cross-chain bridge, and gasless transactions",
+      "author": { "name": "Polymarket", "github": "https://github.com/Polymarket/agent-skills" },
+      "category": "defi-protocol",
+      "tags": ["polymarket", "prediction-market", "trading", "polygon", "gasless", "bridge"],
+      "source": "dapp-official",
+      "components": {
+        "skill": {
+          "repo": "Polymarket/agent-skills",
+          "path": "SKILL.md"
+        }
+      },
+      "defi": {
+        "chains": ["polygon", "ethereum", "arbitrum", "base", "optimism", "bnb", "solana"],
+        "protocols": ["polymarket"],
+        "risk_level": "medium"
+      }
+    }
+  ]
+}
