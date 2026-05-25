@@ -1,143 +1,39 @@
-# Plugin Store
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/cover_dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="assets/cover_light.png">
+  <img alt="OKX Plugin Store" src="assets/cover_dark.png" width="100%">
+</picture>
 
-Plugin Store is a **Skills and MCP marketplace** for AI coding assistants. It lets agents discover, install, update, and uninstall plugins — including on-chain trading strategies, DeFi protocol integrations, and developer tools — across Claude Code, Cursor, and OpenClaw.
+[English](README.md) | [中文](README-ZH.md)
 
-## Install the Skill
+Discover, install, and build AI agent plugins for DeFi, trading, and Web3.
 
-```bash
-npx skills add okx/plugin-store
-```
+**Supported platforms:** Claude Code, Cursor, OpenClaw
 
-Once installed, the agent gains full access to the plugin marketplace through natural language or the commands below.
-
-## Commands
-
-### Discovery
+## Install Plugin Store
 
 ```bash
-# List all available plugins
-plugin-store list
-
-# Search by keyword
-plugin-store search <keyword>
-
-# Show details for a plugin (description, chains, protocols, components)
-plugin-store info <name>
+npx skills add okx/plugin-store --skill plugin-store
 ```
 
-### Install & Uninstall
+This installs the Plugin Store skill into your AI agent, enabling plugin discovery and management.
+
+## Install a Plugin
 
 ```bash
-# Install a plugin (interactive agent selection)
-plugin-store install <name>
-
-# Install to a specific agent
-plugin-store install <name> --agent claude-code
-
-# Install skill component only (no binary)
-plugin-store install <name> --skill-only
-
-# Install MCP component only
-plugin-store install <name> --mcp-only
-
-# Uninstall from all agents
-plugin-store uninstall <name>
-
-# Uninstall from a specific agent
-plugin-store uninstall <name> --agent claude-code
+# Install a specific plugin
+npx skills add okx/plugin-store --skill <plugin-name>
 ```
 
-### Update
-
-```bash
-# Update a specific plugin
-plugin-store update <name>
-
-# Update all installed plugins
-plugin-store update --all
-
-# Update the plugin-store CLI itself
-plugin-store self-update
-```
-
-### Manage
-
-```bash
-# Show all installed plugins and their status
-plugin-store installed
-
-# Force refresh the registry cache
-plugin-store registry update
-```
-
-## Supported Agents
-
-| Agent | Detection |
-|-------|-----------|
-| Claude Code | `~/.claude/` exists |
-| Cursor | `~/.cursor/` exists |
-| OpenClaw | `~/.openclaw/` exists |
-
-## Plugin Source Trust Levels
-
-| Source | Meaning |
-|--------|---------|
-| `official` | Developed and maintained by Plugin Store |
-| `dapp-official` | Published by the DApp project itself |
-| `community` | Community contribution — install prompt includes a warning |
-
-## Official Strategies
-
-After installing a strategy plugin, the corresponding binary and skill are available immediately. Each strategy requires [onchainos](https://web3.okx.com/zh-hans/onchainos/dev-docs/home/install-your-agentic-wallet) ≥ 2.0.0.
-
-### ranking-sniper
-
-Monitors the OKX DEX trending ranking board every 10s. Applies a 25-point safety filter, scores momentum (0–125 pts), and executes trades with a 6-layer exit system.
-
-```bash
-strategy-ranking-sniper start --budget 0.5 --per-trade 0.05
-strategy-ranking-sniper status
-strategy-ranking-sniper sell-all
-```
-
-### memepump-scanner
-
-Scans pump.fun MIGRATED tokens every 10s. Applies a 22-point safety filter (dev rug zero-tolerance, bundler checks), detects 3-signal momentum, and trades with an 8-layer exit system.
-
-```bash
-strategy-memepump-scanner start
-strategy-memepump-scanner analyze
-strategy-memepump-scanner status
-```
-
-### signal-tracker
-
-Polls OKX Signal API every 20s for SmartMoney / KOL / Whale buy signals. Applies a 17-point safety filter with cost-aware TP/SL, trailing stop, and session risk controls.
-
-```bash
-strategy-signal-tracker start
-strategy-signal-tracker status
-strategy-signal-tracker report
-```
-
-### hyperliquid
-
-Perpetual futures and spot trading on Hyperliquid. 11 commands covering market data (no auth required) and order management (requires `EVM_PRIVATE_KEY`).
-
-```bash
-dapp-hyperliquid markets
-dapp-hyperliquid price BTC
-dapp-hyperliquid buy --symbol BTC --size 0.001 --price 70000 --leverage 10
-dapp-hyperliquid positions
-```
-
-## Risk Warning
-
-> **All trading strategies involve significant financial risk.** Always validate with `--dry-run` before going live. Never deploy more capital than you can afford to lose entirely.
+---
 
 ## Contributing
 
-To submit a community plugin, open a PR adding an entry to [`registry.json`](registry.json). See existing entries for the required schema.
+External submissions from independent developers are not accepted at this time. Popular plugins are proactively curated and added by our team. This repository publishes the full source code of every curated plugin for reference. Technical reference: [English](docs/FOR-DEVELOPERS.md) | [中文](docs/FOR-DEVELOPERS-ZH.md).
+
+## Security
+
+To report a security issue, please submit reports to us on our bug bounty program - HackerOne [https://hackerone.com/okg?type=team](https://hackerone.com/okg?type=team). Do not open a public issue for security vulnerabilities.
 
 ## License
 

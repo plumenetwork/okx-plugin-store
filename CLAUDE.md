@@ -63,8 +63,8 @@ When `SkillComponent.path` is absent, `SkillInstaller::discover_all()` fetches t
 plugin-store list                    # List all plugins
 plugin-store search <keyword>        # Search plugins
 plugin-store info <name>             # Show plugin details
-plugin-store install <name>          # Install (interactive agent select)
-plugin-store install <name> --agent claude-code --skill-only  # Non-interactive install
+npx skills add okx/plugin-store --skill <name>  # Install via npx (recommended)
+plugin-store install <name> --agent claude-code --skill-only  # Install via CLI (alternative)
 plugin-store uninstall <name>        # Uninstall
 plugin-store update --all            # Update all installed plugins
 plugin-store installed               # Show installed plugins

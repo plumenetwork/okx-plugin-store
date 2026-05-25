@@ -1,21 +1,28 @@
 name: Release
 
+# ═══════════════════════════════════════════════════════════════════
+# TEMPORARILY DISABLED — pending CI code review.
+# Auto-trigger on tag push is commented out; only manual dispatch remains.
+# To re-enable: uncomment the `push` block below and remove `workflow_dispatch`.
+# ═══════════════════════════════════════════════════════════════════
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_dispatch:
+  # push:
+  #   tags:
+  #     - 'v*'
 
-permissions:
-  contents: write
+permissions: read-all   # B2.1: top-level read-only; per-job overrides for write
 
 jobs:
   build:
     name: Build ${{ matrix.binary }} ${{ matrix.target }}
     runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
-        binary: [plugin-store, strategy-ranking-sniper, strategy-memepump-scanner, strategy-signal-tracker, dapp-hyperliquid]
+        binary: [plugin-store]
         target:
           - x86_64-apple-darwin
           - aarch64-apple-darwin
@@ -50,14 +57,14 @@ jobs:
             os: windows-2022
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
 
       - name: Verify Cargo.toml version matches tag
         if: matrix.binary == 'plugin-store'
         shell: bash
         run: |
           TAG_VERSION="${GITHUB_REF_NAME#v}"
-          CARGO_VERSION=$(grep '^version' Cargo.toml | head -1 | sed 's/.*"\(.*\)".*/\1/')
+          CARGO_VERSION=$(grep '^version' cli/Cargo.toml | head -1 | sed 's/.*"\(.*\)".*/\1/')
           if [ "$TAG_VERSION" != "$CARGO_VERSION" ]; then
             echo "ERROR: tag $GITHUB_REF_NAME does not match Cargo.toml version $CARGO_VERSION"
             exit 1
@@ -65,7 +72,7 @@ jobs:
           echo "Version check passed: $CARGO_VERSION"
 
       - name: Install Rust
-        uses: dtolnay/rust-toolchain@stable
+        uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8  # stable
         with:
           targets: ${{ matrix.target }}
 
@@ -76,19 +83,7 @@ jobs:
       - name: Set manifest path
         id: manifest
         shell: bash
-        run: |
-          case "${{ matrix.binary }}" in
-            strategy-ranking-sniper)
-              echo "path=official/ranking-sniper/Cargo.toml" >> $GITHUB_OUTPUT ;;
-            strategy-memepump-scanner)
-              echo "path=official/memepump-scanner/Cargo.toml" >> $GITHUB_OUTPUT ;;
-            strategy-signal-tracker)
-              echo "path=official/signal-tracker/Cargo.toml" >> $GITHUB_OUTPUT ;;
-            dapp-hyperliquid)
-              echo "path=official/hyperliquid/Cargo.toml" >> $GITHUB_OUTPUT ;;
-            *)
-              echo "path=Cargo.toml" >> $GITHUB_OUTPUT ;;
-          esac
+        run: echo "path=cli/Cargo.toml" >> $GITHUB_OUTPUT
 
       - name: Build (Unix)
         if: runner.os != 'Windows'
@@ -122,7 +117,7 @@ jobs:
                     "${{ matrix.binary }}-${{ matrix.target }}.exe"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
         with:
           name: ${{ matrix.binary }}-${{ matrix.target }}
           path: ${{ matrix.binary }}-${{ matrix.target }}*
@@ -131,18 +126,20 @@ jobs:
     name: Generate checksums
     needs: build
     runs-on: ubuntu-22.04
+    permissions:
+      contents: read
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093  # v4
         with:
           merge-multiple: true
 
       - name: Generate SHA256 checksums
-        run: sha256sum plugin-store-* strategy-ranking-sniper-* strategy-memepump-scanner-* strategy-signal-tracker-* dapp-hyperliquid-* > checksums.txt
+        run: sha256sum plugin-store-* > checksums.txt
 
       - name: Show checksums
         run: cat checksums.txt
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
         with:
           name: checksums
           path: checksums.txt
@@ -151,8 +148,10 @@ jobs:
     name: Update SKILL.md version
     needs: checksums
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
@@ -163,7 +162,7 @@ jobs:
 
       - name: Update metadata.version in all SKILL.md files
         run: |
-          find skills official -name "SKILL.md" | while read f; do
+          find skills -name "SKILL.md" | while read f; do
             sed -i "s/^  version: .*/  version: \"${{ steps.version.outputs.value }}\"/" "$f"
           done
 
@@ -171,7 +170,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add skills/ official/
+          git add skills/
           git diff --cached --quiet && echo "No version changes" || \
             git commit -m "release: update SKILL.md metadata.version to ${{ steps.version.outputs.value }}"
           git push origin HEAD:main
@@ -180,19 +179,17 @@ jobs:
     name: Create Release
     needs: checksums
     runs-on: ubuntu-22.04
+    permissions:
+      contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093  # v4
         with:
           merge-multiple: true
 
       - name: Create release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65  # v2
         with:
           generate_release_notes: true
           files: |
             plugin-store-*
-            strategy-ranking-sniper-*
-            strategy-memepump-scanner-*
-            strategy-signal-tracker-*
-            dapp-hyperliquid-*
             checksums.txt

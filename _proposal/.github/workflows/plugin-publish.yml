@@ -1,0 +1,538 @@
+# ═══════════════════════════════════════════════════════════════════════════
+#  plugin-publish.yml  —  GitHub Actions (publish-only)
+#
+#  Scope (intentionally narrow):
+#    1. Detect plugins changed in the latest push to main
+#    2. Compile each plugin for 9 targets (3 macOS, 4 Linux musl, 3 Windows MSVC)
+#    3. Create GitHub Release per plugin (tag: plugins/<name>@<version>)
+#    4. Upload binaries as release assets
+#    5. POST signed webhook to backend so it can refresh registry cache
+#
+#  Out of scope (handled by GitLab on-prem):
+#    × lint / static security rules
+#    × build verification (we trust GitLab's build check)
+#    × AI code review
+#    × pre-flight injection into SKILL.md
+#    × registry.json / marketplace.json regeneration
+#    × user-facing PR feedback
+#
+#  Trust boundary:
+#    GitHub repo accepts NO direct push from any human, NO pull_request, and
+#    NO pull_request_target. The ONLY ingress is the GitLab sync bot pushing
+#    to `main`. This eliminates the cross-PR poisoning attack surface that
+#    led to the previous incident.
+#
+#  Triggers:
+#    • push: branches=[main]   from sync bot
+#    • workflow_dispatch       manual rebuild (admin only — uses repo perms)
+#
+#  See: docs/PUBLISH_PIPELINE_DESIGN.md
+# ═══════════════════════════════════════════════════════════════════════════
+
+name: "Publish — compile, tag, release"
+
+on:
+  push:
+    branches: [main]
+    # Only fire when something publish-relevant changes
+    paths:
+      - 'skills/**'
+      - 'registry.json'
+      - '.claude-plugin/marketplace.json'
+  workflow_dispatch:
+    inputs:
+      rebuild_all:
+        description: 'Rebuild ALL plugins regardless of diff'
+        required: false
+        default: 'false'
+        type: choice
+        options: ['false', 'true']
+
+# Top-level: read-only. Each job opts into the minimum needed (e.g. contents: write).
+permissions: read-all
+
+# Releases are append-only and immutable; do not cancel an in-flight publish.
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: false
+
+# Identity of the only account that is allowed to push to main.
+# Branch protection on `main` MUST also restrict push to this actor.
+env:
+  SYNC_BOT_ACTOR: "gitlab-sync-bot"
+
+jobs:
+  # ═══════════════════════════════════════════════════════════════════════
+  # JOB 1  verify-source
+  #
+  # Defence in depth. Branch protection should already gate this, but if
+  # protection is ever misconfigured we still refuse to run for unexpected
+  # actors. workflow_dispatch is allowed (it requires repo write to invoke).
+  # ═══════════════════════════════════════════════════════════════════════
+  verify-source:
+    name: Verify source
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      verified: ${{ steps.check.outputs.verified }}
+    steps:
+      - id: check
+        env:
+          EVENT: ${{ github.event_name }}
+          ACTOR: ${{ github.actor }}
+          BOT:   ${{ env.SYNC_BOT_ACTOR }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            echo "manual dispatch by $ACTOR — allowed"
+            echo "verified=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$ACTOR" != "$BOT" ]; then
+            echo "::error::push by '$ACTOR' refused. only '$BOT' is allowed to push main."
+            echo "verified=false" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
+          echo "push by sync bot — allowed"
+          echo "verified=true" >> "$GITHUB_OUTPUT"
+
+  # ═══════════════════════════════════════════════════════════════════════
+  # JOB 2  detect
+  #
+  # Find which plugins changed in this push. A plugin is "buildable" if
+  # skills/<name>/plugin.yaml contains a `build:` section.
+  # workflow_dispatch with rebuild_all=true forces a full rebuild.
+  # ═══════════════════════════════════════════════════════════════════════
+  detect:
+    name: Detect changes
+    needs: verify-source
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      has_builds: ${{ steps.build_info.outputs.has_builds }}
+      build_plugins_json: ${{ steps.build_info.outputs.build_plugins_json }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install yq
+        run: |
+          sudo wget -qO /usr/local/bin/yq \
+            https://github.com/mikefarah/yq/releases/download/v4.44.3/yq_linux_amd64
+          sudo chmod +x /usr/local/bin/yq
+          yq --version
+
+      - name: List changed plugins
+        id: changed
+        env:
+          BEFORE: ${{ github.event.before }}
+          REBUILD_ALL: ${{ inputs.rebuild_all }}
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "$REBUILD_ALL" = "true" ]; then
+            PLUGINS=$(ls -d skills/*/plugin.yaml 2>/dev/null \
+              | xargs -I{} dirname {} | xargs -I{} basename {} \
+              | sort -u | tr '\n' ' ' | sed 's/ $//')
+            echo "rebuild-all mode: ${PLUGINS}"
+          elif [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+            # First push to main / branch was just created. Build everything.
+            PLUGINS=$(ls -d skills/*/plugin.yaml 2>/dev/null \
+              | xargs -I{} dirname {} | xargs -I{} basename {} \
+              | sort -u | tr '\n' ' ' | sed 's/ $//')
+            echo "first-push mode: ${PLUGINS}"
+          else
+            # Normal sync: diff before…HEAD, take skills/<name> level
+            git fetch --depth=50 origin "$BEFORE" 2>/dev/null || true
+            PLUGINS=$(git diff --name-only "$BEFORE...HEAD" -- 'skills/' \
+              | cut -d'/' -f2 | sort -u | grep -v '^$' \
+              | tr '\n' ' ' | sed 's/ $//')
+            echo "diff mode: ${PLUGINS:-<none>}"
+          fi
+          if [ -z "$PLUGINS" ]; then
+            echo "changed_plugins=" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed_plugins=${PLUGINS}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Filter to plugins with build section + collect metadata
+        id: build_info
+        env:
+          PLUGINS: ${{ steps.changed.outputs.changed_plugins }}
+        run: |
+          BUILD_PLUGINS_JSON='[]'
+          for p in $PLUGINS; do
+            # Strict name validation — refuse anything we cannot safely use in shell args / URLs
+            if ! echo "$p" | grep -qE '^[a-z0-9][a-z0-9-]*[a-z0-9]$'; then
+              echo "::warning::skipping invalid plugin name '$p'"
+              continue
+            fi
+            YAML="skills/${p}/plugin.yaml"
+            [ -f "$YAML" ] || { echo "no plugin.yaml for $p, skip"; continue; }
+            HAS_BUILD=$(yq '.build // null | type == "!!map"' "$YAML")
+            [ "$HAS_BUILD" = "true" ] || { echo "$p has no build section, skip"; continue; }
+
+            LANG=$(yq -r '.build.lang // ""' "$YAML")
+            BIN=$(yq -r '.build.binary_name // ""' "$YAML")
+            VER=$(yq -r '.version // ""' "$YAML")
+            REPO=$(yq -r '.build.source_repo // ""' "$YAML")
+            COMMIT=$(yq -r '.build.source_commit // ""' "$YAML")
+            SUBDIR=$(yq -r '.build.source_dir // "."' "$YAML")
+
+            # Validate every field we will later interpolate into shell
+            echo "$VER" | grep -qE '^[0-9]+\.[0-9]+\.[0-9]+([-+][a-zA-Z0-9.-]+)?$' \
+              || { echo "::warning::$p version '$VER' not semver, skip"; continue; }
+            echo "$BIN" | grep -qE '^[a-zA-Z0-9._-]+$' \
+              || { echo "::warning::$p binary_name '$BIN' invalid, skip"; continue; }
+            case "$LANG" in
+              rust|go) : ;;
+              *) echo "::warning::$p lang '$LANG' not in {rust,go}, skip"; continue ;;
+            esac
+
+            BUILD_PLUGINS_JSON=$(echo "$BUILD_PLUGINS_JSON" | jq \
+              --arg n "$p" --arg l "$LANG" --arg b "$BIN" --arg v "$VER" \
+              --arg r "$REPO" --arg c "$COMMIT" --arg s "$SUBDIR" \
+              '. += [{name:$n, lang:$l, binary_name:$b, version:$v, source_repo:$r, source_commit:$c, source_dir:$s}]')
+            echo "  + $p ($LANG) $BIN@$VER"
+          done
+
+          # GitHub Actions output: serialise JSON onto one line
+          ONE_LINE=$(echo "$BUILD_PLUGINS_JSON" | jq -c .)
+          echo "build_plugins_json=${ONE_LINE}" >> "$GITHUB_OUTPUT"
+          COUNT=$(echo "$BUILD_PLUGINS_JSON" | jq 'length')
+          [ "$COUNT" -gt 0 ] && echo "has_builds=true" >> "$GITHUB_OUTPUT" \
+                             || echo "has_builds=false" >> "$GITHUB_OUTPUT"
+          echo "buildable plugins: $COUNT"
+
+  # ═══════════════════════════════════════════════════════════════════════
+  # JOB 3  build-release
+  #
+  # Build matrix — 9 targets per push. Inside each matrix run, iterate
+  # through every plugin that needs publishing. Linux musl variants are
+  # cross-compiled from Ubuntu via cargo-zigbuild; macOS / Windows use
+  # GitHub-hosted native runners.
+  # ═══════════════════════════════════════════════════════════════════════
+  build-release:
+    name: Build (${{ matrix.target }})
+    needs: detect
+    if: needs.detect.outputs.has_builds == 'true'
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - x86_64-apple-darwin
+          - aarch64-apple-darwin
+          - x86_64-unknown-linux-musl
+          - i686-unknown-linux-musl
+          - aarch64-unknown-linux-musl
+          - armv7-unknown-linux-musleabihf
+          - x86_64-pc-windows-msvc
+          - i686-pc-windows-msvc
+          - aarch64-pc-windows-msvc
+        include:
+          - target: x86_64-apple-darwin
+            os: macos-latest
+          - target: aarch64-apple-darwin
+            os: macos-latest
+          - target: x86_64-unknown-linux-musl
+            os: ubuntu-latest
+            zigbuild: true
+          - target: i686-unknown-linux-musl
+            os: ubuntu-latest
+            zigbuild: true
+          - target: aarch64-unknown-linux-musl
+            os: ubuntu-latest
+            zigbuild: true
+          - target: armv7-unknown-linux-musleabihf
+            os: ubuntu-latest
+            zigbuild: true
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+          - target: i686-pc-windows-msvc
+            os: windows-latest
+          - target: aarch64-pc-windows-msvc
+            os: windows-latest
+    steps:
+      - name: Set up Go (for govulncheck on go plugins)
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff  # v5
+        with:
+          go-version: 'stable'
+          check-latest: true
+
+      - name: Install Rust toolchain
+        uses: dtolnay/rust-toolchain@29eef336d9b2848a0b548edc03f92a220660cdb8  # stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Set up Zig (musl cross-compile)
+        if: matrix.zigbuild
+        uses: mlugg/setup-zig@53fc45b17fe98b52f92ee5ea08ff48a85a3e7eb7  # v1
+        with:
+          version: 0.13.0
+
+      - name: Install cargo-zigbuild
+        if: matrix.zigbuild
+        run: cargo install cargo-zigbuild --locked
+
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: Build all changed plugins for ${{ matrix.target }}
+        shell: bash
+        env:
+          BUILD_PLUGINS: ${{ needs.detect.outputs.build_plugins_json }}
+          TARGET: ${{ matrix.target }}
+          ZIGBUILD: ${{ matrix.zigbuild }}
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+
+          EXT=""
+          case "$TARGET" in *-pc-windows-msvc) EXT=".exe" ;; esac
+
+          echo "$BUILD_PLUGINS" | jq -c '.[]' | while read -r P; do
+            NAME=$(echo "$P" | jq -r .name)
+            LANG=$(echo "$P" | jq -r .lang)
+            BIN=$( echo "$P" | jq -r .binary_name)
+            VER=$( echo "$P" | jq -r .version)
+            REPO=$(echo "$P" | jq -r .source_repo)
+            SHA=$( echo "$P" | jq -r .source_commit)
+            SUB=$( echo "$P" | jq -r .source_dir)
+
+            # ── Resolve source: local skills/<name>/ or external repo@commit
+            SRC_ROOT=""
+            if [ -n "$REPO" ] && [ "$REPO" != "null" ] && [ -n "$SHA" ] && [ "$SHA" != "null" ]; then
+              # External repo: hard-pin to commit SHA, never branch / tag
+              echo "::group::clone ${REPO}@${SHA:0:12}"
+              EXT_DIR="$RUNNER_TEMP/src-$NAME"
+              git clone --filter=blob:none --no-checkout "https://github.com/${REPO}.git" "$EXT_DIR"
+              git -C "$EXT_DIR" fetch --depth 1 origin "$SHA"
+              git -C "$EXT_DIR" checkout "$SHA"
+              SRC_ROOT="$EXT_DIR/$SUB"
+              echo "::endgroup::"
+            else
+              SRC_ROOT="skills/$NAME/$SUB"
+            fi
+
+            pushd "$SRC_ROOT" >/dev/null
+            echo "::group::build $NAME ($LANG) for $TARGET"
+            case "$LANG" in
+              rust)
+                if [ "$ZIGBUILD" = "true" ]; then
+                  cargo zigbuild --release --target "$TARGET"
+                else
+                  cargo build --release --target "$TARGET"
+                fi
+                OUT_PATH="target/${TARGET}/release/${BIN}${EXT}"
+                ;;
+              go)
+                if [ "$TARGET" = "x86_64-unknown-linux-musl" ]; then
+                  GOOS=linux  GOARCH=amd64
+                elif [ "$TARGET" = "aarch64-unknown-linux-musl" ]; then
+                  GOOS=linux  GOARCH=arm64
+                elif [ "$TARGET" = "i686-unknown-linux-musl" ]; then
+                  GOOS=linux  GOARCH=386
+                elif [ "$TARGET" = "armv7-unknown-linux-musleabihf" ]; then
+                  GOOS=linux  GOARCH=arm GOARM=7
+                elif [ "$TARGET" = "x86_64-apple-darwin" ]; then
+                  GOOS=darwin GOARCH=amd64
+                elif [ "$TARGET" = "aarch64-apple-darwin" ]; then
+                  GOOS=darwin GOARCH=arm64
+                elif [ "$TARGET" = "x86_64-pc-windows-msvc" ]; then
+                  GOOS=windows GOARCH=amd64
+                elif [ "$TARGET" = "i686-pc-windows-msvc" ]; then
+                  GOOS=windows GOARCH=386
+                elif [ "$TARGET" = "aarch64-pc-windows-msvc" ]; then
+                  GOOS=windows GOARCH=arm64
+                else
+                  echo "::error::unsupported target $TARGET for go"
+                  exit 1
+                fi
+                export GOOS GOARCH GOARM CGO_ENABLED=0
+                go build -ldflags="-s -w" -o "${BIN}${EXT}" .
+                OUT_PATH="${BIN}${EXT}"
+                ;;
+              *) echo "::error::lang $LANG not supported here"; exit 1 ;;
+            esac
+            echo "::endgroup::"
+
+            # Stage as <bin>-<target>[.exe] for the release asset name
+            ASSET="${BIN}-${TARGET}${EXT}"
+            cp "$OUT_PATH" "${GITHUB_WORKSPACE}/artifacts/${ASSET}"
+            ( cd "${GITHUB_WORKSPACE}/artifacts" && \
+              if command -v sha256sum >/dev/null; then sha256sum "$ASSET"; \
+              else shasum -a 256 "$ASSET"; fi )
+            popd >/dev/null
+          done
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
+        with:
+          name: build-${{ matrix.target }}
+          path: artifacts/*
+          if-no-files-found: error
+          retention-days: 7
+
+  # ═══════════════════════════════════════════════════════════════════════
+  # JOB 4  create-release
+  #
+  # Per plugin in build_plugins_json:
+  #   • Tag:   plugins/<name>@<version>
+  #   • Title: <name> <version>
+  #   • Body:  auto-generated changelog (commit since previous tag)
+  #   • Assets: every artifact produced by the 9 matrix jobs
+  #
+  # If the tag already exists, we SKIP — releases are immutable. To re-publish,
+  # bump plugin.yaml version in GitLab and resync.
+  # ═══════════════════════════════════════════════════════════════════════
+  create-release:
+    name: Create release
+    needs: [detect, build-release]
+    if: needs.detect.outputs.has_builds == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      published_json: ${{ steps.publish.outputs.published_json }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093  # v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Publish releases
+        id: publish
+        env:
+          BUILD_PLUGINS: ${{ needs.detect.outputs.build_plugins_json }}
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          PUBLISHED='[]'
+          echo "$BUILD_PLUGINS" | jq -c '.[]' | while read -r P; do
+            NAME=$(echo "$P" | jq -r .name)
+            BIN=$( echo "$P" | jq -r .binary_name)
+            VER=$( echo "$P" | jq -r .version)
+            TAG="plugins/${NAME}@${VER}"
+
+            # Idempotency: skip if already released
+            if gh release view "$TAG" --repo "$REPO" >/dev/null 2>&1; then
+              echo "::notice::release $TAG already exists — skipping (immutable)"
+              continue
+            fi
+
+            # Collect this plugin's 9 binaries from the merged artifacts dir
+            ASSETS=$(ls artifacts/${BIN}-* 2>/dev/null | tr '\n' ' ')
+            if [ -z "$ASSETS" ]; then
+              echo "::error::no artifacts found for ${NAME} (pattern: ${BIN}-*)"
+              continue
+            fi
+            ASSET_COUNT=$(echo "$ASSETS" | wc -w | tr -d ' ')
+
+            # SHA256 manifest as the 10th asset
+            ( cd artifacts && sha256sum ${BIN}-* > "${BIN}-checksums.txt" )
+            ASSETS="${ASSETS}artifacts/${BIN}-checksums.txt"
+
+            echo "creating release $TAG with ${ASSET_COUNT} binaries + checksums"
+            gh release create "$TAG" \
+              --repo "$REPO" \
+              --title "$NAME $VER" \
+              --notes "Auto-released from commit ${GITHUB_SHA:0:12}.
+
+Plugin: $NAME
+Version: $VER
+Binary: $BIN
+Targets: 9 (3 macOS + 4 Linux musl + 3 Windows MSVC)
+
+Audit: this release was built from a GitLab-synced commit on \`main\`.
+No PR-based ingress exists; all source vetting happens on GitLab on-prem." \
+              $ASSETS
+
+            PUBLISHED=$(echo "$PUBLISHED" | jq \
+              --arg n "$NAME" --arg v "$VER" --arg t "$TAG" \
+              '. += [{name:$n, version:$v, tag:$t}]')
+          done
+          ONE_LINE=$(echo "$PUBLISHED" | jq -c .)
+          echo "published_json=${ONE_LINE}" >> "$GITHUB_OUTPUT"
+
+  # ═══════════════════════════════════════════════════════════════════════
+  # JOB 5  webhook-backend
+  #
+  # Notify the Plugin Store backend that new releases are live so it can
+  # refresh its registry cache. Signed body, secret-bearer auth.
+  # ═══════════════════════════════════════════════════════════════════════
+  webhook-backend:
+    name: Webhook backend
+    needs: create-release
+    if: success() && needs.create-release.outputs.published_json != '[]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: POST to backend
+        env:
+          BACKEND_URL:   ${{ secrets.PLUGIN_STORE_WEBHOOK_URL }}
+          BACKEND_TOKEN: ${{ secrets.PLUGIN_STORE_WEBHOOK_TOKEN }}
+          PUBLISHED:     ${{ needs.create-release.outputs.published_json }}
+          COMMIT:        ${{ github.sha }}
+        run: |
+          if [ -z "${BACKEND_URL:-}" ]; then
+            echo "::warning::PLUGIN_STORE_WEBHOOK_URL not set — skipping webhook"
+            exit 0
+          fi
+          PAYLOAD=$(jq -nc \
+            --arg c "$COMMIT" \
+            --arg r "$GITHUB_REPOSITORY" \
+            --arg w "$GITHUB_WORKFLOW" \
+            --argjson p "$PUBLISHED" \
+            '{event:"plugins.released", repo:$r, workflow:$w, commit:$c, plugins:$p}')
+          echo "POST $BACKEND_URL"
+          # Use --fail to make non-2xx a CI failure. Do not echo Authorization.
+          curl --silent --show-error --fail \
+            --max-time 15 \
+            --header "Content-Type: application/json" \
+            --header "Authorization: Bearer ${BACKEND_TOKEN}" \
+            --data "${PAYLOAD}" \
+            "${BACKEND_URL}"
+          echo
+          echo "webhook delivered"
+
+  # ═══════════════════════════════════════════════════════════════════════
+  # JOB 6  notify-failure
+  #
+  # If any of the above jobs fail, alert the maintainer channel so we don't
+  # silently miss a broken release.
+  # ═══════════════════════════════════════════════════════════════════════
+  notify-failure:
+    name: Notify failure
+    needs: [verify-source, detect, build-release, create-release, webhook-backend]
+    if: failure()
+    runs-on: ubuntu-latest
+    permissions: read-all
+    steps:
+      - name: Send alert
+        env:
+          ALERT_URL: ${{ secrets.MAINTAINERS_ALERT_WEBHOOK }}
+        run: |
+          if [ -z "${ALERT_URL:-}" ]; then
+            echo "::warning::MAINTAINERS_ALERT_WEBHOOK not set — failure silent"
+            exit 0
+          fi
+          curl --silent --max-time 10 --header "Content-Type: application/json" \
+            --data "$(jq -nc \
+              --arg r "$GITHUB_REPOSITORY" \
+              --arg run "$GITHUB_RUN_ID" \
+              --arg c "${GITHUB_SHA:0:12}" \
+              '{event:"publish_failed", repo:$r, run_id:$run, commit:$c,
+                run_url:"https://github.com/\($r)/actions/runs/\($run)"}')" \
+            "$ALERT_URL"

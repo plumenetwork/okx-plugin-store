@@ -27,7 +27,6 @@ $ plugin-store list
 Name                                Version    Source          Description
 ------------------------------------------------------------------------------------------
 uniswap-ai                          1.7.0      dapp-official   AI-powered Uniswap developer tools...
-polymarket-agent-skills              1.0.0      dapp-official   Polymarket prediction market integration...
 
 2 plugins available.
 ```
@@ -54,7 +53,6 @@ $ plugin-store search trading
 Name                                Version    Source          Description
 ------------------------------------------------------------------------------------------
 uniswap-ai                          1.7.0      dapp-official   AI-powered Uniswap developer tools...
-polymarket-agent-skills              1.0.0      dapp-official   Polymarket prediction market integration...
 
 2 plugins found.
 ```
@@ -93,7 +91,7 @@ Show detailed plugin metadata including components, chains, and protocols.
 | Source | enum | Trust level |
 | Tags | string[] | Comma-separated tags |
 | Components | flags | Which components are available: Skill ✔, MCP ✔ (type), Binary ✔ |
-| DeFi Info | object | Chains, protocols, risk level (only if plugin has defi metadata) |
+| Extra | object | Chains, protocols, risk level (only if plugin has extra metadata) |
 
 **Example:**
 
@@ -111,7 +109,7 @@ Tags: uniswap, trading, hooks, v2, v3, v4, multi-chain
 Components:
   ✔ Skill
 
-DeFi Info:
+Extra:
   Chains: ethereum, base, arbitrum, optimism, polygon, bnb, avalanche, celo, blast, zora, worldchain, unichain
   Protocols: uniswap-v2, uniswap-v3, uniswap-v4, universal-router
   Risk Level: medium
@@ -141,7 +139,7 @@ Install a plugin to one or more agents. Downloads skill files, configures MCP se
 **Behavior:**
 
 1. Fetches plugin metadata from registry
-2. If `source == "community"` and not already installed → shows warning, asks confirmation
+2. If `type == "community"` and not already installed → shows warning, asks confirmation
 3. If `--agent` not specified → detects installed agents, prompts multi-select
 4. Installs components per agent:
    - **Skill**: downloads SKILL.md from GitHub → writes to `~/<agent>/skills/<plugin>/SKILL.md`
@@ -322,7 +320,6 @@ $ plugin-store installed
 Name                                Version    Agents               Components
 -------------------------------------------------------------------------------------
 uniswap-ai                          1.7.0      claude-code          skill
-polymarket-agent-skills              1.0.0      claude-code, cursor  skill
 
 2 plugins installed.
 ```
@@ -477,5 +474,4 @@ plugin-store installed                              # Verify remaining
 
 ```bash
 plugin-store search prediction                 # Find prediction market plugins
-plugin-store install polymarket-agent-skills    # Install the match
 ```
