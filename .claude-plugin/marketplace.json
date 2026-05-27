@@ -127,6 +127,16 @@
       }
     },
     {
+      "name": "euler-v2-plugin",
+      "description": "Supply, borrow and earn yield on Euler v2 - a modular lending protocol with isolated-risk vaults (EVK)",
+      "source": "./skills/euler-v2-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      }
+    },
+    {
       "name": "fluid-plugin",
       "description": "Supply and borrow on Fluid Protocol's smart collateral lending vaults on Ethereum and Arbitrum",
       "source": "./skills/fluid-plugin",
