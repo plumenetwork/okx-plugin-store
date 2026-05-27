@@ -355,9 +355,20 @@ jobs:
               # at job end, so the patched Cargo.toml disappears.
               # Ported from the historical .github/workflows/plugin-publish.yml
               # (pre-audit version) where this logic was field-tested.
+              # Only apply the patcher for musl. Windows-msvc native-tls
+              # links to SChannel (system TLS), not OpenSSL — cfg() guards
+              # in native-tls's source skip openssl on cfg(target_os = "windows")
+              # even when openssl-sys is an indirect dep in Cargo.lock.
+              # If we patched Windows too, the `cargo add openssl --features
+              # vendored` step would require Perl + nmake to build OpenSSL
+              # from source on the Windows runner, which we don't have set
+              # up. Empirically this broke all 3 windows targets in run
+              # 26499485782 even though they had been succeeding before
+              # the patcher was introduced. Leave Windows on its happy
+              # native-tls path.
               NEED_TLS_PATCH=false
               case "$TARGET" in
-                *musl*|*windows*) NEED_TLS_PATCH=true ;;
+                *musl*) NEED_TLS_PATCH=true ;;
               esac
               if [ "$NEED_TLS_PATCH" = "true" ] && grep -q 'openssl-sys' Cargo.lock 2>/dev/null; then
                 echo "::group::auto-patch Cargo.toml for ${TARGET} (rustls-tls + vendored openssl)"

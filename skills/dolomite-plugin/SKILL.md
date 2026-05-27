@@ -475,3 +475,4 @@ dolomite-plugin repay --token USDT --all --position-account-number 100 --from-ac
 - **feat**: structured GEN-001 errors; ONC-001 `--force`; EVM-014 retry (3 patterns); EVM-015 explicit gas-limit (60k approve, 400k writes, 450k borrow steps); TX-001 on-chain confirmation; EVM-001 / EVM-002 / EVM-006 / GAS-001 / ONB-001 / LEND-001 fully honored
 - Verified end-to-end on Arbitrum mainnet: supply USDC + USDT, open position 100 with 0.3 USDC collateral, borrow 0.2 USDT, repay --all exact-zero (link `0xca8aa1...9777`), withdraw collateral back to wallet
 
+
