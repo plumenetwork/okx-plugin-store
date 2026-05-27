@@ -159,6 +159,21 @@ jobs:
         run: |
           set -euo pipefail
           BUILD_PLUGINS_JSON='[]'
+
+          # Pre-compute (plugin_name, author.github, author.name) for every
+          # plugin in skills/. Used below to mark contributors as "new" only
+          # when this is their first plugin in the repo — keeps the release
+          # notes' `## New Contributors` section honest across versions.
+          ALL_AUTHORS=$(mktemp)
+          for OYAML in skills/*/plugin.yaml; do
+            [ -f "$OYAML" ] || continue
+            ON=$(basename "$(dirname "$OYAML")")
+            case "$ON" in _*) continue ;; esac
+            OG=$(yq -r '.author.github // ""' "$OYAML" 2>/dev/null || echo "")
+            OA=$(yq -r '.author.name // ""'   "$OYAML" 2>/dev/null || echo "")
+            printf '%s\t%s\t%s\n' "$ON" "$OG" "$OA" >> "$ALL_AUTHORS"
+          done
+
           for p in $PLUGINS; do
             # Strict name validation — refuse anything we cannot safely use in shell args / URLs
             if ! echo "$p" | grep -qE '^[a-z0-9][a-z0-9-]*[a-z0-9]$'; then
@@ -201,11 +216,36 @@ jobs:
                 ;;
             esac
 
+            # Release-notes metadata. Sanitise everything we pass through
+            # shell quoting later — strip backtick, $, ", \ and collapse
+            # newlines (yaml's folded scalars can sneak \n into descriptions);
+            # cap length so a misbehaving plugin.yaml cannot bloat the JSON
+            # output beyond GitHub Actions' 1MB output limit.
+            DESC=$(yq -r '.description // ""'                   "$YAML" 2>/dev/null || echo "")
+            AUTH_NAME=$(yq -r '.author.name // .author // ""'   "$YAML" 2>/dev/null || echo "")
+            AUTH_GH=$(yq -r '.author.github // ""'              "$YAML" 2>/dev/null || echo "")
+            DESC=$(printf '%s' "$DESC"      | tr -d '`$"\\' | tr '\n\r' '  ' | cut -c1-300)
+            AUTH_NAME=$(printf '%s' "$AUTH_NAME" | tr -d '`$"\\' | tr '\n\r' '  ' | cut -c1-80)
+            AUTH_GH=$(printf '%s' "$AUTH_GH"   | tr -d '`$"\\' | tr '\n\r' '  ' | cut -c1-80)
+
+            # Prefer GitHub handle; fall back to display name; final fallback "Community".
+            CONTRIBUTOR="${AUTH_GH:-$AUTH_NAME}"
+            [ -z "$CONTRIBUTOR" ] && CONTRIBUTOR="Community"
+
+            # "Is this contributor new?" = no OTHER plugin in skills/ has the
+            # same author.github or author.name. Used by create-release to
+            # decide whether to render `## New Contributors`.
+            HITS=$(awk -F'\t' -v plugin="$p" -v c="$CONTRIBUTOR" \
+              '$1 != plugin && ($2 == c || $3 == c) { n++ } END { print (n+0) }' "$ALL_AUTHORS")
+            if [ "$HITS" -eq 0 ]; then IS_NEW="true"; else IS_NEW="false"; fi
+
             BUILD_PLUGINS_JSON=$(echo "$BUILD_PLUGINS_JSON" | jq \
               --arg n "$p" --arg l "$LANG" --arg b "$BIN" --arg v "$VER" \
               --arg r "$REPO" --arg c "$COMMIT" --arg s "$SUBDIR" \
-              '. += [{name:$n, lang:$l, binary_name:$b, version:$v, source_repo:$r, source_commit:$c, source_dir:$s}]')
-            echo "  + $p ($LANG) $BIN@$VER"
+              --arg desc "$DESC" --arg an "$AUTH_NAME" --arg ag "$AUTH_GH" \
+              --arg ct "$CONTRIBUTOR" --arg new "$IS_NEW" \
+              '. += [{name:$n, lang:$l, binary_name:$b, version:$v, source_repo:$r, source_commit:$c, source_dir:$s, description:$desc, author_name:$an, author_github:$ag, contributor:$ct, is_new_contributor:$new}]')
+            echo "  + $p ($LANG) $BIN@$VER  contributor=$CONTRIBUTOR new=$IS_NEW"
           done
 
           # GitHub Actions output: serialise JSON onto one line
@@ -510,6 +550,10 @@ jobs:
             NAME=$(echo "$P" | jq -r .name)
             BIN=$( echo "$P" | jq -r .binary_name)
             VER=$( echo "$P" | jq -r .version)
+            LANG=$(echo "$P" | jq -r '.lang // "unknown"')
+            DESC=$(echo "$P" | jq -r '.description // ""')
+            CONTRIBUTOR=$(echo "$P" | jq -r '.contributor // "Community"')
+            IS_NEW=$(echo "$P" | jq -r '.is_new_contributor // "false"')
             TAG="plugins/${NAME}@${VER}"
 
             # Idempotency: skip if already released
@@ -536,20 +580,36 @@ jobs:
 
             ASSETS=$(ls "$STAGE"/* | tr '\n' ' ')
             ASSET_COUNT=$(echo "$ASSETS" | wc -w | tr -d ' ')
+            PLATFORM_COUNT=$(ls "$STAGE"/${BIN}-* 2>/dev/null | wc -l | tr -d ' ')
+
+            # Build the release-notes body. Format mirrors the old
+            # cross-platform-release workflow so the GitHub release page
+            # keeps a consistent shape across the GitLab cut-over:
+            #   ## What's Changed   — bullets: name+version+desc / lang+count / install / source
+            #   ## New Contributors — only when detect marked this contributor as first-time
+            #   ## Contributors     — always the active contributor
+            #   --- Published by OKX Plugin Store CI
+            NOTES_FILE="release-notes-${NAME}.md"
+            {
+              printf "## What's Changed\n\n"
+              printf '%s\n' "- **${NAME}** v${VER} -- ${DESC}"
+              printf '%s\n' "- Language: ${LANG} | Platforms: ${PLATFORM_COUNT}"
+              printf '%s\n' "- Install: npx skills add ${REPO} --skill ${NAME}"
+              printf '%s\n' "- Source: skills/${NAME}/ (included in submission)"
+              if [ "$IS_NEW" = "true" ]; then
+                printf '\n## New Contributors\n\n'
+                printf '%s\n' "- **${CONTRIBUTOR}** made their first contribution"
+              fi
+              printf '\n## Contributors\n\n'
+              printf '%s\n' "- **${CONTRIBUTOR}**"
+              printf '\n---\nPublished by OKX Plugin Store CI\n'
+            } > "$NOTES_FILE"
 
             echo "creating release $TAG with ${ASSET_COUNT} assets (incl. checksums.txt)"
             gh release create "$TAG" \
               --repo "$REPO" \
-              --title "$NAME $VER" \
-              --notes "Auto-released from commit ${GITHUB_SHA:0:12}.
-
-              Plugin: $NAME
-              Version: $VER
-              Binary: $BIN
-              Targets: 9 (3 macOS + 4 Linux musl + 3 Windows MSVC)
-
-              Audit: this release was built from a GitLab-synced commit on \`main\`.
-              No PR-based ingress exists; all source vetting happens on GitLab on-prem." \
+              --title "${NAME} v${VER}" \
+              --notes-file "$NOTES_FILE" \
               $ASSETS
 
             PUBLISHED=$(echo "$PUBLISHED" | jq \
