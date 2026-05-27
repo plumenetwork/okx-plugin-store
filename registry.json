@@ -283,7 +283,7 @@
         "arbitrum",
         "dolo"
       ],
-      "modify_date": "1779785966",
+      "modify_date": "1779873362",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1494,6 +1494,59 @@
         ],
         "protocols": [],
         "risk_level": "high"
+      }
+    },
+    {
+      "name": "relay-plugin",
+      "version": "0.1.1",
+      "description": "Fast cross-chain transfers using Relay Protocol's intent-based bridge",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "bridge",
+        "cross-chain",
+        "relay",
+        "fast-bridge",
+        "intent"
+      ],
+      "modify_date": "1779884655",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/relay-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "relay-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/relay-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "relay-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/relay-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/relay-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/relay-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/relay-plugin/README.md",
+      "api_calls": [
+        "https://api.relay.link"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
       }
     },
     {

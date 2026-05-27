@@ -287,6 +287,16 @@
       }
     },
     {
+      "name": "relay-plugin",
+      "description": "Fast cross-chain transfers using Relay Protocol's intent-based bridge",
+      "source": "./skills/relay-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      }
+    },
+    {
       "name": "rootdata-crypto-plugin",
       "description": "RootData is a leading Web3 data platform covering crypto projects, investors, funding data, and personnel movements. This skill is the OKX-dedicated integration, isolated from the standard RootData skill with its own API key namespace and endpoints.",
       "source": "./skills/rootdata-crypto-plugin",
