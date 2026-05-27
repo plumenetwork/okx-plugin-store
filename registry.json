@@ -283,7 +283,7 @@
         "arbitrum",
         "dolo"
       ],
-      "modify_date": "1779785966",
+      "modify_date": "1779873362",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -652,6 +652,66 @@
       ],
       "extra": {
         "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
+      "name": "lifi-plugin",
+      "version": "0.1.1",
+      "description": "LI.FI cross-chain bridge & swap aggregator - list chains/tokens, get quotes, bridge or swap, track tx status across Ethereum, Arbitrum, Base, BSC, Polygon, and Optimism",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "bridge",
+        "cross-chain",
+        "aggregator",
+        "lifi",
+        "swap"
+      ],
+      "modify_date": "1779879273",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/lifi-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "lifi-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/lifi-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "lifi-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/lifi-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/lifi-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/lifi-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/lifi-plugin/README.md",
+      "api_calls": [
+        "https://li.quest",
+        "https://ethereum-rpc.publicnode.com",
+        "https://arbitrum-one-rpc.publicnode.com",
+        "https://base-rpc.publicnode.com",
+        "https://bsc-rpc.publicnode.com",
+        "https://polygon-bor-rpc.publicnode.com",
+        "https://optimism-rpc.publicnode.com"
+      ],
+      "extra": {
+        "chains": [
+          "solana",
           "ethereum",
           "base"
         ],
