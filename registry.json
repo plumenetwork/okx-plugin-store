@@ -277,7 +277,7 @@
         "winddown",
         "defi"
       ],
-      "modify_date": "1779879313",
+      "modify_date": "1779879618",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -502,7 +502,7 @@
         "yield",
         "lrt"
       ],
-      "modify_date": "1779879357",
+      "modify_date": "1779879652",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -642,6 +642,66 @@
         "https://api.fluid.xyz",
         "https://eth.llamarpc.com",
         "https://arb1.arbitrum.io/rpc"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
+      "name": "fourmeme-plugin",
+      "version": "0.1.1",
+      "description": "Trade Four.meme bonding-curve memecoins on BNB Chain - buy/sell pre-graduate tokens via TokenManager V2 with Helper3 quoting",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "meme",
+        "launchpad",
+        "bonding-curve",
+        "bsc",
+        "bnb-chain",
+        "four-meme",
+        "token-trading"
+      ],
+      "modify_date": "1779882817",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/fourmeme-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "fourmeme-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/fourmeme-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "fourmeme-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/fourmeme-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/fourmeme-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/fourmeme-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/fourmeme-plugin/README.md",
+      "api_calls": [
+        "https://bsc-rpc.publicnode.com",
+        "https://bsc-dataseed.binance.org",
+        "https://api.dexscreener.com",
+        "https://four.meme",
+        "https://static.four.meme",
+        "https://bscscan.com"
       ],
       "extra": {
         "chains": [
@@ -951,7 +1011,7 @@
         "lifi",
         "swap"
       ],
-      "modify_date": "1779879273",
+      "modify_date": "1779879728",
       "type": "community-developer",
       "components": {
         "skill": {
