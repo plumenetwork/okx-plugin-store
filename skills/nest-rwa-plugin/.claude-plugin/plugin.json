@@ -1,0 +1,22 @@
+{
+  "name": "nest-rwa-plugin",
+  "version": "0.1.0",
+  "description": "Park idle stablecoins into Nest RWA yield vaults — tokenized US Treasuries, regulated funds, private credit, CLOs. Same-chain deposit, withdraw, claim, instant-redeem, and cross-chain share bridge on Ethereum, BSC, Arbitrum, Plasma, and Plume.",
+  "author": {
+    "name": "Plume Network",
+    "github": "plumenetwork"
+  },
+  "license": "MIT",
+  "homepage": "https://nest.credit",
+  "repository": "https://github.com/plumenetwork/nest-cli",
+  "keywords": [
+    "rwa",
+    "real-world-assets",
+    "tokenized-treasuries",
+    "treasury-yield",
+    "private-credit",
+    "stablecoin-yield",
+    "nest",
+    "plume"
+  ]
+}
