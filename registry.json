@@ -148,6 +148,62 @@
       ]
     },
     {
+      "name": "compound-v2-plugin",
+      "version": "0.1.1",
+      "description": "Compound V2 (legacy cToken-based) money market on Ethereum mainnet - exit tool: redeem cTokens, repay debt, claim COMP. New supply/borrow paused by governance - use compound-v3-plugin for active flows",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "compound",
+        "lending",
+        "borrowing",
+        "ethereum",
+        "ctoken",
+        "comp",
+        "winddown",
+        "defi"
+      ],
+      "modify_date": "1779879313",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/compound-v2-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "compound-v2-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/compound-v2-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "compound-v2-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/compound-v2-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/compound-v2-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/compound-v2-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/compound-v2-plugin/README.md",
+      "api_calls": [
+        "https://ethereum-rpc.publicnode.com"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
       "name": "compound-v3-plugin",
       "version": "0.2.8",
       "description": "Compound V3 (Comet) lending plugin: supply collateral, borrow/repay the base asset, and claim COMP rewards",
@@ -283,7 +339,7 @@
         "arbitrum",
         "dolo"
       ],
-      "modify_date": "1779785966",
+      "modify_date": "1779873362",
       "type": "community-developer",
       "components": {
         "skill": {

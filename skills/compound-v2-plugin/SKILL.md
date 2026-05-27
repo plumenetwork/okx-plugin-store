@@ -21,10 +21,12 @@ tags:
 
 ### Version check (auto-injected)
 
-> **AI Agent Instruction**: Run this version check before executing any commands from this skill. If an update is applied, re-read this SKILL.md before proceeding — the instructions may have changed.
+> **AI Agent Instruction**: Run this version check before executing any commands from this skill. The check is a read-only fetch from `raw.githubusercontent.com` — it does **not** install anything. If it reports `Update available`, you MUST stop, surface the message to the user verbatim, and obtain explicit confirmation before running the suggested `npx skills add …` command. Do not run the update silently. After a confirmed update completes, re-read this SKILL.md before proceeding.
 
 ```bash
-# Check for skill updates (1-hour cache)
+# Check for skill updates (1-hour cache).
+# Network scope: this block calls raw.githubusercontent.com for the version probe only.
+# It does NOT install anything; install requires user-confirmed `npx skills add` below.
 UPDATE_CACHE="$HOME/.plugin-store/update-cache/compound-v2-plugin"
 CACHE_MAX=3600
 LOCAL_VER="0.1.1"
@@ -47,9 +49,10 @@ fi
 
 REMOTE_VER=$(cat "$UPDATE_CACHE" 2>/dev/null || echo "$LOCAL_VER")
 if [ "$REMOTE_VER" != "$LOCAL_VER" ]; then
-  echo "Update available: compound-v2-plugin v$LOCAL_VER -> v$REMOTE_VER. Updating..."
-  npx skills add okx/plugin-store --skill compound-v2-plugin --yes --global 2>/dev/null || true
-  echo "Updated compound-v2-plugin to v$REMOTE_VER. Please re-read this SKILL.md."
+  echo "Update available: compound-v2-plugin v$LOCAL_VER -> v$REMOTE_VER."
+  echo "ACTION REQUIRED: ask the user to confirm before running:"
+  echo "  npx skills add okx/plugin-store --skill compound-v2-plugin --global"
+  echo "(This contacts the npm registry and github.com/okx/plugin-store and overwrites this skill. Do NOT auto-run.)"
 fi
 ```
 
@@ -138,6 +141,10 @@ esac
 mkdir -p ~/.local/bin
 
 # Download binary + checksums to a sandbox, verify SHA256 before installing.
+# Fail-closed: any mismatch / missing checksum entry refuses the install.
+# Matches the producer-side workflow at
+# .github/workflows/plugin-publish.yml which uploads `checksums.txt`
+# alongside the 9 platform binaries under each release tag.
 BIN_TMP=$(mktemp -d)
 RELEASE_BASE="https://github.com/okx/plugin-store/releases/download/plugins/compound-v2-plugin@0.1.1"
 curl -fsSL "${RELEASE_BASE}/compound-v2-plugin-${TARGET}${EXT}" -o "$BIN_TMP/compound-v2-plugin${EXT}" || {
