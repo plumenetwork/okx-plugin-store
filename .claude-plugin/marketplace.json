@@ -87,6 +87,16 @@
       }
     },
     {
+      "name": "eigencloud-plugin",
+      "description": "Restake LSTs on EigenLayer to earn AVS operator yield — stake, delegate, and manage your restaking positions",
+      "source": "./skills/eigencloud-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      }
+    },
+    {
       "name": "etherfi-plugin",
       "description": "Liquid restaking on Ethereum — deposit ETH to receive eETH, wrap/unwrap eETH/weETH (ERC-4626), unstake eETH back to ETH, and check positions with APY",
       "source": "./skills/etherfi-plugin",
