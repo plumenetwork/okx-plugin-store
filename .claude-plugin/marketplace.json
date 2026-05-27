@@ -77,6 +77,16 @@
       }
     },
     {
+      "name": "fluid-plugin",
+      "description": "Supply and borrow on Fluid Protocol's smart collateral lending vaults on Ethereum and Arbitrum",
+      "source": "./skills/fluid-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      }
+    },
+    {
       "name": "gmx-v2-plugin",
       "description": "Trade perpetuals and spot on GMX V2 — open/close leveraged positions, place limit/stop orders, add/remove GM pool liquidity on Arbitrum and Avalanche",
       "source": "./skills/gmx-v2-plugin",
