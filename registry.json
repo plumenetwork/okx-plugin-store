@@ -283,7 +283,7 @@
         "arbitrum",
         "dolo"
       ],
-      "modify_date": "1779785966",
+      "modify_date": "1779873362",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -367,6 +367,66 @@
         "yields.llama.fi",
         "coins.llama.fi",
         "etherscan.io"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
+      "name": "euler-v2-plugin",
+      "version": "0.1.1",
+      "description": "Supply, borrow and earn yield on Euler v2 - a modular lending protocol with isolated-risk vaults (EVK)",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "lending",
+        "borrowing",
+        "defi",
+        "earn",
+        "euler",
+        "euler-v2",
+        "evk",
+        "collateral"
+      ],
+      "modify_date": "1779884928",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/euler-v2-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "euler-v2-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/euler-v2-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "euler-v2-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/euler-v2-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/euler-v2-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/euler-v2-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/euler-v2-plugin/README.md",
+      "api_calls": [
+        "https://app.euler.finance",
+        "https://api.merkl.xyz",
+        "https://ethereum-rpc.publicnode.com",
+        "https://base-rpc.publicnode.com",
+        "https://arbitrum.drpc.org"
       ],
       "extra": {
         "chains": [

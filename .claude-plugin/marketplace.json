@@ -77,6 +77,16 @@
       }
     },
     {
+      "name": "euler-v2-plugin",
+      "description": "Supply, borrow and earn yield on Euler v2 - a modular lending protocol with isolated-risk vaults (EVK)",
+      "source": "./skills/euler-v2-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      }
+    },
+    {
       "name": "gmx-v2-plugin",
       "description": "Trade perpetuals and spot on GMX V2 — open/close leveraged positions, place limit/stop orders, add/remove GM pool liquidity on Arbitrum and Avalanche",
       "source": "./skills/gmx-v2-plugin",
