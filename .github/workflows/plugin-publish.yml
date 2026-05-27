@@ -340,6 +340,60 @@ jobs:
           echo "::group::build $NAME ($LANG) for $TARGET"
           case "$LANG" in
             rust)
+              # ── Auto-patch Cargo.toml for musl / Windows TLS compatibility ──
+              # reqwest's default features pull native-tls → openssl-sys,
+              # which fails to cross-compile under cargo-zigbuild on musl
+              # (no system OpenSSL) and is fragile under Windows MSVC
+              # (vcpkg perl/timeouts). Detect openssl-sys in Cargo.lock and:
+              #   1. Patch reqwest to use rustls-tls (pure Rust, no native deps)
+              #   2. Add vendored openssl for indirect deps (solana-sdk, etc.)
+              #   3. Install musl-tools on Linux for vendored openssl build
+              #   4. Regenerate Cargo.lock
+              #
+              # These edits are IN-MEMORY on the runner only — the plugin's
+              # source in git is never modified. The runner VM is destroyed
+              # at job end, so the patched Cargo.toml disappears.
+              # Ported from the historical .github/workflows/plugin-publish.yml
+              # (pre-audit version) where this logic was field-tested.
+              NEED_TLS_PATCH=false
+              case "$TARGET" in
+                *musl*|*windows*) NEED_TLS_PATCH=true ;;
+              esac
+              if [ "$NEED_TLS_PATCH" = "true" ] && grep -q 'openssl-sys' Cargo.lock 2>/dev/null; then
+                echo "::group::auto-patch Cargo.toml for ${TARGET} (rustls-tls + vendored openssl)"
+                # 1. Patch reqwest to use rustls-tls, drop default-features
+                python3 - <<'PYEOF'
+import re
+with open('Cargo.toml') as f:
+    c = f.read()
+def patch(m):
+    s = m.group(0)
+    if 'rustls-tls' in s:
+        return s
+    if 'default-features' in s:
+        s = re.sub(r'default-features\s*=\s*true', 'default-features = false', s)
+    else:
+        s = s.replace('}', ', default-features = false}')
+    s = re.sub(r'features\s*=\s*\[', 'features = ["rustls-tls", ', s)
+    return s
+c = re.sub(r'reqwest\s*=\s*\{[^}]+\}', patch, c)
+with open('Cargo.toml', 'w') as f:
+    f.write(c)
+PYEOF
+                # 2. Add vendored openssl for indirect deps (solana-sdk, pumpfun, …)
+                if ! grep -q 'openssl.*vendored' Cargo.toml 2>/dev/null; then
+                  cargo add openssl --features vendored 2>/dev/null || \
+                    sed -i 's/\[dependencies\]/[dependencies]\nopenssl = { version = "0.10", features = ["vendored"] }/' Cargo.toml
+                fi
+                # 3. musl: install musl-tools so vendored openssl's C build links
+                if [ "$ZIGBUILD" = "true" ]; then
+                  sudo apt-get install -y musl-tools 2>/dev/null || true
+                fi
+                # 4. Refresh lockfile so the patched deps resolve
+                cargo generate-lockfile 2>/dev/null || true
+                echo "::endgroup::"
+              fi
+
               if [ "$ZIGBUILD" = "true" ]; then
                 cargo zigbuild --release --target "$TARGET"
               else

@@ -1,6 +1,6 @@
 schema_version: 1
 name: dolomite-plugin
-version: "0.1.1"
+version: "0.1.2"
 description: Dolomite Finance lending and borrowing on Arbitrum - supply assets to earn interest, open isolated borrow positions, and manage repay/withdraw via DolomiteMargin
 author:
   name: GeoGu360
