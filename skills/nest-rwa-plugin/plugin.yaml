@@ -1,7 +1,7 @@
 schema_version: 1
 name: nest-rwa-plugin
 version: "0.1.0"
-description: "Park idle stablecoins into Nest RWA yield vaults — tokenized US Treasuries, regulated funds, private credit, CLOs. Same-chain deposit, withdraw, claim, instant-redeem, and cross-chain share bridge on Ethereum, BSC, Arbitrum, Plasma, and Plume."
+description: "Park idle stablecoins into Nest's RWA yield vaults — tokenized US Treasuries, regulated funds, private credit, CLOs. Deposit, withdraw, claim, redeem, and bridge shares across 5 EVM chains."
 author:
   name: "Plume Network"
   github: "plumenetwork"
@@ -18,7 +18,6 @@ tags:
   - plume
   - ethereum
   - bsc
-  - arbitrum
 
 components:
   skill:
