@@ -20,10 +20,12 @@ chains:
 
 ### Version check (auto-injected)
 
-> **AI Agent Instruction**: Run this version check before executing any commands from this skill. If an update is applied, re-read this SKILL.md before proceeding — the instructions may have changed.
+> **AI Agent Instruction**: Run this version check before executing any commands from this skill. The check is a read-only fetch from `raw.githubusercontent.com` — it does **not** install anything. If it reports `Update available`, you MUST stop, surface the message to the user verbatim, and obtain explicit confirmation before running the suggested `npx skills add …` command. Do not run the update silently. After a confirmed update completes, re-read this SKILL.md before proceeding.
 
 ```bash
-# Check for skill updates (1-hour cache)
+# Check for skill updates (1-hour cache).
+# Network scope: this block calls raw.githubusercontent.com for the version probe only.
+# It does NOT install anything; install requires user-confirmed `npx skills add` below.
 UPDATE_CACHE="$HOME/.plugin-store/update-cache/quickswap-plugin"
 CACHE_MAX=3600
 LOCAL_VER="0.1.2"
@@ -46,9 +48,10 @@ fi
 
 REMOTE_VER=$(cat "$UPDATE_CACHE" 2>/dev/null || echo "$LOCAL_VER")
 if [ "$REMOTE_VER" != "$LOCAL_VER" ]; then
-  echo "Update available: quickswap-plugin v$LOCAL_VER -> v$REMOTE_VER. Updating..."
-  npx skills add okx/plugin-store --skill quickswap-plugin --yes --global 2>/dev/null || true
-  echo "Updated quickswap-plugin to v$REMOTE_VER. Please re-read this SKILL.md."
+  echo "Update available: quickswap-plugin v$LOCAL_VER -> v$REMOTE_VER."
+  echo "ACTION REQUIRED: ask the user to confirm before running:"
+  echo "  npx skills add okx/plugin-store --skill quickswap-plugin --global"
+  echo "(This contacts the npm registry and github.com/okx/plugin-store and overwrites this skill. Do NOT auto-run.)"
 fi
 ```
 

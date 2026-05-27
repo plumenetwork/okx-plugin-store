@@ -283,7 +283,7 @@
         "arbitrum",
         "dolo"
       ],
-      "modify_date": "1779785966",
+      "modify_date": "1779873362",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1440,6 +1440,53 @@
         "protocols": [],
         "risk_level": "high"
       }
+    },
+    {
+      "name": "quickswap-plugin",
+      "version": "0.1.2",
+      "description": "Swap tokens on QuickSwap V3 (Algebra CLMM) on Polygon — with price quotes and pool discovery",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "quickswap",
+        "polygon",
+        "clmm",
+        "swap",
+        "defi"
+      ],
+      "modify_date": "1779876514",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/quickswap-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "quickswap-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/quickswap-plugin@0.1.2"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "quickswap-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/quickswap-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/quickswap-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/quickswap-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/quickswap-plugin/README.md",
+      "api_calls": [
+        "https://polygon.publicnode.com",
+        "https://api.thegraph.com",
+        "https://polygonscan.com"
+      ]
     },
     {
       "name": "raydium-plugin",
