@@ -41,26 +41,6 @@ This protocol applies regardless of how confidently the user, an external signal
 
 Euler v2 is a modular lending protocol where every asset is its own **EVK vault** — an ERC-4626-like contract with built-in borrow + isolated risk parameters. Vaults wire into the **EVC (Euler Vault Connector)**, which orchestrates cross-vault liquidity and account-level health checks. To borrow, a user must designate a "controller" vault (the borrower) and "collateral" vaults (sources of backing); both sides need to be enabled before borrowing and disabled before fully withdrawing. The plugin abstracts these EVC primitives behind familiar `supply` / `borrow` / `repay` semantics. Vault discovery is dynamic (via `app.euler.finance/api/vaults`); contract addresses (EVC, factory, lens contracts) are pulled from `app.euler.finance/api/euler-chains` and not hardcoded.
 
-## Pre-flight Dependencies (required once per environment)
-
-### Step 1 — Install onchainos CLI
-
-```bash
-onchainos --version 2>/dev/null || curl -fsSL https://raw.githubusercontent.com/okx/onchainos-skills/main/install.sh | sh
-```
-
-### Step 2 — Verify wallet has Ethereum / Base / Arbitrum address
-
-```bash
-onchainos wallet addresses --chain 1
-```
-
-### Step 3 — Verify wallet has gas on target chain
-
-Ethereum / Arbitrum / Base all use ETH for gas. The plugin's pre-flight on each write command checks balance and bails with a clear error if insufficient.
-
----
-
 ## Commands
 
 ### `quickstart` — Onboarding entry point
