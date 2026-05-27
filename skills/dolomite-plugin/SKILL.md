@@ -1,7 +1,7 @@
 ---
 name: dolomite-plugin
 description: Dolomite Finance lending and borrowing on Arbitrum - supply assets to earn interest, open isolated borrow positions, and manage repay/withdraw via DolomiteMargin
-version: "0.1.1"
+version: "0.1.3"
 author: GeoGu360
 tags:
   - lending
@@ -28,7 +28,7 @@ tags:
 # It does NOT install anything; install requires user-confirmed `npx skills add` below.
 UPDATE_CACHE="$HOME/.plugin-store/update-cache/dolomite-plugin"
 CACHE_MAX=3600
-LOCAL_VER="0.1.1"
+LOCAL_VER="0.1.3"
 DO_CHECK=true
 
 if [ -f "$UPDATE_CACHE" ]; then
@@ -145,12 +145,12 @@ mkdir -p ~/.local/bin
 # .github/workflows/plugin-publish.yml which uploads `checksums.txt`
 # alongside the 9 platform binaries under each release tag.
 BIN_TMP=$(mktemp -d)
-RELEASE_BASE="https://github.com/okx/plugin-store/releases/download/plugins/dolomite-plugin@0.1.1"
+RELEASE_BASE="https://github.com/okx/plugin-store/releases/download/plugins/dolomite-plugin@0.1.3"
 curl -fsSL "${RELEASE_BASE}/dolomite-plugin-${TARGET}${EXT}" -o "$BIN_TMP/dolomite-plugin${EXT}" || {
   echo "ERROR: failed to download dolomite-plugin-${TARGET}${EXT}" >&2
   rm -rf "$BIN_TMP"; exit 1; }
 curl -fsSL "${RELEASE_BASE}/checksums.txt" -o "$BIN_TMP/checksums.txt" || {
-  echo "ERROR: failed to download checksums.txt for dolomite-plugin@0.1.1" >&2
+  echo "ERROR: failed to download checksums.txt for dolomite-plugin@0.1.3" >&2
   rm -rf "$BIN_TMP"; exit 1; }
 
 EXPECTED=$(awk -v b="dolomite-plugin-${TARGET}${EXT}" '$2 == b {print $1; exit}' "$BIN_TMP/checksums.txt")
@@ -174,7 +174,7 @@ ln -sf "$LAUNCHER" ~/.local/bin/dolomite-plugin
 
 # Register version
 mkdir -p "$HOME/.plugin-store/managed"
-echo "0.1.1" > "$HOME/.plugin-store/managed/dolomite-plugin"
+echo "0.1.3" > "$HOME/.plugin-store/managed/dolomite-plugin"
 ```
 
 ---

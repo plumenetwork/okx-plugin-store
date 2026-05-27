@@ -460,11 +460,14 @@ jobs:
   #
   # Note on `checksums.txt` naming:
   #   Multiple plugins can share the artifacts/ directory after
-  #   merge-multiple download. We generate per-plugin checksum files under
-  #   distinct temp names (${BIN}-checksums.tmp) and upload-rename them to
-  #   plain `checksums.txt` via gh release's FILE#NAME syntax, so the
-  #   inject-preflight.py runtime check (which downloads `checksums.txt`
-  #   from each release tag) finds it under the expected path.
+  #   merge-multiple download. Each plugin's binaries + a freshly-generated
+  #   `checksums.txt` are staged into an underscore-prefixed per-plugin
+  #   subdir (artifacts/_${BIN}/), then uploaded from there. The literal
+  #   filename `checksums.txt` lands on the release as-is, so the
+  #   consumer-side SHA256 verification step in each SKILL.md (which
+  #   downloads `${RELEASE_BASE}/checksums.txt`) resolves correctly.
+  #   (`gh release create FILE#LABEL` sets only the display LABEL, not the
+  #   asset filename — hence the on-disk rename via the staging dir.)
   # ═══════════════════════════════════════════════════════════════════════
   create-release:
     name: Create release
@@ -515,23 +518,26 @@ jobs:
               continue
             fi
 
-            # Collect this plugin's 9 binaries from the merged artifacts dir
-            ASSETS=$(ls artifacts/${BIN}-* 2>/dev/null | tr '\n' ' ')
-            if [ -z "$ASSETS" ]; then
+            # Stage this plugin's assets in artifacts/_${BIN}/ (underscore
+            # prefix keeps the dir name from matching the `${BIN}-*` glob
+            # and guarantees no overlap with other plugins). This lets us
+            # upload a real file named `checksums.txt` instead of relying
+            # on `gh release create FILE#LABEL`, which sets only the
+            # display LABEL — the asset filename would otherwise have
+            # remained `${BIN}-checksums.tmp`.
+            if ! ls artifacts/${BIN}-* >/dev/null 2>&1; then
               echo "::error::no artifacts found for ${NAME} (pattern: ${BIN}-*)"
               continue
             fi
+            STAGE="artifacts/_${BIN}"
+            mkdir -p "$STAGE"
+            cp artifacts/${BIN}-* "$STAGE"/
+            ( cd "$STAGE" && sha256sum ${BIN}-* > checksums.txt )
+
+            ASSETS=$(ls "$STAGE"/* | tr '\n' ' ')
             ASSET_COUNT=$(echo "$ASSETS" | wc -w | tr -d ' ')
 
-            # SHA256 manifest. Use a per-plugin temp filename in shared
-            # artifacts/ to avoid two plugins' checksum files overwriting
-            # each other, then upload-rename to plain `checksums.txt`
-            # using gh release's FILE#NAME syntax so the consumer-side
-            # download URL (`${RELEASE_BASE}/checksums.txt`) resolves.
-            ( cd artifacts && sha256sum ${BIN}-* > "${BIN}-checksums.tmp" )
-            ASSETS="${ASSETS}artifacts/${BIN}-checksums.tmp#checksums.txt"
-
-            echo "creating release $TAG with ${ASSET_COUNT} binaries + checksums"
+            echo "creating release $TAG with ${ASSET_COUNT} assets (incl. checksums.txt)"
             gh release create "$TAG" \
               --repo "$REPO" \
               --title "$NAME $VER" \
