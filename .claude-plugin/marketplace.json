@@ -7,9 +7,29 @@
   },
   "plugins": [
     {
+      "name": "aave-v2-plugin",
+      "description": "Aave V2 exit tool on Ethereum, Polygon, and Avalanche - all reserves are frozen by governance. Redeem aTokens, repay debt cleanly via uint256.max sentinel, claim stkAAVE/WMATIC/WAVAX rewards. New supply/borrow rejected; use aave-v3-plugin for active flows",
+      "source": "./skills/aave-v2-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      }
+    },
+    {
       "name": "aave-v3-plugin",
       "description": "Lend and borrow crypto assets on Aave V3 — the leading decentralized liquidity protocol. Trigger phrases: supply to aave, deposit to aave, borrow from aave, repay aave loan, aave health factor, my aave positions, aave interest rates, enable emode, disable collateral, claim aave rewards.",
       "source": "./skills/aave-v3-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      }
+    },
+    {
+      "name": "aerodrome-amm-plugin",
+      "description": "Swap tokens and provide liquidity on Aerodrome AMM (volatile/stable pools) on Base",
+      "source": "./skills/aerodrome-amm-plugin",
       "category": "defi-protocol",
       "author": {
         "name": "skylavis-sky",
@@ -267,9 +287,29 @@
       }
     },
     {
+      "name": "puffer-plugin",
+      "description": "Puffer Finance liquid restaking on Ethereum - stake ETH for pufETH (ERC-4626 nLRT), choose 1-step instant exit (1% fee) or 2-step queued (~14d, no fee), check positions and rate",
+      "source": "./skills/puffer-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      }
+    },
+    {
       "name": "pump-fun-plugin",
       "description": "Buy and sell tokens on pump.fun bonding curves on Solana mainnet",
       "source": "./skills/pump-fun-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      }
+    },
+    {
+      "name": "quickswap-plugin",
+      "description": "Swap tokens on QuickSwap V3 (Algebra CLMM) on Polygon — with price quotes and pool discovery",
+      "source": "./skills/quickswap-plugin",
       "category": "defi-protocol",
       "author": {
         "name": "skylavis-sky",
@@ -334,6 +374,16 @@
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
+      }
+    },
+    {
+      "name": "sparklend-plugin",
+      "description": "SparkLend lending and borrowing on Ethereum Mainnet — supply, withdraw, borrow, repay, positions, health factor, reserves.",
+      "source": "./skills/sparklend-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
       }
     },
     {
