@@ -619,6 +619,71 @@ jobs:
           ONE_LINE=$(echo "$PUBLISHED" | jq -c .)
           echo "published_json=${ONE_LINE}" >> "$GITHUB_OUTPUT"
 
+      # ─────────────────────────────────────────────────────────────────
+      # Post-publish sweep: GUARANTEE no Draft releases remain.
+      #
+      # Background: the create-release flow does NOT use `gh release
+      # create --draft`, so under normal operation no Draft is produced.
+      # This step is a hard safety net that runs unconditionally
+      # (`if: always()`) and self-heals any Draft state — both from
+      # this run AND legacy Drafts left by earlier workflows that used
+      # a draft-then-un-draft pattern with `|| true` (which silently
+      # swallowed failures).
+      #
+      # Policy per Draft tag:
+      #   - complete (assets >= 10  = 9 binaries + checksums.txt)
+      #       → un-draft (promote to Published)
+      #   - incomplete (assets < 10)
+      #       → delete release AND tag (clean break, no half-shipped
+      #         binary visible to consumers)
+      #
+      # Final assertion: 0 drafts must remain or the job fails loudly.
+      # No `|| true` here — un-draft / delete errors propagate.
+      # ─────────────────────────────────────────────────────────────────
+      - name: Guarantee no drafts (post-publish sweep)
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          echo "::group::scan for drafts"
+          DRAFTS=$(gh release list --repo "$REPO" --limit 500 \
+            --json tagName,isDraft,createdAt \
+            --jq '.[] | select(.isDraft) | "\(.tagName)\t\(.createdAt)"')
+          if [ -z "$DRAFTS" ]; then
+            echo "✓ zero drafts — repo state already clean"
+            echo "::endgroup::"
+            exit 0
+          fi
+          DRAFT_COUNT=$(echo "$DRAFTS" | wc -l | tr -d ' ')
+          echo "found ${DRAFT_COUNT} draft(s); applying cleanup policy:"
+          echo "::endgroup::"
+
+          echo "::group::per-draft action"
+          echo "$DRAFTS" | while IFS=$'\t' read -r TAG CREATED; do
+            ASSETS=$(gh release view "$TAG" --repo "$REPO" \
+              --json assets --jq '.assets | length')
+            if [ "$ASSETS" -ge 10 ]; then
+              echo "  un-draft     $TAG    (${ASSETS} assets, complete, created=${CREATED})"
+              gh release edit "$TAG" --repo "$REPO" --draft=false
+            else
+              echo "  delete+tag   $TAG    (${ASSETS} assets, incomplete, created=${CREATED})"
+              gh release delete "$TAG" --repo "$REPO" --yes --cleanup-tag
+            fi
+          done
+          echo "::endgroup::"
+
+          echo "::group::final assertion"
+          REMAINING=$(gh release list --repo "$REPO" --limit 500 \
+            --json isDraft --jq '[.[] | select(.isDraft)] | length')
+          if [ "$REMAINING" -gt 0 ]; then
+            echo "::error::post-sweep cleanup failed — ${REMAINING} draft(s) still exist"
+            exit 1
+          fi
+          echo "✓ post-sweep verified: zero drafts in repo"
+          echo "::endgroup::"
+
   # ═══════════════════════════════════════════════════════════════════════
   # JOB 5  notify-failure
   #
