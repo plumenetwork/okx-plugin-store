@@ -22,7 +22,7 @@
         "aave-v2",
         "defi"
       ],
-      "modify_date": "1779876384",
+      "modify_date": "1779876690",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -135,7 +135,7 @@
         "swap",
         "defi"
       ],
-      "modify_date": "1779876543",
+      "modify_date": "1779876838",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1516,7 +1516,7 @@
         "ethereum",
         "erc4626"
       ],
-      "modify_date": "1779876622",
+      "modify_date": "1779876899",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1625,7 +1625,7 @@
         "swap",
         "defi"
       ],
-      "modify_date": "1779876514",
+      "modify_date": "1779876818",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1866,6 +1866,64 @@
       }
     },
     {
+      "name": "spark-savings-plugin",
+      "version": "0.1.1",
+      "description": "Spark Savings - earn Sky Savings Rate (SSR) on USDS or DAI via the sUSDS yield-bearing vault. Supports deposit, withdraw, balance, APY queries on Ethereum (ERC-4626) and Base/Arbitrum (Spark PSM).",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "savings",
+        "yield",
+        "stablecoin",
+        "sky",
+        "spark",
+        "ssr",
+        "usds"
+      ],
+      "modify_date": "1779879641",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/spark-savings-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "spark-savings-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/spark-savings-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "spark-savings-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/spark-savings-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/spark-savings-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/spark-savings-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/spark-savings-plugin/README.md",
+      "api_calls": [
+        "https://ethereum-rpc.publicnode.com",
+        "https://base-rpc.publicnode.com",
+        "https://arbitrum-one-rpc.publicnode.com"
+      ],
+      "extra": {
+        "chains": [
+          "solana",
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
       "name": "sparklend-plugin",
       "version": "0.1.1",
       "description": "SparkLend lending and borrowing on Ethereum Mainnet — supply, withdraw, borrow, repay, positions, health factor, reserves.",
@@ -1882,7 +1940,7 @@
         "sparklend",
         "aave"
       ],
-      "modify_date": "1779876514",
+      "modify_date": "1779876827",
       "type": "community-developer",
       "components": {
         "skill": {
