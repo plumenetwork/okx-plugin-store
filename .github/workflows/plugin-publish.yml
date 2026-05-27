@@ -361,25 +361,11 @@ jobs:
               esac
               if [ "$NEED_TLS_PATCH" = "true" ] && grep -q 'openssl-sys' Cargo.lock 2>/dev/null; then
                 echo "::group::auto-patch Cargo.toml for ${TARGET} (rustls-tls + vendored openssl)"
-                # 1. Patch reqwest to use rustls-tls, drop default-features
-                python3 - <<'PYEOF'
-import re
-with open('Cargo.toml') as f:
-    c = f.read()
-def patch(m):
-    s = m.group(0)
-    if 'rustls-tls' in s:
-        return s
-    if 'default-features' in s:
-        s = re.sub(r'default-features\s*=\s*true', 'default-features = false', s)
-    else:
-        s = s.replace('}', ', default-features = false}')
-    s = re.sub(r'features\s*=\s*\[', 'features = ["rustls-tls", ', s)
-    return s
-c = re.sub(r'reqwest\s*=\s*\{[^}]+\}', patch, c)
-with open('Cargo.toml', 'w') as f:
-    f.write(c)
-PYEOF
+                # 1. Patch reqwest to use rustls-tls, drop default-features.
+                # One-line python (no heredoc) to avoid YAML block-scalar
+                # indent issues inside the `run: |` block. Mirrors the
+                # historical pre-audit workflow's same one-liner.
+                python3 -c "import re; c=open('Cargo.toml').read(); c=re.sub(r'reqwest\s*=\s*\{[^}]+\}', lambda m: (m.group(0) if 'rustls-tls' in m.group(0) else re.sub(r'features\s*=\s*\[', 'features = [\"rustls-tls\", ', m.group(0).replace('}', ', default-features = false}') if 'default-features' not in m.group(0) else re.sub(r'default-features\s*=\s*true', 'default-features = false', m.group(0)))), c); open('Cargo.toml','w').write(c)"
                 # 2. Add vendored openssl for indirect deps (solana-sdk, pumpfun, …)
                 if ! grep -q 'openssl.*vendored' Cargo.toml 2>/dev/null; then
                   cargo add openssl --features vendored 2>/dev/null || \
