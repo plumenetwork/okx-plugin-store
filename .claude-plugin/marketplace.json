@@ -17,6 +17,16 @@
       }
     },
     {
+      "name": "aerodrome-amm-plugin",
+      "description": "Swap tokens and provide liquidity on Aerodrome AMM (volatile/stable pools) on Base",
+      "source": "./skills/aerodrome-amm-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      }
+    },
+    {
       "name": "clanker-plugin",
       "description": "Deploy and manage Clanker ERC-20 tokens on Base and Arbitrum — launch tokens, search by creator, and claim LP fee rewards",
       "source": "./skills/clanker-plugin",

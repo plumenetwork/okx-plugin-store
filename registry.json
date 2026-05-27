@@ -61,6 +61,58 @@
       }
     },
     {
+      "name": "aerodrome-amm-plugin",
+      "version": "0.1.1",
+      "description": "Swap tokens and provide liquidity on Aerodrome AMM (volatile/stable pools) on Base",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "aerodrome",
+        "amm",
+        "base",
+        "swap",
+        "defi"
+      ],
+      "modify_date": "1779876543",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/aerodrome-amm-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "aerodrome-amm-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/aerodrome-amm-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "aerodrome-amm-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/aerodrome-amm-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aerodrome-amm-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aerodrome-amm-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aerodrome-amm-plugin/README.md",
+      "api_calls": [
+        "https://base-rpc.publicnode.com"
+      ],
+      "extra": {
+        "chains": [
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
       "name": "clanker-plugin",
       "version": "0.2.6",
       "description": "Deploy and manage Clanker ERC-20 tokens on Base and Arbitrum — launch tokens, search by creator, and claim LP fee rewards",
@@ -283,7 +335,7 @@
         "arbitrum",
         "dolo"
       ],
-      "modify_date": "1779785966",
+      "modify_date": "1779873362",
       "type": "community-developer",
       "components": {
         "skill": {
