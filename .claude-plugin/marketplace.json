@@ -167,6 +167,16 @@
       }
     },
     {
+      "name": "lifi-plugin",
+      "description": "LI.FI cross-chain bridge & swap aggregator - list chains/tokens, get quotes, bridge or swap, track tx status across Ethereum, Arbitrum, Base, BSC, Polygon, and Optimism",
+      "source": "./skills/lifi-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      }
+    },
+    {
       "name": "macro-intelligence",
       "description": "Unified macro intelligence feed — reads 7 sources, classifies events, scores sentiment, generates AI insights, exposes signals via HTTP API",
       "source": "./skills/macro-intelligence",
