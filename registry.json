@@ -283,7 +283,7 @@
         "arbitrum",
         "dolo"
       ],
-      "modify_date": "1779785966",
+      "modify_date": "1779873362",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1641,6 +1641,59 @@
       "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sorin-skill/README.md",
       "api_calls": [
         "defi-tools-proxy.saharaa.info"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
+      "name": "sparklend-plugin",
+      "version": "0.1.1",
+      "description": "SparkLend lending and borrowing on Ethereum Mainnet — supply, withdraw, borrow, repay, positions, health factor, reserves.",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "defi",
+        "lending",
+        "ethereum",
+        "sparklend",
+        "aave"
+      ],
+      "modify_date": "1779876514",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/sparklend-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "sparklend-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/sparklend-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "sparklend-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/sparklend-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sparklend-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sparklend-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sparklend-plugin/README.md",
+      "api_calls": [
+        "https://ethereum.publicnode.com"
       ],
       "extra": {
         "chains": [
