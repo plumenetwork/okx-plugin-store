@@ -1498,6 +1498,63 @@
       }
     },
     {
+      "name": "puffer-plugin",
+      "version": "0.1.1",
+      "description": "Puffer Finance liquid restaking on Ethereum - stake ETH for pufETH (ERC-4626 nLRT), choose 1-step instant exit (1% fee) or 2-step queued (~14d, no fee), check positions and rate",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "liquid-staking",
+        "restaking",
+        "eigenlayer",
+        "pufeth",
+        "puffer",
+        "ethereum",
+        "erc4626"
+      ],
+      "modify_date": "1779876622",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/puffer-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "puffer-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/puffer-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "puffer-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/puffer-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/puffer-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/puffer-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/puffer-plugin/README.md",
+      "api_calls": [
+        "ethereum-rpc.publicnode.com",
+        "yields.llama.fi",
+        "coins.llama.fi"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
       "name": "pump-fun-plugin",
       "version": "0.1.9",
       "description": "Buy and sell tokens on pump.fun bonding curves on Solana mainnet",

@@ -287,6 +287,16 @@
       }
     },
     {
+      "name": "puffer-plugin",
+      "description": "Puffer Finance liquid restaking on Ethereum - stake ETH for pufETH (ERC-4626 nLRT), choose 1-step instant exit (1% fee) or 2-step queued (~14d, no fee), check positions and rate",
+      "source": "./skills/puffer-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      }
+    },
+    {
       "name": "pump-fun-plugin",
       "description": "Buy and sell tokens on pump.fun bonding curves on Solana mainnet",
       "source": "./skills/pump-fun-plugin",
