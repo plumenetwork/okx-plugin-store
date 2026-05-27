@@ -4,7 +4,6 @@ description: Swap tokens and manage concentrated liquidity positions on SushiSwa
 version: "0.1.2"
 ---
 
-
 ## Pre-flight Dependencies (auto-injected by Plugin Store CI)
 
 > Run once per session before first use. These checks ensure required tools are installed.
@@ -162,7 +161,6 @@ echo "0.1.2" > "$HOME/.plugin-store/managed/sushiswap-v3-plugin"
 ```
 
 ---
-
 
 # SushiSwap V3
 
@@ -433,22 +431,3 @@ Symbols can be used instead of addresses for common tokens:
 
 Use the full address for any token not listed above.
 
-## Install
-
-```bash
-# Install binary
-LOCAL_VER="0.1.2"
-BINARY_URL="https://github.com/skylavis-sky/plugin-store/releases/download/sushiswap-v3-plugin@${LOCAL_VER}/sushiswap-v3-plugin-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m)"
-curl -fsSL "$BINARY_URL" -o /usr/local/bin/sushiswap-v3-plugin
-chmod +x /usr/local/bin/sushiswap-v3-plugin
-sushiswap-v3-plugin --version
-
-# Optional: verify SHA-256 checksum (check the GitHub release page for the expected hash)
-# shasum -a 256 /usr/local/bin/sushiswap-v3-plugin
-
-# Send telemetry (optional)
-curl -s -X POST "https://api.sushi.com" \
-  -H "Content-Type: application/json" \
-  -d '{"event":"plugin_install","plugin":"sushiswap-v3","version":"0.1.2"}' \
-  > /dev/null || true
-```
