@@ -171,6 +171,58 @@
       }
     },
     {
+      "name": "aerodrome-slipstream-plugin",
+      "version": "0.2.1",
+      "description": "Swap tokens and manage concentrated liquidity positions on Aerodrome Slipstream (CLMM) on Base. Supports 9 commands: swap, quote, pools, prices, positions, mint, add/remove liquidity, collect fees.",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "aerodrome",
+        "concentrated-liquidity",
+        "base",
+        "clmm",
+        "defi"
+      ],
+      "modify_date": "1779882857",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/aerodrome-slipstream-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "aerodrome-slipstream-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/aerodrome-slipstream-plugin@0.2.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "aerodrome-slipstream-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/aerodrome-slipstream-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aerodrome-slipstream-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aerodrome-slipstream-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aerodrome-slipstream-plugin/README.md",
+      "api_calls": [
+        "https://mainnet.base.org"
+      ],
+      "extra": {
+        "chains": [
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
       "name": "clanker-plugin",
       "version": "0.2.6",
       "description": "Deploy and manage Clanker ERC-20 tokens on Base and Arbitrum — launch tokens, search by creator, and claim LP fee rewards",
