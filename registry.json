@@ -1809,6 +1809,59 @@
       }
     },
     {
+      "name": "sparklend-plugin",
+      "version": "0.1.1",
+      "description": "SparkLend lending and borrowing on Ethereum Mainnet — supply, withdraw, borrow, repay, positions, health factor, reserves.",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "defi",
+        "lending",
+        "ethereum",
+        "sparklend",
+        "aave"
+      ],
+      "modify_date": "1779876514",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/sparklend-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "sparklend-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/sparklend-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "sparklend-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/sparklend-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sparklend-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sparklend-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sparklend-plugin/README.md",
+      "api_calls": [
+        "https://ethereum.publicnode.com"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
       "name": "stablecoin-chain-explorer",
       "version": "0.1.0",
       "description": "Explore stablecoin TVL and yield opportunities by blockchain. Compare cross-chain yields on Ethereum, BSC, Arbitrum, Base, Polygon, Optimism, Solana, and more.",
