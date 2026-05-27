@@ -367,16 +367,6 @@
       }
     },
     {
-      "name": "spark-savings-plugin",
-      "description": "Spark Savings - earn Sky Savings Rate (SSR) on USDS or DAI via the sUSDS yield-bearing vault. Supports deposit, withdraw, balance, APY queries on Ethereum (ERC-4626) and Base/Arbitrum (Spark PSM).",
-      "source": "./skills/spark-savings-plugin",
-      "category": "defi-protocol",
-      "author": {
-        "name": "GeoGu360",
-        "github": "GeoGu360"
-      }
-    },
-    {
       "name": "sparklend-plugin",
       "description": "SparkLend lending and borrowing on Ethereum Mainnet — supply, withdraw, borrow, repay, positions, health factor, reserves.",
       "source": "./skills/sparklend-plugin",
