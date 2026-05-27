@@ -7,9 +7,39 @@
   },
   "plugins": [
     {
+      "name": "aave-v2-plugin",
+      "description": "Aave V2 exit tool on Ethereum, Polygon, and Avalanche - all reserves are frozen by governance. Redeem aTokens, repay debt cleanly via uint256.max sentinel, claim stkAAVE/WMATIC/WAVAX rewards. New supply/borrow rejected; use aave-v3-plugin for active flows",
+      "source": "./skills/aave-v2-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      }
+    },
+    {
       "name": "aave-v3-plugin",
       "description": "Lend and borrow crypto assets on Aave V3 — the leading decentralized liquidity protocol. Trigger phrases: supply to aave, deposit to aave, borrow from aave, repay aave loan, aave health factor, my aave positions, aave interest rates, enable emode, disable collateral, claim aave rewards.",
       "source": "./skills/aave-v3-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      }
+    },
+    {
+      "name": "aerodrome-amm-plugin",
+      "description": "Swap tokens and provide liquidity on Aerodrome AMM (volatile/stable pools) on Base",
+      "source": "./skills/aerodrome-amm-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      }
+    },
+    {
+      "name": "aerodrome-slipstream-plugin",
+      "description": "Swap tokens and manage concentrated liquidity positions on Aerodrome Slipstream (CLMM) on Base. Supports 9 commands: swap, quote, pools, prices, positions, mint, add/remove liquidity, collect fees.",
+      "source": "./skills/aerodrome-slipstream-plugin",
       "category": "defi-protocol",
       "author": {
         "name": "skylavis-sky",
@@ -34,6 +64,16 @@
       "author": {
         "name": "Clawvard",
         "github": "A4ever369"
+      }
+    },
+    {
+      "name": "compound-v2-plugin",
+      "description": "Compound V2 (legacy cToken-based) money market on Ethereum mainnet - exit tool: redeem cTokens, repay debt, claim COMP. New supply/borrow paused by governance - use compound-v3-plugin for active flows",
+      "source": "./skills/compound-v2-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
       }
     },
     {
@@ -67,6 +107,16 @@
       }
     },
     {
+      "name": "eigencloud-plugin",
+      "description": "Restake LSTs on EigenLayer to earn AVS operator yield — stake, delegate, and manage your restaking positions",
+      "source": "./skills/eigencloud-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      }
+    },
+    {
       "name": "etherfi-plugin",
       "description": "Liquid restaking on Ethereum — deposit ETH to receive eETH, wrap/unwrap eETH/weETH (ERC-4626), unstake eETH back to ETH, and check positions with APY",
       "source": "./skills/etherfi-plugin",
@@ -77,9 +127,19 @@
       }
     },
     {
-      "name": "euler-v2-plugin",
-      "description": "Supply, borrow and earn yield on Euler v2 - a modular lending protocol with isolated-risk vaults (EVK)",
-      "source": "./skills/euler-v2-plugin",
+      "name": "fluid-plugin",
+      "description": "Supply and borrow on Fluid Protocol's smart collateral lending vaults on Ethereum and Arbitrum",
+      "source": "./skills/fluid-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      }
+    },
+    {
+      "name": "fourmeme-plugin",
+      "description": "Trade Four.meme bonding-curve memecoins on BNB Chain - buy/sell pre-graduate tokens via TokenManager V2 with Helper3 quoting",
+      "source": "./skills/fourmeme-plugin",
       "category": "defi-protocol",
       "author": {
         "name": "GeoGu360",
@@ -130,6 +190,16 @@
       "name": "lido-plugin",
       "description": "Stake ETH with Lido liquid staking protocol — stake, manage withdrawals, and track staking rewards on Ethereum mainnet",
       "source": "./skills/lido-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      }
+    },
+    {
+      "name": "lifi-plugin",
+      "description": "LI.FI cross-chain bridge & swap aggregator - list chains/tokens, get quotes, bridge or swap, track tx status across Ethereum, Arbitrum, Base, BSC, Polygon, and Optimism",
+      "source": "./skills/lifi-plugin",
       "category": "defi-protocol",
       "author": {
         "name": "GeoGu360",
@@ -277,6 +347,16 @@
       }
     },
     {
+      "name": "puffer-plugin",
+      "description": "Puffer Finance liquid restaking on Ethereum - stake ETH for pufETH (ERC-4626 nLRT), choose 1-step instant exit (1% fee) or 2-step queued (~14d, no fee), check positions and rate",
+      "source": "./skills/puffer-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      }
+    },
+    {
       "name": "pump-fun-plugin",
       "description": "Buy and sell tokens on pump.fun bonding curves on Solana mainnet",
       "source": "./skills/pump-fun-plugin",
@@ -287,9 +367,29 @@
       }
     },
     {
+      "name": "quickswap-plugin",
+      "description": "Swap tokens on QuickSwap V3 (Algebra CLMM) on Polygon — with price quotes and pool discovery",
+      "source": "./skills/quickswap-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      }
+    },
+    {
       "name": "raydium-plugin",
       "description": "Raydium AMM plugin for token swaps, price queries, and pool info on Solana mainnet. Trigger phrases: swap on raydium, raydium swap, raydium price, raydium pool, get swap quote raydium, raydium dex, swap solana raydium.",
       "source": "./skills/raydium-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      }
+    },
+    {
+      "name": "relay-plugin",
+      "description": "Fast cross-chain transfers using Relay Protocol's intent-based bridge",
+      "source": "./skills/relay-plugin",
       "category": "defi-protocol",
       "author": {
         "name": "skylavis-sky",
@@ -334,6 +434,26 @@
       "author": {
         "name": "Sahara AI",
         "github": "SaharaLabsAI"
+      }
+    },
+    {
+      "name": "spark-savings-plugin",
+      "description": "Spark Savings - earn Sky Savings Rate (SSR) on USDS or DAI via the sUSDS yield-bearing vault. Supports deposit, withdraw, balance, APY queries on Ethereum (ERC-4626) and Base/Arbitrum (Spark PSM).",
+      "source": "./skills/spark-savings-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      }
+    },
+    {
+      "name": "sparklend-plugin",
+      "description": "SparkLend lending and borrowing on Ethereum Mainnet — supply, withdraw, borrow, repay, positions, health factor, reserves.",
+      "source": "./skills/sparklend-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
       }
     },
     {
@@ -410,6 +530,16 @@
       "author": {
         "name": "VibeCodeDaddy",
         "github": "VibeCodeDaddy69"
+      }
+    },
+    {
+      "name": "sushiswap-v3-plugin",
+      "description": "Swap tokens and manage concentrated liquidity positions on SushiSwap V3 across Ethereum, Arbitrum, Base, Polygon, and Optimism",
+      "source": "./skills/sushiswap-v3-plugin",
+      "category": "defi-protocol",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
       }
     },
     {

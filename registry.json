@@ -3,6 +3,64 @@
   "stats_url": "https://plugin-store-dun.vercel.app",
   "plugins": [
     {
+      "name": "aave-v2-plugin",
+      "version": "0.1.1",
+      "description": "Aave V2 exit tool on Ethereum, Polygon, and Avalanche - all reserves are frozen by governance. Redeem aTokens, repay debt cleanly via uint256.max sentinel, claim stkAAVE/WMATIC/WAVAX rewards. New supply/borrow rejected; use aave-v3-plugin for active flows",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "aave",
+        "lending",
+        "borrowing",
+        "ethereum",
+        "polygon",
+        "avalanche",
+        "aave-v2",
+        "defi"
+      ],
+      "modify_date": "1779876690",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/aave-v2-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "aave-v2-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/aave-v2-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "aave-v2-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/aave-v2-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aave-v2-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aave-v2-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aave-v2-plugin/README.md",
+      "api_calls": [
+        "https://ethereum-rpc.publicnode.com",
+        "https://polygon-bor-rpc.publicnode.com",
+        "https://avalanche-c-chain-rpc.publicnode.com"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
       "name": "aave-v3-plugin",
       "version": "0.2.8",
       "description": "Lend and borrow crypto assets on Aave V3 — the leading decentralized liquidity protocol. Trigger phrases: supply to aave, deposit to aave, borrow from aave, repay aave loan, aave health factor, my aave positions, aave interest rates, enable emode, disable collateral, claim aave rewards.",
@@ -54,6 +112,110 @@
       "extra": {
         "chains": [
           "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
+      "name": "aerodrome-amm-plugin",
+      "version": "0.1.1",
+      "description": "Swap tokens and provide liquidity on Aerodrome AMM (volatile/stable pools) on Base",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "aerodrome",
+        "amm",
+        "base",
+        "swap",
+        "defi"
+      ],
+      "modify_date": "1779876838",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/aerodrome-amm-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "aerodrome-amm-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/aerodrome-amm-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "aerodrome-amm-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/aerodrome-amm-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aerodrome-amm-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aerodrome-amm-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aerodrome-amm-plugin/README.md",
+      "api_calls": [
+        "https://base-rpc.publicnode.com"
+      ],
+      "extra": {
+        "chains": [
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
+      "name": "aerodrome-slipstream-plugin",
+      "version": "0.2.1",
+      "description": "Swap tokens and manage concentrated liquidity positions on Aerodrome Slipstream (CLMM) on Base. Supports 9 commands: swap, quote, pools, prices, positions, mint, add/remove liquidity, collect fees.",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "aerodrome",
+        "concentrated-liquidity",
+        "base",
+        "clmm",
+        "defi"
+      ],
+      "modify_date": "1779882857",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/aerodrome-slipstream-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "aerodrome-slipstream-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/aerodrome-slipstream-plugin@0.2.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "aerodrome-slipstream-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/aerodrome-slipstream-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aerodrome-slipstream-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aerodrome-slipstream-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/aerodrome-slipstream-plugin/README.md",
+      "api_calls": [
+        "https://mainnet.base.org"
+      ],
+      "extra": {
+        "chains": [
           "base"
         ],
         "protocols": [],
@@ -146,6 +308,62 @@
       "api_calls": [
         "clawvard.school"
       ]
+    },
+    {
+      "name": "compound-v2-plugin",
+      "version": "0.1.1",
+      "description": "Compound V2 (legacy cToken-based) money market on Ethereum mainnet - exit tool: redeem cTokens, repay debt, claim COMP. New supply/borrow paused by governance - use compound-v3-plugin for active flows",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "compound",
+        "lending",
+        "borrowing",
+        "ethereum",
+        "ctoken",
+        "comp",
+        "winddown",
+        "defi"
+      ],
+      "modify_date": "1779879618",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/compound-v2-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "compound-v2-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/compound-v2-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "compound-v2-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/compound-v2-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/compound-v2-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/compound-v2-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/compound-v2-plugin/README.md",
+      "api_calls": [
+        "https://ethereum-rpc.publicnode.com"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
     },
     {
       "name": "compound-v3-plugin",
@@ -320,6 +538,59 @@
       }
     },
     {
+      "name": "eigencloud-plugin",
+      "version": "0.1.1",
+      "description": "Restake LSTs on EigenLayer to earn AVS operator yield — stake, delegate, and manage your restaking positions",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "restaking",
+        "eigenlayer",
+        "ethereum",
+        "yield",
+        "lrt"
+      ],
+      "modify_date": "1779879652",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/eigencloud-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "eigencloud-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/eigencloud-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "eigencloud-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/eigencloud-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/eigencloud-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/eigencloud-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/eigencloud-plugin/README.md",
+      "api_calls": [
+        "https://ethereum.publicnode.com"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
       "name": "etherfi-plugin",
       "version": "0.2.11",
       "description": "Liquid restaking on Ethereum — deposit ETH to receive eETH, wrap/unwrap eETH/weETH (ERC-4626), unstake eETH back to ETH, and check positions with APY",
@@ -378,9 +649,65 @@
       }
     },
     {
-      "name": "euler-v2-plugin",
+      "name": "fluid-plugin",
       "version": "0.1.1",
-      "description": "Supply, borrow and earn yield on Euler v2 - a modular lending protocol with isolated-risk vaults (EVK)",
+      "description": "Supply and borrow on Fluid Protocol's smart collateral lending vaults on Ethereum and Arbitrum",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "fluid",
+        "lending",
+        "smart-collateral",
+        "ethereum",
+        "arbitrum",
+        "defi"
+      ],
+      "modify_date": "1779879353",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/fluid-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "fluid-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/fluid-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "fluid-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/fluid-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/fluid-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/fluid-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/fluid-plugin/README.md",
+      "api_calls": [
+        "https://api.fluid.xyz",
+        "https://eth.llamarpc.com",
+        "https://arb1.arbitrum.io/rpc"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
+      "name": "fourmeme-plugin",
+      "version": "0.1.1",
+      "description": "Trade Four.meme bonding-curve memecoins on BNB Chain - buy/sell pre-graduate tokens via TokenManager V2 with Helper3 quoting",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -388,45 +715,45 @@
       "license": "MIT",
       "category": "defi-protocol",
       "tags": [
-        "lending",
-        "borrowing",
-        "defi",
-        "earn",
-        "euler",
-        "euler-v2",
-        "evk",
-        "collateral"
+        "meme",
+        "launchpad",
+        "bonding-curve",
+        "bsc",
+        "bnb-chain",
+        "four-meme",
+        "token-trading"
       ],
-      "modify_date": "1779884928",
+      "modify_date": "1779882817",
       "type": "community-developer",
       "components": {
         "skill": {
           "repo": "okx/plugin-store",
-          "dir": "skills/euler-v2-plugin"
+          "dir": "skills/fourmeme-plugin"
         },
         "binary": {
           "repo": "okx/plugin-store",
-          "asset_pattern": "euler-v2-plugin-{target}",
+          "asset_pattern": "fourmeme-plugin-{target}",
           "checksums_asset": "checksums.txt",
-          "release_tag": "plugins/euler-v2-plugin@0.1.1"
+          "release_tag": "plugins/fourmeme-plugin@0.1.1"
         }
       },
       "build": {
         "lang": "rust",
         "source_repo": "",
         "source_commit": "",
-        "binary_name": "euler-v2-plugin"
+        "binary_name": "fourmeme-plugin"
       },
-      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/euler-v2-plugin",
-      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/euler-v2-plugin/SKILL.md",
-      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/euler-v2-plugin/SUMMARY.md",
-      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/euler-v2-plugin/README.md",
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/fourmeme-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/fourmeme-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/fourmeme-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/fourmeme-plugin/README.md",
       "api_calls": [
-        "https://app.euler.finance",
-        "https://api.merkl.xyz",
-        "https://ethereum-rpc.publicnode.com",
-        "https://base-rpc.publicnode.com",
-        "https://arbitrum.drpc.org"
+        "https://bsc-rpc.publicnode.com",
+        "https://bsc-dataseed.binance.org",
+        "https://api.dexscreener.com",
+        "https://four.meme",
+        "https://static.four.meme",
+        "https://bscscan.com"
       ],
       "extra": {
         "chains": [
@@ -712,6 +1039,66 @@
       ],
       "extra": {
         "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
+      "name": "lifi-plugin",
+      "version": "0.1.1",
+      "description": "LI.FI cross-chain bridge & swap aggregator - list chains/tokens, get quotes, bridge or swap, track tx status across Ethereum, Arbitrum, Base, BSC, Polygon, and Optimism",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "bridge",
+        "cross-chain",
+        "aggregator",
+        "lifi",
+        "swap"
+      ],
+      "modify_date": "1779879728",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/lifi-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "lifi-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/lifi-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "lifi-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/lifi-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/lifi-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/lifi-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/lifi-plugin/README.md",
+      "api_calls": [
+        "https://li.quest",
+        "https://ethereum-rpc.publicnode.com",
+        "https://arbitrum-one-rpc.publicnode.com",
+        "https://base-rpc.publicnode.com",
+        "https://bsc-rpc.publicnode.com",
+        "https://polygon-bor-rpc.publicnode.com",
+        "https://optimism-rpc.publicnode.com"
+      ],
+      "extra": {
+        "chains": [
+          "solana",
           "ethereum",
           "base"
         ],
@@ -1448,6 +1835,63 @@
       }
     },
     {
+      "name": "puffer-plugin",
+      "version": "0.1.1",
+      "description": "Puffer Finance liquid restaking on Ethereum - stake ETH for pufETH (ERC-4626 nLRT), choose 1-step instant exit (1% fee) or 2-step queued (~14d, no fee), check positions and rate",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "liquid-staking",
+        "restaking",
+        "eigenlayer",
+        "pufeth",
+        "puffer",
+        "ethereum",
+        "erc4626"
+      ],
+      "modify_date": "1779876899",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/puffer-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "puffer-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/puffer-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "puffer-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/puffer-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/puffer-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/puffer-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/puffer-plugin/README.md",
+      "api_calls": [
+        "ethereum-rpc.publicnode.com",
+        "yields.llama.fi",
+        "coins.llama.fi"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
       "name": "pump-fun-plugin",
       "version": "0.1.9",
       "description": "Buy and sell tokens on pump.fun bonding curves on Solana mainnet",
@@ -1502,6 +1946,53 @@
       }
     },
     {
+      "name": "quickswap-plugin",
+      "version": "0.1.2",
+      "description": "Swap tokens on QuickSwap V3 (Algebra CLMM) on Polygon — with price quotes and pool discovery",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "quickswap",
+        "polygon",
+        "clmm",
+        "swap",
+        "defi"
+      ],
+      "modify_date": "1779876818",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/quickswap-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "quickswap-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/quickswap-plugin@0.1.2"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "quickswap-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/quickswap-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/quickswap-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/quickswap-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/quickswap-plugin/README.md",
+      "api_calls": [
+        "https://polygon.publicnode.com",
+        "https://api.thegraph.com",
+        "https://polygonscan.com"
+      ]
+    },
+    {
       "name": "raydium-plugin",
       "version": "0.2.2",
       "description": "Raydium AMM plugin for token swaps, price queries, and pool info on Solana mainnet. Trigger phrases: swap on raydium, raydium swap, raydium price, raydium pool, get swap quote raydium, raydium dex, swap solana raydium.",
@@ -1554,6 +2045,59 @@
         ],
         "protocols": [],
         "risk_level": "high"
+      }
+    },
+    {
+      "name": "relay-plugin",
+      "version": "0.1.1",
+      "description": "Fast cross-chain transfers using Relay Protocol's intent-based bridge",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "bridge",
+        "cross-chain",
+        "relay",
+        "fast-bridge",
+        "intent"
+      ],
+      "modify_date": "1779884655",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/relay-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "relay-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/relay-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "relay-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/relay-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/relay-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/relay-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/relay-plugin/README.md",
+      "api_calls": [
+        "https://api.relay.link"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
       }
     },
     {
@@ -1701,6 +2245,117 @@
       "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sorin-skill/README.md",
       "api_calls": [
         "defi-tools-proxy.saharaa.info"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
+      "name": "spark-savings-plugin",
+      "version": "0.1.1",
+      "description": "Spark Savings - earn Sky Savings Rate (SSR) on USDS or DAI via the sUSDS yield-bearing vault. Supports deposit, withdraw, balance, APY queries on Ethereum (ERC-4626) and Base/Arbitrum (Spark PSM).",
+      "author": {
+        "name": "GeoGu360",
+        "github": "GeoGu360"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "savings",
+        "yield",
+        "stablecoin",
+        "sky",
+        "spark",
+        "ssr",
+        "usds"
+      ],
+      "modify_date": "1779879641",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/spark-savings-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "spark-savings-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/spark-savings-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "spark-savings-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/spark-savings-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/spark-savings-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/spark-savings-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/spark-savings-plugin/README.md",
+      "api_calls": [
+        "https://ethereum-rpc.publicnode.com",
+        "https://base-rpc.publicnode.com",
+        "https://arbitrum-one-rpc.publicnode.com"
+      ],
+      "extra": {
+        "chains": [
+          "solana",
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
+      "name": "sparklend-plugin",
+      "version": "0.1.1",
+      "description": "SparkLend lending and borrowing on Ethereum Mainnet — supply, withdraw, borrow, repay, positions, health factor, reserves.",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "defi",
+        "lending",
+        "ethereum",
+        "sparklend",
+        "aave"
+      ],
+      "modify_date": "1779876827",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/sparklend-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "sparklend-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/sparklend-plugin@0.1.1"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "sparklend-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/sparklend-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sparklend-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sparklend-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sparklend-plugin/README.md",
+      "api_calls": [
+        "https://ethereum.publicnode.com"
       ],
       "extra": {
         "chains": [
@@ -1983,6 +2638,65 @@
         ],
         "protocols": [],
         "risk_level": "high"
+      }
+    },
+    {
+      "name": "sushiswap-v3-plugin",
+      "version": "0.1.2",
+      "description": "Swap tokens and manage concentrated liquidity positions on SushiSwap V3 across Ethereum, Arbitrum, Base, Polygon, and Optimism",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "sushiswap",
+        "clmm",
+        "swap",
+        "liquidity",
+        "multi-chain",
+        "defi"
+      ],
+      "modify_date": "1779884348",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/sushiswap-v3-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "sushiswap-v3-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/sushiswap-v3-plugin@0.1.2"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "sushiswap-v3-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/sushiswap-v3-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sushiswap-v3-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sushiswap-v3-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sushiswap-v3-plugin/README.md",
+      "api_calls": [
+        "https://api.sushi.com",
+        "https://eth.llamarpc.com",
+        "https://arb1.arbitrum.io",
+        "https://mainnet.base.org",
+        "https://polygon-bor-rpc.publicnode.com",
+        "https://mainnet.optimism.io"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
       }
     },
     {
