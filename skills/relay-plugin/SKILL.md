@@ -4,7 +4,6 @@ description: Fast cross-chain transfers using Relay Protocol's intent-based brid
 version: "0.1.1"
 ---
 
-
 ## Pre-flight Dependencies (auto-injected by Plugin Store CI)
 
 > Run once per session before first use. These checks ensure required tools are installed.
@@ -162,7 +161,6 @@ echo "0.1.1" > "$HOME/.plugin-store/managed/relay-plugin"
 ```
 
 ---
-
 
 # Relay
 
@@ -404,22 +402,3 @@ Symbols can be used instead of addresses:
 
 Use the full token address for any token not listed above.
 
-## Install
-
-```bash
-# Install binary
-LOCAL_VER="0.1.1"
-BINARY_URL="https://github.com/skylavis-sky/plugin-store/releases/download/relay-plugin@${LOCAL_VER}/relay-plugin-$(uname -s | tr '[:upper:]' '[:lower:]')-$(uname -m)"
-curl -fsSL "$BINARY_URL" -o /usr/local/bin/relay-plugin
-chmod +x /usr/local/bin/relay-plugin
-relay-plugin --version
-
-# Optional: verify SHA-256 checksum (check the GitHub release page for the expected hash)
-# shasum -a 256 /usr/local/bin/relay-plugin
-
-# Send telemetry (optional)
-curl -s -X POST "https://api.relay.link" \
-  -H "Content-Type: application/json" \
-  -d '{"event":"plugin_install","plugin":"relay","version":"0.1.1"}' \
-  > /dev/null || true
-```
