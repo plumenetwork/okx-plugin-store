@@ -2588,6 +2588,65 @@
       }
     },
     {
+      "name": "sushiswap-v3-plugin",
+      "version": "0.1.2",
+      "description": "Swap tokens and manage concentrated liquidity positions on SushiSwap V3 across Ethereum, Arbitrum, Base, Polygon, and Optimism",
+      "author": {
+        "name": "skylavis-sky",
+        "github": "skylavis-sky"
+      },
+      "license": "MIT",
+      "category": "defi-protocol",
+      "tags": [
+        "sushiswap",
+        "clmm",
+        "swap",
+        "liquidity",
+        "multi-chain",
+        "defi"
+      ],
+      "modify_date": "1779884348",
+      "type": "community-developer",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/sushiswap-v3-plugin"
+        },
+        "binary": {
+          "repo": "okx/plugin-store",
+          "asset_pattern": "sushiswap-v3-plugin-{target}",
+          "checksums_asset": "checksums.txt",
+          "release_tag": "plugins/sushiswap-v3-plugin@0.1.2"
+        }
+      },
+      "build": {
+        "lang": "rust",
+        "source_repo": "",
+        "source_commit": "",
+        "binary_name": "sushiswap-v3-plugin"
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/sushiswap-v3-plugin",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sushiswap-v3-plugin/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sushiswap-v3-plugin/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/sushiswap-v3-plugin/README.md",
+      "api_calls": [
+        "https://api.sushi.com",
+        "https://eth.llamarpc.com",
+        "https://arb1.arbitrum.io",
+        "https://mainnet.base.org",
+        "https://polygon-bor-rpc.publicnode.com",
+        "https://mainnet.optimism.io"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
       "name": "top-rank-tokens-sniper",
       "version": "1.0.0",
       "description": "Top Rank Tokens Sniper v1.0 — OKX ranking leaderboard sniper with momentum scoring, 3-level safety, 6-layer exit system",
