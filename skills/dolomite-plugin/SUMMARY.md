@@ -16,3 +16,4 @@ Dolomite is a decentralized money market and margin protocol on Arbitrum. Supply
 6. If you see `status: has_supply_earning` - view your accruing position and per-market APY: `dolomite-plugin positions`
 7. If you see `status: has_borrow_position` - close debt cleanly (zero dust via Dolomite native sentinel): `dolomite-plugin repay --token USDT --all --position-account-number 100 --confirm`
 8. To open a leveraged isolated position OR exit any position: `dolomite-plugin borrow --token USDT --amount 0.5 --collateral-token USDC --collateral-amount 1 --confirm` (opens position 100 with 1 USDC collateral, borrows 0.5 USDT) - and `dolomite-plugin withdraw --token USDC --amount 50 --confirm` to exit (use `--from-account-number N` to recover collateral from an isolated position)
+

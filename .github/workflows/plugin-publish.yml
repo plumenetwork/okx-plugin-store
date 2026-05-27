@@ -117,7 +117,7 @@ jobs:
           set -euo pipefail
           YQ_VERSION=v4.44.3
           # SHA256 of yq_linux_amd64 for v4.44.3 (from the release's checksums.txt).
-          YQ_SHA256=eef0fb0da6bdaee52b22a9adf6dc7ddb7df73d24d5c0e94c69aabfd76d4dca7f
+          YQ_SHA256=a2c097180dd884a8d50c956ee16a9cec070f30a7947cf4ebf87d5f36213e9ed7
           TMP=$(mktemp)
           curl -sSL -o "${TMP}" \
             "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64"
