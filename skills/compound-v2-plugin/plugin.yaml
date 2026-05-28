@@ -5,7 +5,7 @@ description: "Compound V2 (legacy cToken-based) money market on Ethereum mainnet
 author:
   name: GeoGu360
   github: GeoGu360
-category: defi-protocol
+category: dapp
 tags:
   - compound
   - lending

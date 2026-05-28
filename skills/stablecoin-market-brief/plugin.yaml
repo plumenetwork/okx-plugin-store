@@ -7,6 +7,6 @@ author:
   github: YBSbarker
   email: partner@barker.money
 license: MIT
-category: analytics
+category: dapp
 api_calls:
   - api.barker.money

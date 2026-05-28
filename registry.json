@@ -11,7 +11,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "aave",
         "lending",
@@ -69,7 +69,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "lending",
         "borrowing",
@@ -127,7 +127,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "aerodrome",
         "amm",
@@ -179,7 +179,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "aerodrome",
         "concentrated-liquidity",
@@ -231,7 +231,7 @@
         "github": "dangquocdat97"
       },
       "license": "MIT",
-      "category": "analytics",
+      "category": "dapp",
       "tags": [
         "birdeye",
         "defi",
@@ -278,7 +278,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "token-launch",
         "meme",
@@ -333,7 +333,7 @@
         "github": "A4ever369"
       },
       "license": "MIT",
-      "category": "utility",
+      "category": "dapp",
       "tags": [
         "ai-agent",
         "evaluation",
@@ -365,7 +365,7 @@
         "github": "coinank"
       },
       "license": "MIT",
-      "category": "analytics",
+      "category": "dapp",
       "tags": [
         "ethereum",
         "defi"
@@ -404,7 +404,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "compound",
         "lending",
@@ -460,7 +460,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "lending",
         "borrowing",
@@ -518,7 +518,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "dex",
         "swap",
@@ -578,7 +578,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "lending",
         "borrowing",
@@ -632,7 +632,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "restaking",
         "eigenlayer",
@@ -685,7 +685,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "liquid-staking",
         "restaking",
@@ -743,7 +743,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "lending",
         "borrowing",
@@ -803,7 +803,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "fluid",
         "lending",
@@ -859,7 +859,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "meme",
         "launchpad",
@@ -919,7 +919,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "perpetuals",
         "trading",
@@ -976,7 +976,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "perpetuals",
         "trading",
@@ -1034,7 +1034,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "lending",
         "borrowing",
@@ -1089,7 +1089,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "solana",
         "yield",
@@ -1146,7 +1146,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "staking",
         "liquid-staking",
@@ -1201,7 +1201,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "bridge",
         "cross-chain",
@@ -1261,7 +1261,7 @@
         "github": "VibeCodeDaddy69"
       },
       "license": "MIT",
-      "category": "trading-strategy",
+      "category": "strategy",
       "tags": [
         "macro",
         "news-aggregator",
@@ -1297,7 +1297,7 @@
         "github": "VibeCodeDaddy69"
       },
       "license": "MIT",
-      "category": "trading-strategy",
+      "category": "dapp",
       "tags": [
         "solana",
         "ethereum",
@@ -1343,7 +1343,7 @@
         "github": "VibeCodeDaddy69"
       },
       "license": "MIT",
-      "category": "analytics",
+      "category": "dapp",
       "tags": [
         "bitcoin",
         "ethereum",
@@ -1393,7 +1393,7 @@
         "github": "yz06276"
       },
       "license": "MIT",
-      "category": "trading-strategy",
+      "category": "strategy",
       "tags": [
         "solana",
         "onchainos",
@@ -1429,7 +1429,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "solana",
         "dex",
@@ -1484,7 +1484,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "lending",
         "borrowing",
@@ -1541,7 +1541,7 @@
         "github": "MigOKG"
       },
       "license": "MIT",
-      "category": "utility",
+      "category": "dapp",
       "tags": [
         "hackathon",
         "xlayer",
@@ -1584,7 +1584,7 @@
         "github": "VibeCodeDaddy69"
       },
       "license": "MIT",
-      "category": "trading-strategy",
+      "category": "dapp",
       "tags": [
         "solana",
         "bsc",
@@ -1633,7 +1633,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "trading-strategy",
+      "category": "dapp",
       "tags": [
         "dex",
         "swap",
@@ -1689,7 +1689,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "dex",
         "liquidity",
@@ -1746,7 +1746,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "dex",
         "swap",
@@ -1805,7 +1805,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "dex",
         "swap",
@@ -1866,7 +1866,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "yield-trading",
         "fixed-yield",
@@ -1923,7 +1923,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "prediction-market",
         "polymarket",
@@ -1989,7 +1989,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "liquid-staking",
         "restaking",
@@ -2046,7 +2046,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "solana",
         "memecoins",
@@ -2100,7 +2100,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "quickswap",
         "polygon",
@@ -2147,7 +2147,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "solana",
         "dex",
@@ -2202,7 +2202,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "bridge",
         "cross-chain",
@@ -2255,7 +2255,7 @@
         "github": "CJZZWW"
       },
       "license": "MIT",
-      "category": "utility",
+      "category": "dapp",
       "tags": [
         "web3",
         "crypto"
@@ -2285,7 +2285,7 @@
         "github": "VibeCodeDaddy69"
       },
       "license": "MIT",
-      "category": "trading-strategy",
+      "category": "dapp",
       "tags": [
         "rwa",
         "real-world-assets",
@@ -2333,7 +2333,7 @@
         "github": "yz06276"
       },
       "license": "MIT",
-      "category": "trading-strategy",
+      "category": "strategy",
       "tags": [
         "solana",
         "onchainos",
@@ -2369,7 +2369,7 @@
         "github": "SaharaLabsAI"
       },
       "license": "MIT",
-      "category": "analytics",
+      "category": "dapp",
       "tags": [
         "defi",
         "crypto",
@@ -2410,7 +2410,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "savings",
         "yield",
@@ -2468,7 +2468,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "defi",
         "lending",
@@ -2522,7 +2522,7 @@
         "email": "partner@barker.money"
       },
       "license": "MIT",
-      "category": "analytics",
+      "category": "dapp",
       "tags": [
         "solana",
         "ethereum",
@@ -2563,7 +2563,7 @@
         "email": "partner@barker.money"
       },
       "license": "MIT",
-      "category": "analytics",
+      "category": "dapp",
       "tags": [
         "trading",
         "signal"
@@ -2601,7 +2601,7 @@
         "email": "partner@barker.money"
       },
       "license": "MIT",
-      "category": "analytics",
+      "category": "dapp",
       "tags": [
         "ethereum",
         "defi"
@@ -2640,7 +2640,7 @@
         "email": "partner@barker.money"
       },
       "license": "MIT",
-      "category": "analytics",
+      "category": "dapp",
       "tags": [
         "defi",
         "ranking"
@@ -2678,7 +2678,7 @@
         "email": "partner@barker.money"
       },
       "license": "MIT",
-      "category": "analytics",
+      "category": "dapp",
       "tags": [
         "ethereum",
         "defi"
@@ -2717,7 +2717,7 @@
         "email": "partner@barker.money"
       },
       "license": "MIT",
-      "category": "analytics",
+      "category": "dapp",
       "tags": [
         "defi"
       ],
@@ -2753,7 +2753,7 @@
         "github": "VibeCodeDaddy69"
       },
       "license": "MIT",
-      "category": "trading-strategy",
+      "category": "strategy",
       "tags": [
         "trading-bot",
         "strategy-builder",
@@ -2795,7 +2795,7 @@
         "github": "skylavis-sky"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "sushiswap",
         "clmm",
@@ -2854,7 +2854,7 @@
         "github": "yz06276"
       },
       "license": "MIT",
-      "category": "trading-strategy",
+      "category": "strategy",
       "tags": [
         "solana",
         "onchainos",
@@ -2890,7 +2890,7 @@
         "github": "Uniswap"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "uniswap",
         "trading",
@@ -2929,7 +2929,7 @@
         "github": "GeoGu360"
       },
       "license": "MIT",
-      "category": "defi-protocol",
+      "category": "dapp",
       "tags": [
         "dex",
         "amm",
@@ -2983,7 +2983,7 @@
         "github": "VibeCodeDaddy69"
       },
       "license": "MIT",
-      "category": "trading-strategy",
+      "category": "dapp",
       "tags": [
         "solana",
         "onchainos",
@@ -3024,7 +3024,7 @@
         "email": "partner@barker.money"
       },
       "license": "MIT",
-      "category": "analytics",
+      "category": "dapp",
       "tags": [
         "ethereum",
         "defi"

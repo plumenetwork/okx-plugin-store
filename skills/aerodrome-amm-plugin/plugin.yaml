@@ -5,7 +5,7 @@ description: "Swap tokens and provide liquidity on Aerodrome AMM (volatile/stabl
 author:
   name: skylavis-sky
   github: skylavis-sky
-category: defi-protocol
+category: dapp
 tags:
   - aerodrome
   - amm

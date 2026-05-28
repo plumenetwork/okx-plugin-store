@@ -5,7 +5,7 @@ description: "Curve DEX plugin — swap stablecoins, add/remove liquidity, query
 author:
   name: GeoGu360
   github: GeoGu360
-category: defi-protocol
+category: dapp
 tags:
   - dex
   - swap

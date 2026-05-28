@@ -5,7 +5,7 @@ description: "Raydium AMM plugin for token swaps, price queries, and pool info o
 author:
   name: skylavis-sky
   github: skylavis-sky
-category: defi-protocol
+category: dapp
 tags:
   - solana
   - dex

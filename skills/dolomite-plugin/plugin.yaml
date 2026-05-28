@@ -5,7 +5,7 @@ description: Dolomite Finance lending and borrowing on Arbitrum - supply assets 
 author:
   name: GeoGu360
   github: GeoGu360
-category: defi-protocol
+category: dapp
 tags:
   - lending
   - borrowing

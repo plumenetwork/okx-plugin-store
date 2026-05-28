@@ -6,7 +6,7 @@ description: Swap tokens and manage classic AMM (volatile/stable) LP positions o
 author:
   name: GeoGu360
   github: GeoGu360
-category: defi-protocol
+category: dapp
 tags:
 - dex
 - amm

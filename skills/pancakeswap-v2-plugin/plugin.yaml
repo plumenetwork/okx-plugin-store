@@ -5,7 +5,7 @@ description: "Swap tokens and manage liquidity on PancakeSwap V2 (xyk AMM) on BS
 author:
   name: skylavis-sky
   github: skylavis-sky
-category: defi-protocol
+category: dapp
 tags:
   - dex
   - swap

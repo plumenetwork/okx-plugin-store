@@ -5,7 +5,7 @@ description: "Aave V2 exit tool on Ethereum, Polygon, and Avalanche - all reserv
 author:
   name: GeoGu360
   github: GeoGu360
-category: defi-protocol
+category: dapp
 tags:
   - aave
   - lending
