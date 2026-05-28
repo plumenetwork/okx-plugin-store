@@ -2585,7 +2585,7 @@
     },
     {
       "name": "stablecoin-risk-check",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Stablecoin safety and risk assessment - depeg history, reserve composition, audit status, and regulatory exposure for USDT, USDC, DAI, USDe, and other major stablecoins.",
       "author": {
         "name": "Barker",
@@ -2598,7 +2598,7 @@
         "defi",
         "ranking"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779937667",
       "type": "official",
       "components": {
         "skill": {
