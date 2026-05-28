@@ -2469,7 +2469,7 @@
     },
     {
       "name": "stablecoin-depeg-monitor",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Stablecoin peg stability monitoring and historical depeg database. Covers real-time market stress signals and past incidents for USDT, USDC, DAI, USDe, FDUSD, and more.",
       "author": {
         "name": "Barker",
@@ -2482,7 +2482,7 @@
         "trading",
         "signal"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779937585",
       "type": "official",
       "components": {
         "skill": {
