@@ -18,5 +18,14 @@
     "@types/node": "20.14.0",
     "tsx": "4.21.0",
     "typescript": "5.9.3"
-  }
+  },
+  "bin": {
+    "birdeye-plugin-runtime": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist/",
+    "LICENSE",
+    "README.md"
+  ]
 }

@@ -95,8 +95,8 @@ If `<skill-dir>/runtime/dist/index.js` does not exist, tell the user:
 
 Run from the skill directory:
 
-- `node ./runtime/dist/index.js list [--mode apikey|x402]`
-- `node ./runtime/dist/index.js call --endpoint <key> --chain <chain> --param value ...`
+- `birdeye-plugin-runtime list [--mode apikey|x402]`
+- `birdeye-plugin-runtime call --endpoint <key> --chain <chain> --param value ...`
 - Aliases: `price`, `trending`, `overview`, `security`
 
 ## Routing Guidance
