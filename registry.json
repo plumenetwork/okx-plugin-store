@@ -310,6 +310,45 @@
       ]
     },
     {
+      "name": "coinank-openapi",
+      "version": "1.0.0",
+      "description": "Access CoinAnk crypto derivatives market data via API key or Agent Payments Protocol/x402 pay-per-call.",
+      "author": {
+        "name": "CoinAnk",
+        "github": "coinank"
+      },
+      "license": "MIT",
+      "category": "analytics",
+      "tags": [
+        "ethereum",
+        "defi"
+      ],
+      "modify_date": "1779937383",
+      "type": "community",
+      "components": {
+        "skill": {
+          "repo": "okx/plugin-store",
+          "dir": "skills/coinank-openapi"
+        }
+      },
+      "github_link": "https://github.com/okx/plugin-store/tree/main/skills/coinank-openapi",
+      "skill_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/coinank-openapi/SKILL.md",
+      "summary_md_link": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/coinank-openapi/SUMMARY.md",
+      "readme_url": "https://raw.githubusercontent.com/okx/plugin-store/main/skills/coinank-openapi/README.md",
+      "api_calls": [
+        "open-api.coinank.com",
+        "s.cdnblock.com"
+      ],
+      "extra": {
+        "chains": [
+          "ethereum",
+          "base"
+        ],
+        "protocols": [],
+        "risk_level": "medium"
+      }
+    },
+    {
       "name": "compound-v2-plugin",
       "version": "0.1.1",
       "description": "Compound V2 (legacy cToken-based) money market on Ethereum mainnet - exit tool: redeem cTokens, repay debt, claim COMP. New supply/borrow paused by governance - use compound-v3-plugin for active flows",

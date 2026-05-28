@@ -16,6 +16,100 @@ tags:
   - payment
 ---
 
+
+## Pre-flight Dependencies (auto-injected by Plugin Store CI)
+
+> Run once per session before first use. These checks ensure required tools are installed.
+
+### Version check (auto-injected)
+
+> **AI Agent Instruction**: Run this version check before executing any commands from this skill. The check is a read-only fetch from `raw.githubusercontent.com` — it does **not** install anything. If it reports `Update available`, you MUST stop, surface the message to the user verbatim, and obtain explicit confirmation before running the suggested `npx skills add …` command. Do not run the update silently. After a confirmed update completes, re-read this SKILL.md before proceeding.
+
+```bash
+# Check for skill updates (1-hour cache).
+# Network scope: this block calls raw.githubusercontent.com for the version probe only.
+# It does NOT install anything; install requires user-confirmed `npx skills add` below.
+UPDATE_CACHE="$HOME/.plugin-store/update-cache/coinank-openapi"
+CACHE_MAX=3600
+LOCAL_VER="1.0.0"
+DO_CHECK=true
+
+if [ -f "$UPDATE_CACHE" ]; then
+  CACHE_MOD=$(stat -f %m "$UPDATE_CACHE" 2>/dev/null || stat -c %Y "$UPDATE_CACHE" 2>/dev/null || echo 0)
+  NOW=$(date +%s)
+  AGE=$(( NOW - CACHE_MOD ))
+  [ "$AGE" -lt "$CACHE_MAX" ] && DO_CHECK=false
+fi
+
+if [ "$DO_CHECK" = true ]; then
+  REMOTE_VER=$(curl -sf --max-time 3 "https://raw.githubusercontent.com/okx/plugin-store/main/skills/coinank-openapi/plugin.yaml" | grep '^version' | head -1 | tr -d '"' | awk '{print $2}')
+  if [ -n "$REMOTE_VER" ]; then
+    mkdir -p "$HOME/.plugin-store/update-cache"
+    echo "$REMOTE_VER" > "$UPDATE_CACHE"
+  fi
+fi
+
+REMOTE_VER=$(cat "$UPDATE_CACHE" 2>/dev/null || echo "$LOCAL_VER")
+if [ "$REMOTE_VER" != "$LOCAL_VER" ]; then
+  echo "Update available: coinank-openapi v$LOCAL_VER -> v$REMOTE_VER."
+  echo "ACTION REQUIRED: ask the user to confirm before running:"
+  echo "  npx skills add okx/plugin-store --skill coinank-openapi --global"
+  echo "(This contacts the npm registry and github.com/okx/plugin-store and overwrites this skill. Do NOT auto-run.)"
+fi
+```
+
+### Install onchainos CLI + Skills (auto-injected)
+
+```bash
+# 1. Install onchainos CLI — pin to latest release tag, verify SHA256
+#    of the installer before executing (no curl|sh from main).
+if ! command -v onchainos >/dev/null 2>&1; then
+  set -e
+  LATEST_TAG=$(curl -sSL --max-time 5 \
+    "https://api.github.com/repos/okx/onchainos-skills/releases/latest" \
+    | sed -n 's/.*"tag_name"[[:space:]]*:[[:space:]]*"\([^"]*\)".*/\1/p' | head -1)
+  if [ -z "$LATEST_TAG" ]; then
+    echo "ERROR: failed to resolve latest onchainos release tag (network or rate limit)." >&2
+    echo "       Manual install: https://github.com/okx/onchainos-skills" >&2
+    exit 1
+  fi
+
+  ONCHAINOS_TMP=$(mktemp -d)
+  curl -sSL --max-time 30 \
+    "https://raw.githubusercontent.com/okx/onchainos-skills/${LATEST_TAG}/install.sh" \
+    -o "$ONCHAINOS_TMP/install.sh"
+  curl -sSL --max-time 30 \
+    "https://github.com/okx/onchainos-skills/releases/download/${LATEST_TAG}/installer-checksums.txt" \
+    -o "$ONCHAINOS_TMP/installer-checksums.txt"
+
+  EXPECTED=$(awk '$2 ~ /install\.sh$/ {print $1; exit}' "$ONCHAINOS_TMP/installer-checksums.txt")
+  if command -v sha256sum >/dev/null 2>&1; then
+    ACTUAL=$(sha256sum "$ONCHAINOS_TMP/install.sh" | awk '{print $1}')
+  else
+    ACTUAL=$(shasum -a 256 "$ONCHAINOS_TMP/install.sh" | awk '{print $1}')
+  fi
+  if [ -z "$EXPECTED" ] || [ "$EXPECTED" != "$ACTUAL" ]; then
+    echo "ERROR: onchainos installer SHA256 mismatch — refusing to execute." >&2
+    echo "       expected=$EXPECTED  actual=$ACTUAL  tag=$LATEST_TAG" >&2
+    rm -rf "$ONCHAINOS_TMP"
+    exit 1
+  fi
+
+  sh "$ONCHAINOS_TMP/install.sh"
+  rm -rf "$ONCHAINOS_TMP"
+  set +e
+fi
+
+# 2. Install onchainos skills (enables AI agent to use onchainos commands)
+npx skills add okx/onchainos-skills --yes --global
+
+# 3. Install plugin-store skills (enables plugin discovery and management)
+npx skills add okx/plugin-store --skill plugin-store --yes --global
+```
+
+---
+
+
 ## Overview
 
 CoinAnk OpenAPI provides access to cryptocurrency derivatives market data, including K-lines, ETFs, open interest, long/short ratios, funding rates, liquidations, order flow, whale activity, and related analytics. Use direct API-key authentication when available, or use Agent Payments Protocol / x402 pay-per-call access through the latest OKX payment skill when CoinAnk returns a payment challenge.
