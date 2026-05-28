@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { birdeyeGet, resolveMode } from './client.js';
 import { APIKEY_ENDPOINTS, type EndpointDef } from './endpoints-apikey.js';
 import { filterX402 } from './endpoints-x402.js';
