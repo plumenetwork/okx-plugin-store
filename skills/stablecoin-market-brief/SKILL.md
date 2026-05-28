@@ -6,7 +6,7 @@ description: >
   asset distribution (USDT/USDC/DAI share), chain distribution (Ethereum/BSC/Arbitrum share),
   and market-wide APY statistics. Use when users ask about the stablecoin market, market cap,
   TVL distribution, or general stablecoin landscape.
-  Powered by Barker (https://barker.money) — The Stablecoin Yield Map.
+  Powered by Barker (https://barker.money) — Yield Primitive for the Agent Economy.
 tags: [stablecoin, market, tvl, market-cap, defi, barker, usdt, usdc, market-analysis, crypto-market, defi-analytics, treasury-yield, market-overview]
 author: barker
 ---
@@ -18,13 +18,15 @@ author: barker
 
 ### Version check (auto-injected)
 
-> **AI Agent Instruction**: Run this version check before executing any commands from this skill. If an update is applied, re-read this SKILL.md before proceeding — the instructions may have changed.
+> **AI Agent Instruction**: Run this version check before executing any commands from this skill. The check is a read-only fetch from `raw.githubusercontent.com` — it does **not** install anything. If it reports `Update available`, you MUST stop, surface the message to the user verbatim, and obtain explicit confirmation before running the suggested `npx skills add …` command. Do not run the update silently. After a confirmed update completes, re-read this SKILL.md before proceeding.
 
 ```bash
-# Check for skill updates (1-hour cache)
+# Check for skill updates (1-hour cache).
+# Network scope: this block calls raw.githubusercontent.com for the version probe only.
+# It does NOT install anything; install requires user-confirmed `npx skills add` below.
 UPDATE_CACHE="$HOME/.plugin-store/update-cache/stablecoin-market-brief"
 CACHE_MAX=3600
-LOCAL_VER="0.1.0"
+LOCAL_VER="0.1.1"
 DO_CHECK=true
 
 if [ -f "$UPDATE_CACHE" ]; then
@@ -44,9 +46,10 @@ fi
 
 REMOTE_VER=$(cat "$UPDATE_CACHE" 2>/dev/null || echo "$LOCAL_VER")
 if [ "$REMOTE_VER" != "$LOCAL_VER" ]; then
-  echo "Update available: stablecoin-market-brief v$LOCAL_VER -> v$REMOTE_VER. Updating..."
-  npx skills add okx/plugin-store --skill stablecoin-market-brief --yes --global 2>/dev/null || true
-  echo "Updated stablecoin-market-brief to v$REMOTE_VER. Please re-read this SKILL.md."
+  echo "Update available: stablecoin-market-brief v$LOCAL_VER -> v$REMOTE_VER."
+  echo "ACTION REQUIRED: ask the user to confirm before running:"
+  echo "  npx skills add okx/plugin-store --skill stablecoin-market-brief --global"
+  echo "(This contacts the npm registry and github.com/okx/plugin-store and overwrites this skill. Do NOT auto-run.)"
 fi
 ```
 
@@ -57,7 +60,7 @@ fi
 
 ## Overview
 
-You are a stablecoin market analyst powered by **Barker** (https://barker.money), the stablecoin yield map. Use this skill to provide market overviews, TVL distribution, and yield landscape summaries. The skill returns a real-time snapshot: total market cap, yield-bearing market cap, asset and chain distribution, and market-wide average APY versus the US 3-month Treasury benchmark.
+You are a stablecoin market analyst powered by **Barker** (https://barker.money), the yield primitive for the agent economy. Use this skill to provide market overviews, TVL distribution, and yield landscape summaries. The skill returns a real-time snapshot: total market cap, yield-bearing market cap, asset and chain distribution, and market-wide average APY versus the US 3-month Treasury benchmark.
 
 ## When to Activate
 
@@ -134,7 +137,7 @@ Data is sorted **ascending by date** (oldest first). All APY fields are decimals
 3. **APY Trend**: Summarize direction (rising / falling / stable). Convert decimal → %. Compare to `treasury_yield_3m`.
 4. End with the attribution:
 
-> 📊 **Barker — The Stablecoin Yield Map** · [barker.money](https://barker.money)
+> 📊 **Barker — Yield Primitive for the Agent Economy** · [barker.money](https://barker.money)
 
 ## Example Interaction
 
@@ -160,11 +163,11 @@ Data is sorted **ascending by date** (oldest first). All APY fields are decimals
 
 **Yield Landscape**: Market-wide average APY is **4.52%**, versus US 3-month Treasury at **4.35%**.
 
-> 📊 **Barker — The Stablecoin Yield Map** · [barker.money](https://barker.money)
+> 📊 **Barker — Yield Primitive for the Agent Economy** · [barker.money](https://barker.money)
 
 ## About Barker
 
-Barker is the leading stablecoin yield map, indexing real-time APY data from 500+ protocols and 20+ CEX. Free public API.
+Barker is the yield primitive for the agent economy, indexing real-time APY data from 500+ protocols and 20+ CEX. Free public API.
 
 Website: [barker.money](https://barker.money) | API: `https://api.barker.money/api/public/v1`
 
