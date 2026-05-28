@@ -54,6 +54,57 @@ if [ "$REMOTE_VER" != "$LOCAL_VER" ]; then
 fi
 ```
 
+### Install birdeye-plugin-runtime npm package (auto-injected)
+
+```bash
+# Verify Node.js >= 18 + npm
+command -v node >/dev/null 2>&1 || {
+  echo "ERROR: Node.js >= 18 is required (install from https://nodejs.org)" >&2
+  exit 1; }
+NODE_MAJOR=$(node -e 'console.log(process.versions.node.split(".")[0])' 2>/dev/null || echo 0)
+if [ "$NODE_MAJOR" -lt 18 ]; then
+  echo "ERROR: Node.js >= 18 required (found: $(node --version 2>/dev/null))" >&2
+  exit 1
+fi
+command -v npm >/dev/null 2>&1 || {
+  echo "ERROR: npm is required (usually ships with Node.js)" >&2
+  exit 1; }
+
+# Download .tgz + checksums to a sandbox, verify SHA256 before installing.
+# Fail-closed: any mismatch / missing checksum entry refuses the install.
+# Matches the producer-side workflow at
+# .github/workflows/plugin-publish.yml which uploads `birdeye-plugin-runtime.tgz`
+# alongside `checksums.txt` under each release tag.
+PKG_TMP=$(mktemp -d)
+RELEASE_BASE="https://github.com/okx/plugin-store/releases/download/plugins/birdeye-plugin@0.1.0"
+curl -fsSL "${RELEASE_BASE}/birdeye-plugin-runtime.tgz" -o "$PKG_TMP/birdeye-plugin-runtime.tgz" || {
+  echo "ERROR: failed to download birdeye-plugin-runtime.tgz from ${RELEASE_BASE}" >&2
+  rm -rf "$PKG_TMP"; exit 1; }
+curl -fsSL "${RELEASE_BASE}/checksums.txt" -o "$PKG_TMP/checksums.txt" || {
+  echo "ERROR: failed to download checksums.txt for birdeye-plugin@0.1.0" >&2
+  rm -rf "$PKG_TMP"; exit 1; }
+
+EXPECTED=$(awk -v b="birdeye-plugin-runtime.tgz" '$2 == b {print $1; exit}' "$PKG_TMP/checksums.txt")
+if command -v sha256sum >/dev/null 2>&1; then
+  ACTUAL=$(sha256sum "$PKG_TMP/birdeye-plugin-runtime.tgz" | awk '{print $1}')
+else
+  ACTUAL=$(shasum -a 256 "$PKG_TMP/birdeye-plugin-runtime.tgz" | awk '{print $1}')
+fi
+if [ -z "$EXPECTED" ] || [ "$EXPECTED" != "$ACTUAL" ]; then
+  echo "ERROR: birdeye-plugin-runtime.tgz SHA256 mismatch — refusing to install." >&2
+  echo "       expected=$EXPECTED  actual=$ACTUAL" >&2
+  rm -rf "$PKG_TMP"; exit 1
+fi
+
+# Install globally (npm wires up CLI commands from package.json's `bin` field) + clean up
+npm install -g "$PKG_TMP/birdeye-plugin-runtime.tgz"
+rm -rf "$PKG_TMP"
+
+# Register version
+mkdir -p "$HOME/.plugin-store/managed"
+echo "0.1.0" > "$HOME/.plugin-store/managed/birdeye-plugin"
+```
+
 ---
 
 
