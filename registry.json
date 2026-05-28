@@ -2428,7 +2428,7 @@
     },
     {
       "name": "stablecoin-chain-explorer",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Explore stablecoin TVL and yield opportunities by blockchain. Compare cross-chain yields on Ethereum, BSC, Arbitrum, Base, Polygon, Optimism, Solana, and more.",
       "author": {
         "name": "Barker",
@@ -2442,7 +2442,7 @@
         "ethereum",
         "defi"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779937462",
       "type": "official",
       "components": {
         "skill": {
