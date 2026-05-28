@@ -2969,7 +2969,7 @@
     },
     {
       "name": "yield-strategy-advisor",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Stablecoin yield strategy recommendations by risk tolerance, capital size, and chain preference. Suggests diversified allocations across 500+ DeFi protocols and 20+ CEX.",
       "author": {
         "name": "Barker",
@@ -2982,7 +2982,7 @@
         "ethereum",
         "defi"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779937503",
       "type": "official",
       "components": {
         "skill": {
