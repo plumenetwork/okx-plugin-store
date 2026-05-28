@@ -102,6 +102,8 @@ jobs:
     outputs:
       has_builds: ${{ steps.build_info.outputs.has_builds }}
       build_plugins_json: ${{ steps.build_info.outputs.build_plugins_json }}
+      has_node_builds: ${{ steps.build_info.outputs.has_node_builds }}
+      build_node_plugins_json: ${{ steps.build_info.outputs.build_node_plugins_json }}
     steps:
       - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
         with:
@@ -159,6 +161,7 @@ jobs:
         run: |
           set -euo pipefail
           BUILD_PLUGINS_JSON='[]'
+          BUILD_NODE_PLUGINS_JSON='[]'
 
           # Pre-compute (plugin_name, author.github, author.name) for every
           # plugin in skills/. Used below to mark contributors as "new" only
@@ -198,8 +201,8 @@ jobs:
             echo "$BIN" | grep -qE '^[a-zA-Z0-9._-]+$' \
               || { echo "::warning::$p binary_name '$BIN' invalid, skip"; continue; }
             case "$LANG" in
-              rust|go) : ;;
-              *) echo "::warning::$p lang '$LANG' not in {rust,go}, skip"; continue ;;
+              rust|go|typescript|node) : ;;
+              *) echo "::warning::$p lang '$LANG' not in {rust,go,typescript,node}, skip"; continue ;;
             esac
             if [ -n "$REPO" ] && [ "$REPO" != "null" ]; then
               echo "$REPO" | grep -qE '^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$' \
@@ -239,22 +242,41 @@ jobs:
               '$1 != plugin && ($2 == c || $3 == c) { n++ } END { print (n+0) }' "$ALL_AUTHORS")
             if [ "$HITS" -eq 0 ]; then IS_NEW="true"; else IS_NEW="false"; fi
 
-            BUILD_PLUGINS_JSON=$(echo "$BUILD_PLUGINS_JSON" | jq \
+            # Build a single JSON entry then route it to the right bucket:
+            #   - rust / go      → BUILD_PLUGINS_JSON       (9-target native binary matrix)
+            #   - typescript / node → BUILD_NODE_PLUGINS_JSON (single npm package)
+            ENTRY=$(jq -nc \
               --arg n "$p" --arg l "$LANG" --arg b "$BIN" --arg v "$VER" \
               --arg r "$REPO" --arg c "$COMMIT" --arg s "$SUBDIR" \
               --arg desc "$DESC" --arg an "$AUTH_NAME" --arg ag "$AUTH_GH" \
               --arg ct "$CONTRIBUTOR" --arg new "$IS_NEW" \
-              '. += [{name:$n, lang:$l, binary_name:$b, version:$v, source_repo:$r, source_commit:$c, source_dir:$s, description:$desc, author_name:$an, author_github:$ag, contributor:$ct, is_new_contributor:$new}]')
-            echo "  + $p ($LANG) $BIN@$VER  contributor=$CONTRIBUTOR new=$IS_NEW"
+              '{name:$n, lang:$l, binary_name:$b, version:$v, source_repo:$r, source_commit:$c, source_dir:$s, description:$desc, author_name:$an, author_github:$ag, contributor:$ct, is_new_contributor:$new}')
+            case "$LANG" in
+              rust|go)
+                BUILD_PLUGINS_JSON=$(echo "$BUILD_PLUGINS_JSON" | jq --argjson e "$ENTRY" '. += [$e]')
+                echo "  + $p ($LANG, native) $BIN@$VER  contributor=$CONTRIBUTOR new=$IS_NEW"
+                ;;
+              typescript|node)
+                BUILD_NODE_PLUGINS_JSON=$(echo "$BUILD_NODE_PLUGINS_JSON" | jq --argjson e "$ENTRY" '. += [$e]')
+                echo "  + $p ($LANG, npm)    $BIN@$VER  contributor=$CONTRIBUTOR new=$IS_NEW"
+                ;;
+            esac
           done
 
-          # GitHub Actions output: serialise JSON onto one line
+          # GitHub Actions outputs: one JSON per bucket + has_* flags.
           ONE_LINE=$(echo "$BUILD_PLUGINS_JSON" | jq -c .)
           echo "build_plugins_json=${ONE_LINE}" >> "$GITHUB_OUTPUT"
           COUNT=$(echo "$BUILD_PLUGINS_JSON" | jq 'length')
           [ "$COUNT" -gt 0 ] && echo "has_builds=true" >> "$GITHUB_OUTPUT" \
                              || echo "has_builds=false" >> "$GITHUB_OUTPUT"
-          echo "buildable plugins: $COUNT"
+
+          NODE_ONE_LINE=$(echo "$BUILD_NODE_PLUGINS_JSON" | jq -c .)
+          echo "build_node_plugins_json=${NODE_ONE_LINE}" >> "$GITHUB_OUTPUT"
+          NODE_COUNT=$(echo "$BUILD_NODE_PLUGINS_JSON" | jq 'length')
+          [ "$NODE_COUNT" -gt 0 ] && echo "has_node_builds=true" >> "$GITHUB_OUTPUT" \
+                                  || echo "has_node_builds=false" >> "$GITHUB_OUTPUT"
+
+          echo "buildable plugins: $COUNT (native) + $NODE_COUNT (npm)"
 
   # ═══════════════════════════════════════════════════════════════════════
   # JOB 3  build-release
@@ -487,6 +509,88 @@ jobs:
           retention-days: 7
 
   # ═══════════════════════════════════════════════════════════════════════
+  # JOB 3.5  build-release-node
+  #
+  # TS / node plugins package via `npm pack` into a single
+  # `<binary_name>.tgz` (vs rust/go's 9 native binaries). One ubuntu
+  # runner per plugin — no target matrix dimension, because the .tgz is
+  # platform-agnostic JavaScript and the consumer-side install (in
+  # SKILL.md, injected by .gitlab-ci/scripts/inject-preflight.py) just
+  # does `npm install -g <tgz>` after verifying SHA256.
+  #
+  # We rename the file npm pack produces (`<package-name>-<ver>.tgz`)
+  # to `<binary_name>.tgz` so the consumer-side URL is deterministic
+  # (mirrors rust/go's `<bin>-<target>` asset naming convention).
+  # ═══════════════════════════════════════════════════════════════════════
+  build-release-node:
+    name: Build ${{ matrix.plugin.name }} (npm package)
+    needs: [verify-source, detect]
+    if: needs.detect.outputs.has_node_builds == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        plugin: ${{ fromJSON(needs.detect.outputs.build_node_plugins_json) }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+
+      - uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a  # v4
+        with:
+          node-version: '22'
+
+      - name: npm install + build + pack
+        env:
+          NAME: ${{ matrix.plugin.name }}
+          BIN: ${{ matrix.plugin.binary_name }}
+          SUBDIR: ${{ matrix.plugin.source_dir }}
+        run: |
+          set -euo pipefail
+          SRC_REL="skills/${NAME}/${SUBDIR:-.}"
+          SRC="${GITHUB_WORKSPACE}/${SRC_REL}"
+          [ -f "${SRC}/package.json" ] || { echo "::error::no package.json in ${SRC_REL}"; exit 1; }
+          mkdir -p "${GITHUB_WORKSPACE}/artifacts"
+
+          echo "::group::npm install"
+          ( cd "${SRC}" && npm install --no-audit --no-fund )
+          echo "::endgroup::"
+
+          # Run `npm run build` if package.json defines a build script,
+          # otherwise skip (some plugins ship pre-built dist/ already).
+          if grep -q '"build"[[:space:]]*:' "${SRC}/package.json"; then
+            echo "::group::npm run build"
+            ( cd "${SRC}" && npm run build )
+            echo "::endgroup::"
+          else
+            echo "::notice::no 'build' script in package.json; skipping build step"
+          fi
+
+          echo "::group::npm pack"
+          ( cd "${SRC}" && npm pack --quiet )
+          TGZ=$(ls -t "${SRC}"/*.tgz 2>/dev/null | head -1)
+          [ -n "${TGZ}" ] && [ -f "${TGZ}" ] || { echo "::error::npm pack produced no .tgz"; exit 1; }
+          # Rename to <binary_name>.tgz for predictable consumer-side URL
+          cp "${TGZ}" "${GITHUB_WORKSPACE}/artifacts/${BIN}.tgz"
+          ls -la "${GITHUB_WORKSPACE}/artifacts/${BIN}.tgz"
+          if command -v sha256sum >/dev/null; then sha256sum "${GITHUB_WORKSPACE}/artifacts/${BIN}.tgz"; \
+            else shasum -a 256 "${GITHUB_WORKSPACE}/artifacts/${BIN}.tgz"; fi
+          echo "::endgroup::"
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02  # v4
+        with:
+          # Suffix `-node` so the artifact name doesn't collide with rust/go
+          # `build-<name>-<target>` artifacts in the merge-multiple download.
+          name: build-${{ matrix.plugin.name }}-node
+          path: artifacts/*
+          if-no-files-found: error
+          retention-days: 7
+
+  # ═══════════════════════════════════════════════════════════════════════
   # JOB 4  create-release
   #
   # Per plugin in build_plugins_json:
@@ -511,8 +615,12 @@ jobs:
   # ═══════════════════════════════════════════════════════════════════════
   create-release:
     name: Create release
-    needs: [detect, build-release]
-    if: needs.detect.outputs.has_builds == 'true'
+    needs: [detect, build-release, build-release-node]
+    if: |
+      always() &&
+      (needs.detect.outputs.has_builds == 'true' || needs.detect.outputs.has_node_builds == 'true') &&
+      (needs.build-release.result == 'success' || needs.build-release.result == 'skipped') &&
+      (needs.build-release-node.result == 'success' || needs.build-release-node.result == 'skipped')
     runs-on: ubuntu-latest
     permissions:
       # contents: write is required to create the git tag and the
@@ -541,12 +649,20 @@ jobs:
         id: publish
         env:
           BUILD_PLUGINS: ${{ needs.detect.outputs.build_plugins_json }}
+          BUILD_NODE_PLUGINS: ${{ needs.detect.outputs.build_node_plugins_json }}
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
         run: |
           set -euo pipefail
           PUBLISHED='[]'
-          echo "$BUILD_PLUGINS" | jq -c '.[]' | while read -r P; do
+          # Combine native + npm plugin lists into one stream; each entry
+          # carries its own `lang` field, so the publish loop branches on
+          # that to pick the right staging strategy.
+          ALL_PLUGINS=$(jq -nc \
+            --argjson native "${BUILD_PLUGINS:-[]}" \
+            --argjson npm    "${BUILD_NODE_PLUGINS:-[]}" \
+            '$native + $npm')
+          echo "$ALL_PLUGINS" | jq -c '.[]' | while read -r P; do
             NAME=$(echo "$P" | jq -r .name)
             BIN=$( echo "$P" | jq -r .binary_name)
             VER=$( echo "$P" | jq -r .version)
@@ -569,18 +685,38 @@ jobs:
             # on `gh release create FILE#LABEL`, which sets only the
             # display LABEL — the asset filename would otherwise have
             # remained `${BIN}-checksums.tmp`.
-            if ! ls artifacts/${BIN}-* >/dev/null 2>&1; then
-              echo "::error::no artifacts found for ${NAME} (pattern: ${BIN}-*)"
-              continue
-            fi
+            #
+            # Two staging shapes by lang:
+            #   - rust / go     : 9 binaries `${BIN}-<target>[.exe]`
+            #   - typescript / node : 1 npm package `${BIN}.tgz`
+            # checksums.txt is generated over whichever set is staged, so
+            # the consumer-side SHA256 check in inject-preflight.py finds
+            # exactly the asset it just downloaded.
             STAGE="artifacts/_${BIN}"
             mkdir -p "$STAGE"
-            cp artifacts/${BIN}-* "$STAGE"/
-            ( cd "$STAGE" && sha256sum ${BIN}-* > checksums.txt )
+            case "$LANG" in
+              rust|go)
+                if ! ls artifacts/${BIN}-* >/dev/null 2>&1; then
+                  echo "::error::no artifacts found for ${NAME} (pattern: ${BIN}-*)"
+                  continue
+                fi
+                cp artifacts/${BIN}-* "$STAGE"/
+                ( cd "$STAGE" && sha256sum ${BIN}-* > checksums.txt )
+                PLATFORM_LABEL=$(ls "$STAGE"/${BIN}-* | wc -l | tr -d ' ')
+                ;;
+              typescript|node)
+                if [ ! -f "artifacts/${BIN}.tgz" ]; then
+                  echo "::error::no artifact found for ${NAME} (expected: ${BIN}.tgz)"
+                  continue
+                fi
+                cp "artifacts/${BIN}.tgz" "$STAGE"/
+                ( cd "$STAGE" && sha256sum "${BIN}.tgz" > checksums.txt )
+                PLATFORM_LABEL="any (npm)"
+                ;;
+            esac
 
             ASSETS=$(ls "$STAGE"/* | tr '\n' ' ')
             ASSET_COUNT=$(echo "$ASSETS" | wc -w | tr -d ' ')
-            PLATFORM_COUNT=$(ls "$STAGE"/${BIN}-* 2>/dev/null | wc -l | tr -d ' ')
 
             # Build the release-notes body. Format mirrors the old
             # cross-platform-release workflow so the GitHub release page
@@ -593,7 +729,7 @@ jobs:
             {
               printf "## What's Changed\n\n"
               printf '%s\n' "- **${NAME}** v${VER} -- ${DESC}"
-              printf '%s\n' "- Language: ${LANG} | Platforms: ${PLATFORM_COUNT}"
+              printf '%s\n' "- Language: ${LANG} | Platforms: ${PLATFORM_LABEL}"
               printf '%s\n' "- Install: npx skills add ${REPO} --skill ${NAME}"
               printf '%s\n' "- Source: skills/${NAME}/ (included in submission)"
               if [ "$IS_NEW" = "true" ]; then
@@ -693,7 +829,7 @@ jobs:
   # ═══════════════════════════════════════════════════════════════════════
   notify-failure:
     name: Notify failure
-    needs: [verify-source, detect, build-release, create-release]
+    needs: [verify-source, detect, build-release, build-release-node, create-release]
     if: failure()
     runs-on: ubuntu-latest
     permissions: read-all
