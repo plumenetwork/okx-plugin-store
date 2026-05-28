@@ -766,12 +766,32 @@ jobs:
       # a draft-then-un-draft pattern with `|| true` (which silently
       # swallowed failures).
       #
-      # Policy per Draft tag:
-      #   - complete (assets >= 10  = 9 binaries + checksums.txt)
-      #       → un-draft (promote to Published)
-      #   - incomplete (assets < 10)
-      #       → delete release AND tag (clean break, no half-shipped
-      #         binary visible to consumers)
+      # Policy per Draft tag — completeness is shape-dependent because
+      # different plugin types produce different release shapes:
+      #
+      #   rust / go (native binary):
+      #     complete = 9 platform binaries + checksums.txt   → 10 assets
+      #     incomplete = anything less
+      #
+      #   typescript / node (npm package):
+      #     complete = 1 `<bin>.tgz` + checksums.txt          → 2 assets
+      #     (the .tgz is platform-agnostic JavaScript; no per-target build)
+      #
+      # We can't read plugin.yaml here (the release page is the only
+      # signal at sweep time), so we infer plugin type from the assets:
+      #   - any `*.tgz` present → typescript/node release
+      #   - no `*.tgz`          → rust/go release (expect the 9+1 shape)
+      #
+      # In both shapes, `checksums.txt` MUST be present in a complete
+      # release (consumer-side SHA256 verify in the inject pre-flight
+      # depends on it). A draft without checksums.txt is treated as
+      # incomplete and deleted.
+      #
+      # Result:
+      #   complete (un-draft):
+      #     - has checksums.txt AND has .tgz (ts/node shape)             → 2+ assets
+      #     - has checksums.txt AND has 9 binary-named assets (rust/go)  → 10 assets
+      #   incomplete (delete + cleanup tag): every other shape
       #
       # Final assertion: 0 drafts must remain or the job fails loudly.
       # No `|| true` here — un-draft / delete errors propagate.
@@ -798,13 +818,31 @@ jobs:
 
           echo "::group::per-draft action"
           echo "$DRAFTS" | while IFS=$'\t' read -r TAG CREATED; do
-            ASSETS=$(gh release view "$TAG" --repo "$REPO" \
-              --json assets --jq '.assets | length')
-            if [ "$ASSETS" -ge 10 ]; then
-              echo "  un-draft     $TAG    (${ASSETS} assets, complete, created=${CREATED})"
+            # Pull asset names (one per line) for shape detection.
+            ASSET_NAMES=$(gh release view "$TAG" --repo "$REPO" \
+              --json assets --jq -r '.assets[].name')
+            TOTAL=$(echo "$ASSET_NAMES" | grep -c . || true)
+            HAS_CHECKSUMS=$(echo "$ASSET_NAMES" | grep -cFx 'checksums.txt' || true)
+            HAS_TGZ=$(echo "$ASSET_NAMES" | grep -cE '\.tgz$' || true)
+            NON_CHECKSUM_COUNT=$(echo "$ASSET_NAMES" | grep -cvFx 'checksums.txt' || true)
+
+            COMPLETE=false
+            REASON=""
+            if [ "$HAS_CHECKSUMS" -ge 1 ] && [ "$HAS_TGZ" -ge 1 ]; then
+              # ts/node shape: .tgz + checksums.txt (≥ 2 assets)
+              COMPLETE=true
+              REASON="ts/node (.tgz + checksums.txt)"
+            elif [ "$HAS_CHECKSUMS" -ge 1 ] && [ "$NON_CHECKSUM_COUNT" -ge 9 ]; then
+              # rust/go shape: 9 binaries + checksums.txt
+              COMPLETE=true
+              REASON="rust/go (9 binaries + checksums.txt)"
+            fi
+
+            if [ "$COMPLETE" = "true" ]; then
+              echo "  un-draft     $TAG    (${TOTAL} assets, ${REASON}, created=${CREATED})"
               gh release edit "$TAG" --repo "$REPO" --draft=false
             else
-              echo "  delete+tag   $TAG    (${ASSETS} assets, incomplete, created=${CREATED})"
+              echo "  delete+tag   $TAG    (${TOTAL} assets, incomplete: checksums=${HAS_CHECKSUMS}, tgz=${HAS_TGZ}, other=${NON_CHECKSUM_COUNT}, created=${CREATED})"
               gh release delete "$TAG" --repo "$REPO" --yes --cleanup-tag
             fi
           done
