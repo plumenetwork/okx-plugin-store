@@ -2507,7 +2507,7 @@
     },
     {
       "name": "stablecoin-market-brief",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "description": "Real-time stablecoin market overview - total market cap, yield-bearing cap, asset and chain distribution, plus market-wide APY versus US Treasury benchmark.",
       "author": {
         "name": "Barker",
@@ -2520,7 +2520,7 @@
         "ethereum",
         "defi"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779937497",
       "type": "official",
       "components": {
         "skill": {
