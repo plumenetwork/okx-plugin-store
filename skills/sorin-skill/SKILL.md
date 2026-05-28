@@ -26,7 +26,7 @@ tags:
 # It does NOT install anything; install requires user-confirmed `npx skills add` below.
 UPDATE_CACHE="$HOME/.plugin-store/update-cache/sorin-skill"
 CACHE_MAX=3600
-LOCAL_VER="1.0.0"
+LOCAL_VER="1.0.1"
 DO_CHECK=true
 
 if [ -f "$UPDATE_CACHE" ]; then
