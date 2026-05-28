@@ -70,7 +70,7 @@
       "name": "clawvard-agent-eval",
       "description": "Take the Clawvard entrance exam, report the result, and optionally save the agent identity token with user confirmation.",
       "source": "./skills/clawvard-agent-eval",
-      "category": "utility",
+      "category": "strategy",
       "author": {
         "name": "Clawvard",
         "github": "A4ever369"
@@ -240,7 +240,7 @@
       "name": "macro-intelligence",
       "description": "Unified macro intelligence feed — reads 7 sources, classifies events, scores sentiment, generates AI insights, exposes signals via HTTP API",
       "source": "./skills/macro-intelligence",
-      "category": "trading-strategy",
+      "category": "strategy",
       "author": {
         "name": "victorlee",
         "github": "VibeCodeDaddy69"
@@ -250,7 +250,7 @@
       "name": "mainstream-spot-order",
       "description": "Multi-chain DEX spot trading system with 6-signal ensemble, auto-research strategy optimization, and per-pair backtesting across SOL, ETH, BTC, BNB, AVAX, DOGE",
       "source": "./skills/mainstream-spot-order",
-      "category": "trading-strategy",
+      "category": "strategy",
       "author": {
         "name": "victorlee",
         "github": "VibeCodeDaddy69"
@@ -260,7 +260,7 @@
       "name": "market-structure-analyzer",
       "description": "Crypto market-structure research agent — 24+ indicators across derivatives, options, on-chain, and macro sentiment with live K-line dashboard and composite scoring",
       "source": "./skills/market-structure-analyzer",
-      "category": "analytics",
+      "category": "strategy",
       "author": {
         "name": "VibeCodeDaddy",
         "github": "VibeCodeDaddy69"
@@ -270,7 +270,7 @@
       "name": "meme-trench-scanner",
       "description": "Meme Trench Scanner v1.0 — Solana Meme automated trading bot with 11 Launchpad coverage, 7-layer exit system, TraderSoul AI observation",
       "source": "./skills/meme-trench-scanner",
-      "category": "trading-strategy",
+      "category": "strategy",
       "author": {
         "name": "yz06276",
         "github": "yz06276"
@@ -300,7 +300,7 @@
       "name": "okx-buildx-hackathon-agent-track",
       "description": "AI Hackathon participation guide — registration, wallet setup, project building, submission to Moltbook, voting, and scoring. Apr 1-15, 2026. 14,000 USDT in prizes.",
       "source": "./skills/okx-buildx-hackathon-agent-track",
-      "category": "utility",
+      "category": "strategy",
       "author": {
         "name": "OKX",
         "github": "MigOKG"
@@ -310,7 +310,7 @@
       "name": "one-click-token-launch",
       "description": "One-click multi-launchpad token creation with bundled buy, IPFS metadata, MEV protection across 6 launchpads on Solana and BSC",
       "source": "./skills/one-click-token-launch",
-      "category": "trading-strategy",
+      "category": "strategy",
       "author": {
         "name": "victorlee",
         "github": "VibeCodeDaddy69"
@@ -430,7 +430,7 @@
       "name": "rootdata-crypto-plugin",
       "description": "RootData is a leading Web3 data platform covering crypto projects, investors, funding data, and personnel movements. This skill is the OKX-dedicated integration, isolated from the standard RootData skill with its own API key namespace and endpoints.",
       "source": "./skills/rootdata-crypto-plugin",
-      "category": "utility",
+      "category": "strategy",
       "author": {
         "name": "rootdata",
         "github": "CJZZWW"
@@ -440,7 +440,7 @@
       "name": "rwa-alpha",
       "description": "RWA Alpha — Real World Asset intelligence trading. Macro event detection + Polymarket confirmation + on-chain price action → auto-trade tokenized treasury/gold/yield/governance tokens via OKX DEX. Three modes: Yield Optimizer / Macro Trader / Full Alpha. Multi-chain Ethereum + Solana.",
       "source": "./skills/rwa-alpha",
-      "category": "trading-strategy",
+      "category": "strategy",
       "author": {
         "name": "VibeCodeDaddy",
         "github": "VibeCodeDaddy69"
@@ -450,7 +450,7 @@
       "name": "smart-money-signal-copy-trade",
       "description": "Smart Money Signal Copy Trade v1.0 — Smart money signal tracker with cost-aware TP, 15-check safety, 7-layer exit system",
       "source": "./skills/smart-money-signal-copy-trade",
-      "category": "trading-strategy",
+      "category": "strategy",
       "author": {
         "name": "yz06276",
         "github": "yz06276"
@@ -460,7 +460,7 @@
       "name": "sorin-skill",
       "description": "Answer DeFi questions about tokens, pools, chains, protocols, and projects using Sahara's Sorin DeFi AI Services Gateway",
       "source": "./skills/sorin-skill",
-      "category": "analytics",
+      "category": "strategy",
       "author": {
         "name": "Sahara AI",
         "github": "SaharaLabsAI"
@@ -556,7 +556,7 @@
       "name": "starter-coach",
       "description": "Starter Coach V2 — conversational 6-step skill that guides users to build their own automated DEX spot-trading bot on OKX DEX. Onboard → Profile → Build Strategy → Paper Trade → Go Live. Uses OnchainOS CLI for all on-chain data and execution. No freeform trading code — emits validated JSON strategy specs.",
       "source": "./skills/starter-coach",
-      "category": "trading-strategy",
+      "category": "strategy",
       "author": {
         "name": "VibeCodeDaddy",
         "github": "VibeCodeDaddy69"
@@ -576,7 +576,7 @@
       "name": "top-rank-tokens-sniper",
       "description": "Top Rank Tokens Sniper v1.0 — OKX ranking leaderboard sniper with momentum scoring, 3-level safety, 6-layer exit system",
       "source": "./skills/top-rank-tokens-sniper",
-      "category": "trading-strategy",
+      "category": "strategy",
       "author": {
         "name": "yz06276",
         "github": "yz06276"
@@ -606,7 +606,7 @@
       "name": "wallet-tracker-mcap",
       "description": "Wallet copy-trade bot -- monitors target Solana wallets and auto-mirrors meme token buys/sells with MC target gating, tiered TP, trailing stop, and 4-tier risk grading",
       "source": "./skills/wallet-tracker-mcap",
-      "category": "trading-strategy",
+      "category": "strategy",
       "author": {
         "name": "victorlee",
         "github": "VibeCodeDaddy69"
