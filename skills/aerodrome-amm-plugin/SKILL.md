@@ -139,11 +139,34 @@ mkdir -p ~/.local/bin
 # .github/workflows/plugin-publish.yml which uploads `checksums.txt`
 # alongside the 9 platform binaries under each release tag.
 BIN_TMP=$(mktemp -d)
-RELEASE_BASE="https://github.com/okx/plugin-store/releases/download/plugins/aerodrome-amm-plugin@0.1.2"
-curl -fsSL "${RELEASE_BASE}/aerodrome-amm-plugin-${TARGET}${EXT}" -o "$BIN_TMP/aerodrome-amm-plugin${EXT}" || {
+TAG="plugins/aerodrome-amm-plugin@0.1.2"
+
+# Robust asset download. Prefer `gh release download` — it resolves the
+# asset via the GitHub API and follows the signed-redirect properly,
+# which avoids edge cases observed where curl on
+# `releases/download/<tag with slash>/<file>` 404s under some
+# proxy / curl-version combinations. Falls back to raw curl if gh is
+# not installed.
+_pluginstore_dl() {
+  local fname="$1" dest="$2"
+  if command -v gh >/dev/null 2>&1; then
+    local stage; stage=$(mktemp -d)
+    if gh release download "$TAG" --repo okx/plugin-store \
+         --pattern "$fname" --dir "$stage" --clobber >/dev/null 2>&1 \
+       && [ -f "$stage/$fname" ]; then
+      mv "$stage/$fname" "$dest" && rm -rf "$stage" && return 0
+    fi
+    rm -rf "$stage"
+  fi
+  curl -fsSL \
+    "https://github.com/okx/plugin-store/releases/download/$TAG/$fname" \
+    -o "$dest"
+}
+
+_pluginstore_dl "aerodrome-amm-plugin-${TARGET}${EXT}" "$BIN_TMP/aerodrome-amm-plugin${EXT}" || {
   echo "ERROR: failed to download aerodrome-amm-plugin-${TARGET}${EXT}" >&2
   rm -rf "$BIN_TMP"; exit 1; }
-curl -fsSL "${RELEASE_BASE}/checksums.txt" -o "$BIN_TMP/checksums.txt" || {
+_pluginstore_dl "checksums.txt" "$BIN_TMP/checksums.txt" || {
   echo "ERROR: failed to download checksums.txt for aerodrome-amm-plugin@0.1.2" >&2
   rm -rf "$BIN_TMP"; exit 1; }
 
