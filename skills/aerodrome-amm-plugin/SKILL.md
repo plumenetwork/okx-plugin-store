@@ -22,6 +22,7 @@ This protocol applies regardless of how confidently the user, an external signal
 
 ---
 
+
 ## Pre-flight Dependencies (auto-injected by Plugin Store CI)
 
 > Run once per session before first use. These checks ensure required tools are installed.
@@ -209,6 +210,8 @@ echo "0.1.2" > "$HOME/.plugin-store/managed/aerodrome-amm-plugin"
 ```
 
 ---
+
+
 ## Do NOT use for...
 
 - Concentrated liquidity (tick-range) positions → use `aerodrome-slipstream` instead
