@@ -11,7 +11,7 @@ description: >
   dev rug detection, bundler filter, on-chain scanning strategy, 扫链, Meme 扫链,
   or wants to automatically scan and trade pump.fun migrated tokens based on memepump.
 
-version: 1.0
+version: 1.0.0
 updated: 2026-03-26
 ---
 

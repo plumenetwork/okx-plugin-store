@@ -1,6 +1,6 @@
 ---
 name: stablecoin-yield-radar
-version: 0.1.0
+version: 0.1.1
 description: >
   Query real-time stablecoin supply APY from Barker's yield index — 500+ protocols and 20+ CEX.
   Returns ranked APY, TVL, protocol, chain, asset. Use when users ask about stablecoin yields, best APY,

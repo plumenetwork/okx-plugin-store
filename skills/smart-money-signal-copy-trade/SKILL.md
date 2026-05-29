@@ -8,7 +8,7 @@ description: >
   or wants to automatically buy/sell based on smart money signals.
   Runtime file: bot.py (includes Web Dashboard http://localhost:3248)
   Config file: config.py (hot-reload)
-version: 1.0
+version: 1.0.0
 updated: 2026-03-26
 ---
 

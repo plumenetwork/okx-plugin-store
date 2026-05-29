@@ -1,6 +1,6 @@
 ---
 name: stablecoin-depeg-monitor
-version: 0.1.0
+version: 0.1.1
 description: >
   Monitor stablecoin peg stability and review historical depeg events.
   Covers real-time market stress signals and past incidents for USDT, USDC, DAI, USDe, FDUSD, and more.

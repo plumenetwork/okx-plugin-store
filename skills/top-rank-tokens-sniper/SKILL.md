@@ -10,7 +10,7 @@ description: >
   leaderboard sniper, top N sniper, 榜单狙击手, or start ranking sniper.
   Run file: ranking_sniper.py (includes Web Dashboard http://localhost:3244)
 
-version: 1.0
+version: 1.0.0
 updated: 2026-03-26
 ---
 

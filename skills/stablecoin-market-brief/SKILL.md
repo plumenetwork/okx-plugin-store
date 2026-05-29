@@ -1,6 +1,6 @@
 ---
 name: stablecoin-market-brief
-version: 0.1.0
+version: 0.1.1
 description: >
   Get a real-time stablecoin market overview from 500+ protocols and 20+ CEX: total market cap, yield-bearing stablecoin market cap,
   asset distribution (USDT/USDC/DAI share), chain distribution (Ethereum/BSC/Arbitrum share),
