@@ -1,6 +1,6 @@
 ---
 name: stablecoin-risk-check
-version: 0.1.0
+version: 0.1.1
 description: >
   Assess stablecoin safety and risk profile across 500+ protocols. Covers depeg history, reserve composition,
   audit status, regulatory exposure, and market cap trends for major stablecoins

@@ -1,6 +1,6 @@
 ---
 name: stablecoin-chain-explorer
-version: 0.1.0
+version: 0.1.1
 description: >
   Explore stablecoin TVL distribution and yield opportunities by blockchain.
   Query which chains have the most stablecoins, compare cross-chain yields,

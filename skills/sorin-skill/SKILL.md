@@ -1,7 +1,7 @@
 ---
 name: sorin-skill
 description: Use when the user asks crypto-related questions about a token, pool, chain, protocol, or project and the agent should answer with Sorin's DeFi gateway using clear, data-backed analysis.
-version: "1.0.0"
+version: "1.0.1"
 author: Sahara AI
 tags:
   - defi
