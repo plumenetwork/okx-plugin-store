@@ -22,7 +22,7 @@
         "aave-v2",
         "defi"
       ],
-      "modify_date": "1779876690",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -79,7 +79,7 @@
         "collateral",
         "health-factor"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -135,7 +135,7 @@
         "swap",
         "defi"
       ],
-      "modify_date": "1779876838",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -187,7 +187,7 @@
         "clmm",
         "defi"
       ],
-      "modify_date": "1779882857",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -239,7 +239,7 @@
         "solana",
         "x402"
       ],
-      "modify_date": "1779942276",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -286,7 +286,7 @@
         "uniswap-v4",
         "base"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -340,7 +340,7 @@
         "benchmark",
         "skill"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956489",
       "type": "official",
       "components": {
         "skill": {
@@ -370,7 +370,7 @@
         "ethereum",
         "defi"
       ],
-      "modify_date": "1779937383",
+      "modify_date": "1779956246",
       "type": "community",
       "components": {
         "skill": {
@@ -415,7 +415,7 @@
         "winddown",
         "defi"
       ],
-      "modify_date": "1779879618",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -468,7 +468,7 @@
         "compound",
         "comet"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -526,7 +526,7 @@
         "amm",
         "liquidity"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -587,7 +587,7 @@
         "arbitrum",
         "dolo"
       ],
-      "modify_date": "1779873362",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -640,7 +640,7 @@
         "yield",
         "lrt"
       ],
-      "modify_date": "1779879652",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -695,7 +695,7 @@
         "ethereum",
         "erc4626"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -736,7 +736,7 @@
     },
     {
       "name": "euler-v2-plugin",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "description": "Supply, borrow and earn yield on Euler v2 - a modular lending protocol with isolated-risk vaults (EVK)",
       "author": {
         "name": "GeoGu360",
@@ -754,7 +754,7 @@
         "evk",
         "collateral"
       ],
-      "modify_date": "1779885157",
+      "modify_date": "1780021350",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -765,7 +765,7 @@
           "repo": "okx/plugin-store",
           "asset_pattern": "euler-v2-plugin-{target}",
           "checksums_asset": "checksums.txt",
-          "release_tag": "plugins/euler-v2-plugin@0.1.1"
+          "release_tag": "plugins/euler-v2-plugin@0.1.2"
         }
       },
       "build": {
@@ -812,7 +812,7 @@
         "arbitrum",
         "defi"
       ],
-      "modify_date": "1779879353",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -869,7 +869,7 @@
         "four-meme",
         "token-trading"
       ],
-      "modify_date": "1779882817",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -927,7 +927,7 @@
         "arbitrum",
         "avalanche"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -983,7 +983,7 @@
         "hyperliquid",
         "derivatives"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1042,7 +1042,7 @@
         "kamino",
         "defi"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1096,7 +1096,7 @@
         "liquidity",
         "kamino"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1154,7 +1154,7 @@
         "steth",
         "ethereum"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1209,7 +1209,7 @@
         "lifi",
         "swap"
       ],
-      "modify_date": "1779879728",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1270,7 +1270,7 @@
         "fred",
         "finnhub"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1307,7 +1307,7 @@
         "spot-trading",
         "auto-research"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956489",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1356,7 +1356,7 @@
         "smart-money",
         "live-dashboard"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956489",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1399,7 +1399,7 @@
         "onchainos",
         "trading-bot"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1437,7 +1437,7 @@
         "dlmm",
         "swap"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1493,7 +1493,7 @@
         "morpho",
         "collateral"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1549,7 +1549,7 @@
         "uniswap",
         "moltbook"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956489",
       "type": "official",
       "components": {
         "skill": {
@@ -1592,7 +1592,7 @@
         "one-click-token-launch",
         "meme-coin"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956489",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1642,7 +1642,7 @@
         "solana",
         "amm"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1698,7 +1698,7 @@
         "v3",
         "pancakeswap"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1759,7 +1759,7 @@
         "lp",
         "arbitrum"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1815,7 +1815,7 @@
         "base",
         "arbitrum"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1874,7 +1874,7 @@
         "yt",
         "liquidity"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1932,7 +1932,7 @@
         "defi",
         "clob"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -1999,7 +1999,7 @@
         "ethereum",
         "erc4626"
       ],
-      "modify_date": "1779876899",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2054,7 +2054,7 @@
         "launchpad",
         "pump-fun"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2108,7 +2108,7 @@
         "swap",
         "defi"
       ],
-      "modify_date": "1779876818",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2155,7 +2155,7 @@
         "swap",
         "raydium"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2210,7 +2210,7 @@
         "fast-bridge",
         "intent"
       ],
-      "modify_date": "1779884871",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2260,7 +2260,7 @@
         "web3",
         "crypto"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956489",
       "type": "official",
       "components": {
         "skill": {
@@ -2298,7 +2298,7 @@
         "solana",
         "polymarket"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956489",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2339,7 +2339,7 @@
         "onchainos",
         "trading-bot"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2377,7 +2377,7 @@
         "tokens",
         "yield"
       ],
-      "modify_date": "1779937999",
+      "modify_date": "1779956489",
       "type": "official",
       "components": {
         "skill": {
@@ -2420,7 +2420,7 @@
         "ssr",
         "usds"
       ],
-      "modify_date": "1779879641",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2476,7 +2476,7 @@
         "sparklend",
         "aave"
       ],
-      "modify_date": "1779876827",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2528,7 +2528,7 @@
         "ethereum",
         "defi"
       ],
-      "modify_date": "1779937462",
+      "modify_date": "1779956246",
       "type": "official",
       "components": {
         "skill": {
@@ -2568,7 +2568,7 @@
         "trading",
         "signal"
       ],
-      "modify_date": "1779937585",
+      "modify_date": "1779956246",
       "type": "official",
       "components": {
         "skill": {
@@ -2606,7 +2606,7 @@
         "ethereum",
         "defi"
       ],
-      "modify_date": "1779937497",
+      "modify_date": "1779956246",
       "type": "official",
       "components": {
         "skill": {
@@ -2645,7 +2645,7 @@
         "defi",
         "ranking"
       ],
-      "modify_date": "1779937667",
+      "modify_date": "1779956246",
       "type": "official",
       "components": {
         "skill": {
@@ -2683,7 +2683,7 @@
         "ethereum",
         "defi"
       ],
-      "modify_date": "1779937685",
+      "modify_date": "1779956246",
       "type": "official",
       "components": {
         "skill": {
@@ -2721,7 +2721,7 @@
       "tags": [
         "defi"
       ],
-      "modify_date": "1779937528",
+      "modify_date": "1779956246",
       "type": "official",
       "components": {
         "skill": {
@@ -2765,7 +2765,7 @@
         "solana",
         "ethereum"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2804,7 +2804,7 @@
         "multi-chain",
         "defi"
       ],
-      "modify_date": "1779884586",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2860,7 +2860,7 @@
         "onchainos",
         "trading-bot"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2900,7 +2900,7 @@
         "v4",
         "multi-chain"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "dapp-official",
       "components": {
         "skill": {
@@ -2939,7 +2939,7 @@
         "volatile",
         "optimism"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956246",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2991,7 +2991,7 @@
         "copy-trade",
         "meme-coin"
       ],
-      "modify_date": "1779697959",
+      "modify_date": "1779956489",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -3029,7 +3029,7 @@
         "ethereum",
         "defi"
       ],
-      "modify_date": "1779937503",
+      "modify_date": "1779956246",
       "type": "official",
       "components": {
         "skill": {

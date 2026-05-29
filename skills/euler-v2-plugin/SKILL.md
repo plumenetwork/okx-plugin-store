@@ -28,7 +28,7 @@ tags:
 # It does NOT install anything; install requires user-confirmed `npx skills add` below.
 UPDATE_CACHE="$HOME/.plugin-store/update-cache/euler-v2-plugin"
 CACHE_MAX=3600
-LOCAL_VER="0.1.1"
+LOCAL_VER="0.1.2"
 DO_CHECK=true
 
 if [ -f "$UPDATE_CACHE" ]; then
@@ -145,12 +145,12 @@ mkdir -p ~/.local/bin
 # .github/workflows/plugin-publish.yml which uploads `checksums.txt`
 # alongside the 9 platform binaries under each release tag.
 BIN_TMP=$(mktemp -d)
-RELEASE_BASE="https://github.com/okx/plugin-store/releases/download/plugins/euler-v2-plugin@0.1.1"
+RELEASE_BASE="https://github.com/okx/plugin-store/releases/download/plugins/euler-v2-plugin@0.1.2"
 curl -fsSL "${RELEASE_BASE}/euler-v2-plugin-${TARGET}${EXT}" -o "$BIN_TMP/euler-v2-plugin${EXT}" || {
   echo "ERROR: failed to download euler-v2-plugin-${TARGET}${EXT}" >&2
   rm -rf "$BIN_TMP"; exit 1; }
 curl -fsSL "${RELEASE_BASE}/checksums.txt" -o "$BIN_TMP/checksums.txt" || {
-  echo "ERROR: failed to download checksums.txt for euler-v2-plugin@0.1.1" >&2
+  echo "ERROR: failed to download checksums.txt for euler-v2-plugin@0.1.2" >&2
   rm -rf "$BIN_TMP"; exit 1; }
 
 EXPECTED=$(awk -v b="euler-v2-plugin-${TARGET}${EXT}" '$2 == b {print $1; exit}' "$BIN_TMP/checksums.txt")
@@ -174,7 +174,7 @@ ln -sf "$LAUNCHER" ~/.local/bin/euler-v2-plugin
 
 # Register version
 mkdir -p "$HOME/.plugin-store/managed"
-echo "0.1.1" > "$HOME/.plugin-store/managed/euler-v2-plugin"
+echo "0.1.2" > "$HOME/.plugin-store/managed/euler-v2-plugin"
 ```
 
 ---
