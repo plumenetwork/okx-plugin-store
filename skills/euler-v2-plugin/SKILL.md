@@ -1,7 +1,7 @@
 ---
 name: euler-v2-plugin
 description: "Supply, borrow and earn yield on Euler v2 - a modular lending protocol with isolated-risk EVK (Euler Vault Kit) vaults. Trigger phrases: supply to euler, deposit to euler vault, borrow from euler, repay euler loan, euler health factor, my euler positions, euler vault apy, claim euler rewards, list euler vaults, evk vault."
-version: 0.1.1
+version: 0.1.2
 author: GeoGu360
 tags:
   - lending
