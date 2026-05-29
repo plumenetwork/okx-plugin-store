@@ -13,7 +13,8 @@ use crate::rpc::{get_assets_in, native_balance, pad_address, pad_u256, selectors
 #[derive(Args)]
 pub struct EnterMarketsArgs {
     /// Comma-separated cToken symbols (cDAI, cUSDC, …) or 0x cToken addresses.
-    #[arg(long)]
+    /// Singular `--ctoken` is accepted as an alias for symmetry with `exit-market`.
+    #[arg(long, alias = "ctoken")]
     pub ctokens: String,
     #[arg(long)]
     pub dry_run: bool,
