@@ -1,6 +1,6 @@
 ---
 name: yield-strategy-advisor
-version: 0.1.0
+version: 0.1.1
 description: >
   Recommend stablecoin yield strategies based on risk tolerance, capital size, and chain preference.
   Suggests diversified allocations across lending and vaults from 500+ protocols and 20+ CEX.
