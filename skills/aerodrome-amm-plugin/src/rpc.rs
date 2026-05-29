@@ -79,6 +79,42 @@ pub async fn get_allowance(token: &str, owner: &str, spender: &str, rpc: &str) -
     Ok(decode_u128(&hex))
 }
 
+/// Poll `allowance(owner, spender)` until it reaches at least `min_amount`,
+/// or the timeout elapses. Used right after submitting an ERC-20 approve tx
+/// to make sure the next contract call (swap / addLiquidity / removeLiquidity)
+/// sees the updated allowance — relying on a fixed `sleep` would
+/// occasionally race the approve receipt and surface
+/// `ERC20: insufficient allowance` from the downstream call.
+///
+/// Polls every ~1.5s. 60s total wall-clock budget is generous on Base
+/// (typical block time 2s, soft finality 1 confirmation), and bails loudly
+/// rather than silently broadcasting a doomed follow-up.
+pub async fn wait_for_allowance(
+    token: &str,
+    owner: &str,
+    spender: &str,
+    min_amount: u128,
+    rpc: &str,
+) -> anyhow::Result<()> {
+    const TIMEOUT_SECS: u64 = 60;
+    const POLL_INTERVAL_MS: u64 = 1_500;
+
+    let start = std::time::Instant::now();
+    loop {
+        let allowance = get_allowance(token, owner, spender, rpc).await.unwrap_or(0);
+        if allowance >= min_amount {
+            return Ok(());
+        }
+        if start.elapsed().as_secs() >= TIMEOUT_SECS {
+            anyhow::bail!(
+                "allowance still {} < {} after {}s — approve tx likely failed or RPC is lagging",
+                allowance, min_amount, TIMEOUT_SECS
+            );
+        }
+        sleep(Duration::from_millis(POLL_INTERVAL_MS)).await;
+    }
+}
+
 /// ERC-20 totalSupply() — selector 0x18160ddd
 pub async fn get_total_supply(token: &str, rpc: &str) -> anyhow::Result<u128> {
     let hex = eth_call(token, "0x18160ddd", rpc).await?;

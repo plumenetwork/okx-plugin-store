@@ -1,5 +1,4 @@
 use clap::Args;
-use tokio::time::{sleep, Duration};
 use crate::config::{
     build_approve_calldata, factory, pad_address, pad_bool, pad_u256,
     resolve_token_validated, router, rpc_url, token_symbol, unix_now, CHAIN_ID,
@@ -7,7 +6,7 @@ use crate::config::{
 use crate::onchainos::{extract_tx_hash, resolve_wallet, wallet_contract_call};
 use crate::rpc::{
     amm_get_pool, format_amount, get_allowance, get_balance_of, get_decimals,
-    parse_human_amount, router_get_amounts_out,
+    parse_human_amount, router_get_amounts_out, wait_for_allowance,
 };
 
 #[derive(Args)]
@@ -183,8 +182,8 @@ pub async fn run(args: SwapArgs) -> anyhow::Result<()> {
             let approve_data   = build_approve_calldata(rtr, amount_in_raw);
             let approve_result = wallet_contract_call(CHAIN_ID, &token_in, &approve_data, false, false, Some(&recipient)).await?;
             let approve_hash   = extract_tx_hash(&approve_result);
-            eprintln!("[aerodrome-amm] Approve tx: {}. Waiting for confirmation...", approve_hash);
-            sleep(Duration::from_secs(5)).await;
+            eprintln!("[aerodrome-amm] Approve tx: {}. Waiting for allowance to confirm on-chain...", approve_hash);
+            wait_for_allowance(&token_in, &recipient, rtr, amount_in_raw, rpc).await?;
         }
     }
 
