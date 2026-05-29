@@ -120,7 +120,7 @@
     },
     {
       "name": "aerodrome-amm-plugin",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "description": "Swap tokens and provide liquidity on Aerodrome AMM (volatile/stable pools) on Base",
       "author": {
         "name": "skylavis-sky",
@@ -135,7 +135,7 @@
         "swap",
         "defi"
       ],
-      "modify_date": "1779956246",
+      "modify_date": "1780024112",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -146,7 +146,7 @@
           "repo": "okx/plugin-store",
           "asset_pattern": "aerodrome-amm-plugin-{target}",
           "checksums_asset": "checksums.txt",
-          "release_tag": "plugins/aerodrome-amm-plugin@0.1.1"
+          "release_tag": "plugins/aerodrome-amm-plugin@0.1.2"
         }
       },
       "build": {
@@ -1399,7 +1399,7 @@
         "onchainos",
         "trading-bot"
       ],
-      "modify_date": "1779956246",
+      "modify_date": "1780022312",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2339,7 +2339,7 @@
         "onchainos",
         "trading-bot"
       ],
-      "modify_date": "1779956246",
+      "modify_date": "1780022312",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -2377,7 +2377,7 @@
         "tokens",
         "yield"
       ],
-      "modify_date": "1779956489",
+      "modify_date": "1780022014",
       "type": "official",
       "components": {
         "skill": {
@@ -2528,7 +2528,7 @@
         "ethereum",
         "defi"
       ],
-      "modify_date": "1779956246",
+      "modify_date": "1780022014",
       "type": "official",
       "components": {
         "skill": {
@@ -2568,7 +2568,7 @@
         "trading",
         "signal"
       ],
-      "modify_date": "1779956246",
+      "modify_date": "1780022014",
       "type": "official",
       "components": {
         "skill": {
@@ -2606,7 +2606,7 @@
         "ethereum",
         "defi"
       ],
-      "modify_date": "1779956246",
+      "modify_date": "1780022014",
       "type": "official",
       "components": {
         "skill": {
@@ -2645,7 +2645,7 @@
         "defi",
         "ranking"
       ],
-      "modify_date": "1779956246",
+      "modify_date": "1780022014",
       "type": "official",
       "components": {
         "skill": {
@@ -2683,7 +2683,7 @@
         "ethereum",
         "defi"
       ],
-      "modify_date": "1779956246",
+      "modify_date": "1780022014",
       "type": "official",
       "components": {
         "skill": {
@@ -2721,7 +2721,7 @@
       "tags": [
         "defi"
       ],
-      "modify_date": "1779956246",
+      "modify_date": "1780022014",
       "type": "official",
       "components": {
         "skill": {
@@ -2860,7 +2860,7 @@
         "onchainos",
         "trading-bot"
       ],
-      "modify_date": "1779956246",
+      "modify_date": "1780022312",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -3029,7 +3029,7 @@
         "ethereum",
         "defi"
       ],
-      "modify_date": "1779956246",
+      "modify_date": "1780022014",
       "type": "official",
       "components": {
         "skill": {

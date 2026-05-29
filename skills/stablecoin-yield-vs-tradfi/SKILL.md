@@ -1,6 +1,6 @@
 ---
 name: stablecoin-yield-vs-tradfi
-version: 0.1.0
+version: 0.1.1
 description: >
   Compare stablecoin DeFi/CEX yields against traditional finance: bank savings, money market funds,
   and US Treasury bills. Uses Barker's real-time yield data alongside TradFi benchmarks.
