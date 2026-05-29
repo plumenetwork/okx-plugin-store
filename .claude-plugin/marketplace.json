@@ -10,7 +10,7 @@
       "name": "aave-v2-plugin",
       "description": "Aave V2 exit tool on Ethereum, Polygon, and Avalanche - all reserves are frozen by governance. Redeem aTokens, repay debt cleanly via uint256.max sentinel, claim stkAAVE/WMATIC/WAVAX rewards. New supply/borrow rejected; use aave-v3-plugin for active flows",
       "source": "./skills/aave-v2-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -20,7 +20,7 @@
       "name": "aave-v3-plugin",
       "description": "Lend and borrow crypto assets on Aave V3 — the leading decentralized liquidity protocol. Trigger phrases: supply to aave, deposit to aave, borrow from aave, repay aave loan, aave health factor, my aave positions, aave interest rates, enable emode, disable collateral, claim aave rewards.",
       "source": "./skills/aave-v3-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -30,7 +30,7 @@
       "name": "aerodrome-amm-plugin",
       "description": "Swap tokens and provide liquidity on Aerodrome AMM (volatile/stable pools) on Base",
       "source": "./skills/aerodrome-amm-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -40,7 +40,7 @@
       "name": "aerodrome-slipstream-plugin",
       "description": "Swap tokens and manage concentrated liquidity positions on Aerodrome Slipstream (CLMM) on Base. Supports 9 commands: swap, quote, pools, prices, positions, mint, add/remove liquidity, collect fees.",
       "source": "./skills/aerodrome-slipstream-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -50,7 +50,7 @@
       "name": "birdeye-plugin",
       "description": "Birdeye multi-chain DeFi analytics plugin with dual mode access: API key and x402 pay-per-request.",
       "source": "./skills/birdeye-plugin",
-      "category": "analytics",
+      "category": "dapp",
       "author": {
         "name": "Dat Dang",
         "github": "dangquocdat97"
@@ -60,7 +60,7 @@
       "name": "clanker-plugin",
       "description": "Deploy and manage Clanker ERC-20 tokens on Base and Arbitrum — launch tokens, search by creator, and claim LP fee rewards",
       "source": "./skills/clanker-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -80,7 +80,7 @@
       "name": "coinank-openapi",
       "description": "Access CoinAnk crypto derivatives market data via API key or Agent Payments Protocol/x402 pay-per-call.",
       "source": "./skills/coinank-openapi",
-      "category": "analytics",
+      "category": "dapp",
       "author": {
         "name": "CoinAnk",
         "github": "coinank"
@@ -90,7 +90,7 @@
       "name": "compound-v2-plugin",
       "description": "Compound V2 (legacy cToken-based) money market on Ethereum mainnet - exit tool: redeem cTokens, repay debt, claim COMP. New supply/borrow paused by governance - use compound-v3-plugin for active flows",
       "source": "./skills/compound-v2-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -100,7 +100,7 @@
       "name": "compound-v3-plugin",
       "description": "Compound V3 (Comet) lending plugin: supply collateral, borrow/repay the base asset, and claim COMP rewards",
       "source": "./skills/compound-v3-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -110,7 +110,7 @@
       "name": "curve-plugin",
       "description": "Curve DEX plugin — swap stablecoins, add/remove liquidity, query pools and APY across Ethereum, Arbitrum, Base, Polygon, and BSC.",
       "source": "./skills/curve-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -120,7 +120,7 @@
       "name": "dolomite-plugin",
       "description": "Dolomite Finance lending and borrowing on Arbitrum - supply assets to earn interest, open isolated borrow positions, and manage repay/withdraw via DolomiteMargin",
       "source": "./skills/dolomite-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -130,7 +130,7 @@
       "name": "eigencloud-plugin",
       "description": "Restake LSTs on EigenLayer to earn AVS operator yield — stake, delegate, and manage your restaking positions",
       "source": "./skills/eigencloud-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -140,7 +140,7 @@
       "name": "etherfi-plugin",
       "description": "Liquid restaking on Ethereum — deposit ETH to receive eETH, wrap/unwrap eETH/weETH (ERC-4626), unstake eETH back to ETH, and check positions with APY",
       "source": "./skills/etherfi-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -150,7 +150,7 @@
       "name": "euler-v2-plugin",
       "description": "Supply, borrow and earn yield on Euler v2 - a modular lending protocol with isolated-risk vaults (EVK)",
       "source": "./skills/euler-v2-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -160,7 +160,7 @@
       "name": "fluid-plugin",
       "description": "Supply and borrow on Fluid Protocol's smart collateral lending vaults on Ethereum and Arbitrum",
       "source": "./skills/fluid-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -170,7 +170,7 @@
       "name": "fourmeme-plugin",
       "description": "Trade Four.meme bonding-curve memecoins on BNB Chain - buy/sell pre-graduate tokens via TokenManager V2 with Helper3 quoting",
       "source": "./skills/fourmeme-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -180,7 +180,7 @@
       "name": "gmx-v2-plugin",
       "description": "Trade perpetuals and spot on GMX V2 — open/close leveraged positions, place limit/stop orders, add/remove GM pool liquidity on Arbitrum and Avalanche",
       "source": "./skills/gmx-v2-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -190,7 +190,7 @@
       "name": "hyperliquid-plugin",
       "description": "Trade perpetuals on Hyperliquid - check positions, get prices, place market/limit orders with TP/SL brackets, close positions, deposit USDC",
       "source": "./skills/hyperliquid-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -200,7 +200,7 @@
       "name": "kamino-lend-plugin",
       "description": "Supply, borrow, and manage positions on Kamino Lend — the leading Solana lending protocol",
       "source": "./skills/kamino-lend-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -210,7 +210,7 @@
       "name": "kamino-liquidity-plugin",
       "description": "Kamino Liquidity KVault earn vaults on Solana. Deposit tokens to earn yield, withdraw shares, and track positions.",
       "source": "./skills/kamino-liquidity-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -220,7 +220,7 @@
       "name": "lido-plugin",
       "description": "Stake ETH with Lido liquid staking protocol — stake, manage withdrawals, and track staking rewards on Ethereum mainnet",
       "source": "./skills/lido-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -230,7 +230,7 @@
       "name": "lifi-plugin",
       "description": "LI.FI cross-chain bridge & swap aggregator - list chains/tokens, get quotes, bridge or swap, track tx status across Ethereum, Arbitrum, Base, BSC, Polygon, and Optimism",
       "source": "./skills/lifi-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -280,7 +280,7 @@
       "name": "meteora-plugin",
       "description": "Meteora DLMM plugin for searching pools, getting swap quotes, checking positions, executing swaps, and adding liquidity on Solana",
       "source": "./skills/meteora-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -290,7 +290,7 @@
       "name": "morpho-plugin",
       "description": "Supply, borrow and earn yield on Morpho — a permissionless lending protocol",
       "source": "./skills/morpho-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -320,7 +320,7 @@
       "name": "orca-plugin",
       "description": "Concentrated liquidity AMM on Solana — swap tokens and query pools via the Whirlpools CLMM program",
       "source": "./skills/orca-plugin",
-      "category": "trading-strategy",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -330,7 +330,7 @@
       "name": "pancakeswap-clmm-plugin",
       "description": "PancakeSwap V3 CLMM farming plugin — stake LP NFTs into MasterChefV3, harvest CAKE rewards, collect swap fees. Trigger phrases: stake LP NFT, farm CAKE, collect fees, unfarm, PancakeSwap farming.",
       "source": "./skills/pancakeswap-clmm-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -340,7 +340,7 @@
       "name": "pancakeswap-v2-plugin",
       "description": "Swap tokens and manage liquidity on PancakeSwap V2 (xyk AMM) on BSC, Base, and Arbitrum. Triggers: swap pancakeswap v2, add/remove liquidity pancake, pcs v2 quote, check pancake pair.",
       "source": "./skills/pancakeswap-v2-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -350,7 +350,7 @@
       "name": "pancakeswap-v3-plugin",
       "description": "Swap tokens and manage concentrated liquidity on PancakeSwap V3 on BNB Chain, Base, and Arbitrum",
       "source": "./skills/pancakeswap-v3-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -360,7 +360,7 @@
       "name": "pendle-plugin",
       "description": "Pendle Finance yield tokenization plugin — buy/sell PT & YT, add/remove liquidity, mint/redeem PT+YT pairs across Ethereum, Arbitrum, BSC, and Base",
       "source": "./skills/pendle-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -370,7 +370,7 @@
       "name": "polymarket-plugin",
       "description": "Trade prediction markets on Polymarket — buy and sell YES/NO outcome tokens on Polygon",
       "source": "./skills/polymarket-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -380,7 +380,7 @@
       "name": "puffer-plugin",
       "description": "Puffer Finance liquid restaking on Ethereum - stake ETH for pufETH (ERC-4626 nLRT), choose 1-step instant exit (1% fee) or 2-step queued (~14d, no fee), check positions and rate",
       "source": "./skills/puffer-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -390,7 +390,7 @@
       "name": "pump-fun-plugin",
       "description": "Buy and sell tokens on pump.fun bonding curves on Solana mainnet",
       "source": "./skills/pump-fun-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -400,7 +400,7 @@
       "name": "quickswap-plugin",
       "description": "Swap tokens on QuickSwap V3 (Algebra CLMM) on Polygon — with price quotes and pool discovery",
       "source": "./skills/quickswap-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -410,7 +410,7 @@
       "name": "raydium-plugin",
       "description": "Raydium AMM plugin for token swaps, price queries, and pool info on Solana mainnet. Trigger phrases: swap on raydium, raydium swap, raydium price, raydium pool, get swap quote raydium, raydium dex, swap solana raydium.",
       "source": "./skills/raydium-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -420,7 +420,7 @@
       "name": "relay-plugin",
       "description": "Fast cross-chain transfers using Relay Protocol's intent-based bridge",
       "source": "./skills/relay-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -470,7 +470,7 @@
       "name": "spark-savings-plugin",
       "description": "Spark Savings - earn Sky Savings Rate (SSR) on USDS or DAI via the sUSDS yield-bearing vault. Supports deposit, withdraw, balance, APY queries on Ethereum (ERC-4626) and Base/Arbitrum (Spark PSM).",
       "source": "./skills/spark-savings-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -480,7 +480,7 @@
       "name": "sparklend-plugin",
       "description": "SparkLend lending and borrowing on Ethereum Mainnet — supply, withdraw, borrow, repay, positions, health factor, reserves.",
       "source": "./skills/sparklend-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -490,7 +490,7 @@
       "name": "stablecoin-chain-explorer",
       "description": "Explore stablecoin TVL and yield opportunities by blockchain. Compare cross-chain yields on Ethereum, BSC, Arbitrum, Base, Polygon, Optimism, Solana, and more.",
       "source": "./skills/stablecoin-chain-explorer",
-      "category": "analytics",
+      "category": "dapp",
       "author": {
         "name": "Barker",
         "github": "YBSbarker",
@@ -501,7 +501,7 @@
       "name": "stablecoin-depeg-monitor",
       "description": "Stablecoin peg stability monitoring and historical depeg database. Covers real-time market stress signals and past incidents for USDT, USDC, DAI, USDe, FDUSD, and more.",
       "source": "./skills/stablecoin-depeg-monitor",
-      "category": "analytics",
+      "category": "dapp",
       "author": {
         "name": "Barker",
         "github": "YBSbarker",
@@ -512,7 +512,7 @@
       "name": "stablecoin-market-brief",
       "description": "Real-time stablecoin market overview - total market cap, yield-bearing cap, asset and chain distribution, plus market-wide APY versus US Treasury benchmark.",
       "source": "./skills/stablecoin-market-brief",
-      "category": "analytics",
+      "category": "dapp",
       "author": {
         "name": "Barker",
         "github": "YBSbarker",
@@ -523,7 +523,7 @@
       "name": "stablecoin-risk-check",
       "description": "Stablecoin safety and risk assessment - depeg history, reserve composition, audit status, and regulatory exposure for USDT, USDC, DAI, USDe, and other major stablecoins.",
       "source": "./skills/stablecoin-risk-check",
-      "category": "analytics",
+      "category": "dapp",
       "author": {
         "name": "Barker",
         "github": "YBSbarker",
@@ -534,7 +534,7 @@
       "name": "stablecoin-yield-radar",
       "description": "Real-time stablecoin yield APY rankings across 500+ DeFi protocols and 20+ CEX. Returns ranked APY, TVL, protocol, chain, and asset for USDT, USDC, DAI, USDe, and more.",
       "source": "./skills/stablecoin-yield-radar",
-      "category": "analytics",
+      "category": "dapp",
       "author": {
         "name": "Barker",
         "github": "YBSbarker",
@@ -545,7 +545,7 @@
       "name": "stablecoin-yield-vs-tradfi",
       "description": "Compare stablecoin DeFi and CEX yields against TradFi benchmarks - bank savings, money market funds, and US Treasury bills. Real-time crypto yields plus TradFi rates.",
       "source": "./skills/stablecoin-yield-vs-tradfi",
-      "category": "analytics",
+      "category": "dapp",
       "author": {
         "name": "Barker",
         "github": "YBSbarker",
@@ -566,7 +566,7 @@
       "name": "sushiswap-v3-plugin",
       "description": "Swap tokens and manage concentrated liquidity positions on SushiSwap V3 across Ethereum, Arbitrum, Base, Polygon, and Optimism",
       "source": "./skills/sushiswap-v3-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "skylavis-sky",
         "github": "skylavis-sky"
@@ -586,7 +586,7 @@
       "name": "uniswap-ai",
       "description": "AI-powered Uniswap developer tools: trading, hooks, drivers, and on-chain analysis across V2/V3/V4",
       "source": "./skills/uniswap-ai",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "Uniswap",
         "github": "Uniswap"
@@ -596,7 +596,7 @@
       "name": "velodrome-v2-plugin",
       "description": "Swap tokens and manage classic AMM (volatile/stable) LP positions on Velodrome V2 on Optimism",
       "source": "./skills/velodrome-v2-plugin",
-      "category": "defi-protocol",
+      "category": "dapp",
       "author": {
         "name": "GeoGu360",
         "github": "GeoGu360"
@@ -616,7 +616,7 @@
       "name": "yield-strategy-advisor",
       "description": "Stablecoin yield strategy recommendations by risk tolerance, capital size, and chain preference. Suggests diversified allocations across 500+ DeFi protocols and 20+ CEX.",
       "source": "./skills/yield-strategy-advisor",
-      "category": "analytics",
+      "category": "dapp",
       "author": {
         "name": "Barker",
         "github": "YBSbarker",
