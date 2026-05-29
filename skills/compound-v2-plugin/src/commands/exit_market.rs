@@ -14,8 +14,9 @@ use crate::rpc::{
 ///   - Removing this collateral would push your account into shortfall (other debts unsupported)
 #[derive(Args)]
 pub struct ExitMarketArgs {
-    /// cToken symbol (cDAI, cUSDC, …) or 0x cToken address
-    #[arg(long)]
+    /// cToken symbol (cDAI, cUSDC, …) or 0x cToken address.
+    /// Plural `--ctokens` is accepted as an alias for symmetry with `enter-markets`.
+    #[arg(long, alias = "ctokens")]
     pub ctoken: String,
     #[arg(long)]
     pub dry_run: bool,

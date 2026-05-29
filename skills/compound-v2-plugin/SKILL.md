@@ -1,7 +1,7 @@
 ---
 name: compound-v2-plugin
 description: Compound V2 (cToken) money market on Ethereum mainnet - exit tool for legacy positions (redeem, repay, claim COMP). Both supply AND borrow are governance-paused on all 6 markets. Use compound-v3-plugin for active flows.
-version: "0.1.1"
+version: "0.1.2"
 author: GeoGu360
 tags:
   - compound
