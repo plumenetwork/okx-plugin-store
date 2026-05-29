@@ -46,6 +46,11 @@ pub struct RepayArgs {
 
     #[arg(long)]
     pub dry_run: bool,
+
+    /// Required to broadcast. Without this, the command prints a preview
+    /// (calldata + intent) and exits without touching the chain.
+    #[arg(long)]
+    pub confirm: bool,
 }
 
 pub async fn run(args: RepayArgs) -> Result<()> {
@@ -122,7 +127,7 @@ async fn run_inner(args: RepayArgs) -> Result<()> {
         (build_repay_with_shares(amt_raw, &wallet), amt_str.clone(), amt_raw)
     };
 
-    if args.dry_run {
+    if !args.confirm {
         println!("{}", serde_json::to_string_pretty(&serde_json::json!({
             "ok": true, "dry_run": true,
             "data": {
