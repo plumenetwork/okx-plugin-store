@@ -397,7 +397,7 @@
     },
     {
       "name": "compound-v2-plugin",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "description": "Compound V2 (legacy cToken-based) money market on Ethereum mainnet - exit tool: redeem cTokens, repay debt, claim COMP. New supply/borrow paused by governance - use compound-v3-plugin for active flows",
       "author": {
         "name": "GeoGu360",
@@ -415,7 +415,7 @@
         "winddown",
         "defi"
       ],
-      "modify_date": "1779956246",
+      "modify_date": "1780022825",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -426,7 +426,7 @@
           "repo": "okx/plugin-store",
           "asset_pattern": "compound-v2-plugin-{target}",
           "checksums_asset": "checksums.txt",
-          "release_tag": "plugins/compound-v2-plugin@0.1.1"
+          "release_tag": "plugins/compound-v2-plugin@0.1.2"
         }
       },
       "build": {
@@ -754,7 +754,7 @@
         "evk",
         "collateral"
       ],
-      "modify_date": "1780022333",
+      "modify_date": "1780024724",
       "type": "community-developer",
       "components": {
         "skill": {
