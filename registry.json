@@ -135,7 +135,7 @@
         "swap",
         "defi"
       ],
-      "modify_date": "1780024112",
+      "modify_date": "1780024369",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -736,7 +736,7 @@
     },
     {
       "name": "euler-v2-plugin",
-      "version": "0.1.1",
+      "version": "0.1.2",
       "description": "Supply, borrow and earn yield on Euler v2 - a modular lending protocol with isolated-risk vaults (EVK)",
       "author": {
         "name": "GeoGu360",
@@ -754,7 +754,7 @@
         "evk",
         "collateral"
       ],
-      "modify_date": "1779956246",
+      "modify_date": "1780022333",
       "type": "community-developer",
       "components": {
         "skill": {
@@ -765,7 +765,7 @@
           "repo": "okx/plugin-store",
           "asset_pattern": "euler-v2-plugin-{target}",
           "checksums_asset": "checksums.txt",
-          "release_tag": "plugins/euler-v2-plugin@0.1.1"
+          "release_tag": "plugins/euler-v2-plugin@0.1.2"
         }
       },
       "build": {

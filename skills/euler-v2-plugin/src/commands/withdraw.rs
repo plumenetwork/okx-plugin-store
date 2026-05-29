@@ -31,6 +31,11 @@ pub struct WithdrawArgs {
 
     #[arg(long)]
     pub dry_run: bool,
+
+    /// Required to broadcast. Without this, the command prints a preview
+    /// (calldata + intent) and exits without touching the chain.
+    #[arg(long)]
+    pub confirm: bool,
 }
 
 pub async fn run(args: WithdrawArgs) -> Result<()> {
@@ -82,7 +87,7 @@ async fn run_inner(args: WithdrawArgs) -> Result<()> {
         (build_withdraw(amt_raw, &wallet, &wallet), amt_str.clone(), amt_raw)
     };
 
-    if args.dry_run {
+    if !args.confirm {
         println!("{}", serde_json::to_string_pretty(&serde_json::json!({
             "ok": true,
             "dry_run": true,

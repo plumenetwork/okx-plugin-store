@@ -23,6 +23,11 @@ pub struct DisableCollateralArgs {
 
     #[arg(long)]
     pub dry_run: bool,
+
+    /// Required to broadcast. Without this, the command prints a preview
+    /// (calldata + intent) and exits without touching the chain.
+    #[arg(long)]
+    pub confirm: bool,
 }
 
 pub async fn run(args: DisableCollateralArgs) -> Result<()> {
@@ -46,7 +51,7 @@ async fn run_inner(args: DisableCollateralArgs) -> Result<()> {
     let wallet = crate::onchainos::get_wallet_address(args.chain).await?;
     let calldata = build_disable_collateral(&wallet, &vault_addr);
 
-    if args.dry_run {
+    if !args.confirm {
         println!("{}", serde_json::to_string_pretty(&serde_json::json!({
             "ok": true, "dry_run": true,
             "data": {

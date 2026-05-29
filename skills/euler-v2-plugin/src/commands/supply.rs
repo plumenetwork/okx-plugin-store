@@ -50,6 +50,11 @@ pub struct SupplyArgs {
     /// Preview without broadcasting
     #[arg(long)]
     pub dry_run: bool,
+
+    /// Required to broadcast. Without this, the command prints a preview
+    /// (calldata + intent) and exits without touching the chain.
+    #[arg(long)]
+    pub confirm: bool,
 }
 
 pub async fn run(args: SupplyArgs) -> Result<()> {
@@ -95,7 +100,7 @@ async fn run_inner(args: SupplyArgs) -> Result<()> {
     let wallet = crate::onchainos::get_wallet_address(args.chain).await?;
 
     // 3. dry-run preview (no on-chain action)
-    if args.dry_run {
+    if !args.confirm {
         println!(
             "{}",
             serde_json::to_string_pretty(&serde_json::json!({
