@@ -1,7 +1,7 @@
 ---
 name: Aerodrome AMM
 description: Swap tokens and provide liquidity on Aerodrome AMM (volatile/stable pools) on Base
-version: "0.1.1"
+version: "0.1.2"
 tools:
   - name: aerodrome-amm-plugin
     description: Swap, provide liquidity, and claim fees on Aerodrome AMM (classic xy=k and stableswap pools) on Base (chain 8453)
