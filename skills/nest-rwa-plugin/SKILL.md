@@ -248,6 +248,7 @@ Forward each entry in `transactions[]` through `okx-security tx-scan` and `okx-a
 | User says (EN / 中文) | Internal flow |
 |---|---|
 | "Deposit X USDC in Nest's safest vault" / "在 Nest 存 X" / "Park X in Nest" | Flow A — Same-chain deposit |
+| "Buy X nTBILL" / "Buy nALPHA" / "买 nXXX" | Flow A — Same-chain deposit. The user is naming the share token, not a deposit asset; resolve the matching stablecoin from the vault's `liquidAssets[]` on the chosen chain. Ask the user for chain + amount if not specified. |
 | "Show me Nest vaults" / "看 RWA 金库" | C1 `vaults`, then summarize |
 | "Withdraw X shares from <vault>" / "从 <vault> 提取" | Flow B — Withdraw request |
 | "Claim my matured Nest redemption" / "领取" | Flow C — Claim |
@@ -400,7 +401,11 @@ nest-cli adds a 10% buffer over the on-chain LayerZero quote so settlement is re
 1.  okx-agentic-wallet — wallet status (resolve active account if user said "my")
 2.  okx-agentic-wallet — wallet addresses (or use user-supplied 0x...)
 3.  nest positions --address <user> -o json
-       → aggregate: totalValueUSD + weightedApy
+       → returns per-vault entries: { vaultName, vaultSlug, shares, sharePrice, valueUsd }.
+       → Aggregate totalValueUSD by summing per-position valueUsd.
+       → To compute weightedApy, cross-reference each vaultSlug against
+         `nest vaults -o json` (use apy.rolling30d, falling back to apy.rolling7d
+         if rolling30d is null) and weight by valueUsd / totalValueUSD.
 4.  For pending redemptions: nest claim pending --chain plume --address <user> -o json
        (across all vaults; shows what's claimable plus what's still in cooldown)
 ```
@@ -506,7 +511,7 @@ If the top-ranked vault (by APY for the user's risk tier) differs from the user'
 - APY: percent with 2 decimals (`5.12%`)
 - USD: 2 decimals (`$1,234.56`); shorthand for >$1M (`$1.2M`, `$340K`)
 - Token amounts: UI units (`100 USDC`, `50.25 nTBILL`), never base units
-- Sort vault lists by user's risk preference, then by APY descending
+- Sort vault lists by user's risk preference, then by APY descending. **If the user did not state a risk preference**, default to APY-desc and surface a one-line note: *"Sorted by APY — tell me your risk tolerance (conservative / balanced / aggressive) and I'll re-rank."*
 - Always show **abbreviated contract addresses** (`0x6104…0cb6`) alongside the contract role (e.g. "NEW PredicateProxy `0xfC0c…9035`")
 - Always show **full transaction hash** on broadcast success — never truncate `txHash`
 
@@ -537,7 +542,8 @@ If the top-ranked vault (by APY for the user's risk tier) differs from the user'
 | OKX broadcast returns `txStatus: ERROR` (often blank `failReason`) | Run `onchainos wallet history --address <user> --chain ethereum` and read the most recent entry's `failReason`. Common cause: `insufficient funds for gas * price + value`. |
 | `nest deposit` returns 4xx with "not compliant" / "non-compliant" | Surface API's message verbatim, stop. |
 | `nest deposit` returns 4xx with "Dust deposit" or "deposit too small" | Amount is below the vault's minimum. Show the minimum from `nest vaults --slug <slug>`. |
-| `nest deposit` returns 4xx with "simulation failed: …" | API caught a likely revert. Show the reason verbatim; common cause: stale token-approval mismatch or paused vault. |
+| `nest deposit` returns 4xx with "simulation failed: ... TRANSFER_FROM_FAILED" | The caller has insufficient `--asset` balance to deposit `--amount`. Don't retry with the same amount — check `okx-agentic-wallet wallet balance` and reroute to Workflow 2 (swap from another asset) or ask the user to fund the wallet. |
+| `nest deposit` returns 4xx with "simulation failed: …" (any other reason) | API caught a likely revert. Show the reason verbatim; common causes: paused vault, stale token-approval mismatch, slippage too tight. |
 | `nest claim pending` returns `claimableShares: "0"` | Cooldown not finished. Show projected ready time if API provides one; offer `/schedule` (Workflow 5). |
 | `nest instant-redeem submit` returns 4xx with "insufficient liquidity" | Available instant liquidity < requested. Show `nest instant-redeem liquidity` output; offer to fall back to Flow B (queued). |
 | `nest update-redeem submit` returns 4xx "must reduce" | New share total ≥ current pending. Re-prompt the user for a strictly smaller value. |
