@@ -4,7 +4,7 @@ version: "0.1.0"
 description: |
   Use this skill when the user mentions earning yield on stablecoins via real-world assets — RWA / RWAs / real-world asset(s), tokenized treasuries, tokenized US treasuries, T-bill yield, treasury yield, treasury-backed yield, regulated fund onchain, private credit yield, institutional yield, cash management onchain, low-volatility stable yield — or names Nest by any of: Nest, nest.credit, nALPHA, nTBILL, nWISDOM, nOPAL, nBASIS, nINSTO, nCREDIT, nELIXIR, nACRDX, nSCOPE, FalconX CLO, WisdomTree.
 
-  Manages the Nest RWA yield lifecycle: vault discovery, recommendation by risk tier, same-chain deposit (server-side compliance + simulation), withdrawal (request + claim), instant redemption when liquidity is available, auto-claim operator management, cross-chain share bridge, position status, and vault performance history. All transaction-building goes through the `nest` CLI (v0.2.1+) which calls Plume's evm-actions-api server-side — the skill does not fetch predicate signatures or assemble ABI calldata locally.
+  Manages the Nest RWA yield lifecycle: vault discovery, recommendation by risk tier, same-chain deposit (server-side compliance + simulation), withdrawal (request + claim), instant redemption when liquidity is available, auto-claim operator management, cross-chain share bridge, position status, and vault performance history. All transaction-building goes through the `nest` CLI (v0.2.5+) which calls Plume's evm-actions-api server-side — the skill does not fetch predicate signatures or assemble ABI calldata locally.
 
   Trigger verbs (any verb + Nest-name OR RWA-category): park, deposit, stake, invest, put, place, allocate, lock, lock up, lend, save.
 
@@ -20,25 +20,36 @@ license: MIT
 
 Park idle stablecoins into Nest's RWA yield vaults — tokenized US Treasuries (`nTBILL`), regulated funds (`nWISDOM`), private credit (`nOPAL`, `nINSTO`, `nCREDIT`), CLOs (`nELIXIR`), and a diversified mix (`nALPHA`). Deposit, withdraw, instant-redeem, claim, bridge shares across chains, and check positions. Compliance-gated; non-custodial; signing happens in TEE via `okx-agentic-wallet`.
 
-The skill calls the `nest` CLI (from `plumenetwork/nest-cli`, v0.2.1+) which itself calls Plume's `evm-actions-api`. The API handles Predicate compliance, accountant rate reads, decimal conversion, and `simulateCalls` preflight server-side. The skill receives a pre-validated transaction bundle and forwards it to `okx-agentic-wallet` for signing.
+The skill calls the `nest` CLI (from `plumenetwork/nest-cli`, v0.2.5+) which itself calls Plume's `evm-actions-api`. The API handles Predicate compliance, accountant rate reads, decimal conversion, and `simulateCalls` preflight server-side. The skill receives a pre-validated transaction bundle and forwards it to `okx-agentic-wallet` for signing.
+
+`nest` also ships an interactive TUI (`nest dashboard`) with built-in vault / chain / asset pickers, live balances, and the same vault history. **This skill does not invoke the TUI** — agentic use stays strictly in the headless `--dry-run -o json --address <user>` mode so the OKX wallet remains the only signing surface. Users who want to drive Nest manually can launch the TUI themselves outside the skill.
 
 ## Pre-flight — Nest CLI binary
 
-This skill depends on the `nest` binary from `plumenetwork/nest-cli` (v0.2.1+). On first use:
+This skill depends on the `nest` binary from `plumenetwork/nest-cli` (v0.2.5+). On first use:
 
 1. Check the binary is installed and meets the minimum version:
    ```bash
    nest --version
    ```
-2. If exit ≠ 0 or the reported version is `< 0.2.1`, ask the user once:
-   *"I need to install the Nest CLI (v0.2.1+) from `nestagents.io`. OK to install? (requires sudo to write to `/usr/local/bin`)"*
-3. On confirmation, run the official one-liner:
+2. If exit ≠ 0 or the reported version is `< 0.2.5`, ask the user once:
+   *"I need to install the Nest CLI (v0.2.5+) from `nestagents.io`. OK to install?"*
+3. On confirmation, run the one-liner for the user's OS:
+
+   **macOS / Linux** (bash, may prompt for `sudo` to write `/usr/local/bin`):
    ```bash
    curl -fsSL https://nestagents.io/cli/install.sh | sh
    ```
-4. Re-check `nest --version`. If still failing, surface the error verbatim and stop. Common cause: `/usr/local/bin` not in `PATH` — tell the user to add it.
 
-If `nest` is present but below 0.2.1, run `nest update` (it probes `https://nestagents.io/downloads/version.json` and replaces the binary atomically on macOS/Linux). If `nest update` is unavailable, re-run the install one-liner.
+   **Windows** (PowerShell, no admin needed — installs to `%LOCALAPPDATA%\nest-cli\bin\nest.exe` and updates user PATH):
+   ```powershell
+   irm https://nestagents.io/cli/install.ps1 | iex
+   ```
+4. Re-check `nest --version`. If still failing, surface the error verbatim and stop. Common cause: install dir not in `PATH` — tell the user to restart their terminal (Windows) or add the dir to `PATH` (macOS / Linux).
+
+If `nest` is present but below 0.2.5, run `nest update` — it probes `https://nestagents.io/downloads/version.json`, verifies sha256, and replaces the binary atomically (rename trick on Windows). If `nest update` is unavailable, re-run the install one-liner for the user's OS.
+
+**In-binary update notifier:** v0.2.3+ prints an "update available" notice to stderr on every `nest <cmd>` invocation when a newer version is published, then refreshes the cache in the background (24-hour TTL). The agent does not need to police versions — surface the notice if it appears and recommend `nest update`. The user can opt out with `NEST_NO_UPDATE_CHECK=1`.
 
 After a successful version check, do not prompt again in this session.
 
@@ -254,7 +265,7 @@ Forward each entry in `transactions[]` through `okx-security tx-scan` and `okx-a
 Single API-served path for all live vault types (`boring`, `nest`, `boringNest`). The API picks the right predicate proxy (OLD vs NEW) automatically. The returned bundle includes the approve when needed.
 
 ```
-1.  CLI pre-flight (nest --version >= 0.2.1)
+1.  CLI pre-flight (nest --version >= 0.2.5)
 2.  okx-agentic-wallet — wallet status (login if needed)
 3.  okx-agentic-wallet — wallet addresses --chain <chain>   (resolve user's address)
 4.  okx-agentic-wallet — wallet balance --chain <chain> --token-address <asset>
@@ -519,7 +530,7 @@ If the top-ranked vault (by APY for the user's risk tier) differs from the user'
 
 | Situation | What to do |
 |---|---|
-| `nest` not installed or version < 0.2.1 | Pre-flight prompts the user; on confirm, runs `curl -fsSL https://nestagents.io/cli/install.sh \| sh`. |
+| `nest` not installed or version < 0.2.5 | Pre-flight prompts the user; on confirm, runs `curl -fsSL https://nestagents.io/cli/install.sh \| sh`. |
 | Wallet not logged in | Defer to `okx-agentic-wallet` login flow. |
 | Insufficient stable balance | STOP, suggest `okx-dex-swap` (Workflow 2). |
 | Insufficient native (ETH) for gas | Tell user to fund **at least 0.003 ETH** at current mainnet conditions. OKX's broadcast adds priority fee on top of chain `eth_gasPrice`, so naive `gas × eth_gasPrice` underestimates. Alternatively, propose Gas Station (defer to `okx-agentic-wallet` Gas Station setup flow — pays gas in stables). |
@@ -555,7 +566,7 @@ A: Aave and Compound are crypto-native lending markets — yield comes from on-c
 
 **Q: Why do I need to "self-attest a country" — can't you just check?**
 
-A: Nest's compliance is enforced at the contract level via a signed `predicateMessage`. The Predicate service does its own checks based on registration data; the country attestation just lets us fail fast for the obvious cases. With nest-cli v0.2.1+, the compliance check happens server-side inside Plume's evm-actions-api on every `*/build-tx` call — non-compliant users get a clean 4xx without any local plumbing.
+A: Nest's compliance is enforced at the contract level via a signed `predicateMessage`. The Predicate service does its own checks based on registration data; the country attestation just lets us fail fast for the obvious cases. With nest-cli v0.2.5+, the compliance check happens server-side inside Plume's evm-actions-api on every `*/build-tx` call — non-compliant users get a clean 4xx without any local plumbing.
 
 **Q: Why does withdraw take 24 hours sometimes?**
 
